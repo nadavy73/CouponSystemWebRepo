@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="login.js"></script>
+<meta charset="windows-1255">
+<title>Coupon System Login Page</title>
+</head>
+<body>
+<div style="width: 35%; margin: auto">
+<!-- 	<form> -->
+		<fieldset>
+		User Name: <input type="text" name="username" id="username"><br/>
+		Password: <input type="password" name="password" id="password"><br/>
+		</fieldset>
+		<fieldset>
+		<legend>Login As:</legend>
+		<input type="radio" name="clienttype" value="COMPANY" id="company" checked="checked"> Company
+		<input type="radio" name="clienttype" value="CUSTOMER" id="customer"> Customer
+ 		<input type="radio" name="clienttype" value="ADMIN" id="admin"> Admin
+ 		<br/>
+ 		<button onclick="login()">Login</button>
+ 		</fieldset>
+<!-- 	</form> -->
+<!-- 	<button name="test" onclick="login()">test</button> -->
+	</div>
+	<p id="loginMessage"></p>
+</body>
+</html>
