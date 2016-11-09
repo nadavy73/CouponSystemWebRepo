@@ -45,6 +45,7 @@ public class AdminService {
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
+			
 			facade.createCompany(company);
 		} catch (AdminFacadeException | AlreadyExistException e) {
 			e.printStackTrace();
@@ -122,6 +123,7 @@ public class AdminService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Company> getAllCompanies()
 	{
+		System.out.println("INSIDE GET ALL COMPANIES ******************************");
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
