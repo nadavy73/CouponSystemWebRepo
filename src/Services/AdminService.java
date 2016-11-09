@@ -10,7 +10,7 @@ import JavaBeans.*;
 
 @Path("admin")
 public class AdminService {
-//bla
+
 	@Context
 	private HttpServletRequest request;
 	private static final String FACADE_KEY = "facade";
