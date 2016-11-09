@@ -8,7 +8,7 @@ import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
 
-@Path("admin")
+@Path("/admin")
 public class AdminService {
 
 	@Context

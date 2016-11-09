@@ -26,7 +26,7 @@ import JavaBeans.Coupon;
 import JavaBeans.CouponType;
 import JavaBeans.Customer;
 
-@Path("customer")
+@Path("/customer")
 public class CustomerService {
 	
 	@Context
