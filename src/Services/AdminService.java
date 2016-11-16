@@ -4,11 +4,16 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
 
-@Path("/admin")
+@XmlRootElement
+
+@Path("/adminService")
+@Produces(MediaType.APPLICATION_JSON)
 public class AdminService {
 
 	@Context
