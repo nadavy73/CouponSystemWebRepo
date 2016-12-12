@@ -1,60 +1,48 @@
 package com.course.filters;
 
 import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.SysexMessage;
+import javax.ws.rs.core.MediaType;
 
-/**
- * Servlet Filter implementation class LoginFilter
- */
-@WebFilter(urlPatterns = { "/LoginFilter" }, servletNames = { "Jersey REST Service" })
+
+@WebFilter("/loginFilter")
 public class LoginFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public LoginFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 
-	/**
-	 * @see Filter#destroy()
-	 */
+		
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+		if (httpRequest.getSession(false) == null) {
+			
+			httpResponse.setStatus(400);
+			
+			response.setContentType(MediaType.APPLICATION_JSON);
+			
+			ServletOutputStream out = response.getOutputStream();
+			out.println("{"
+					+ "\"errorMessag\":\"null session\","
+					+ " \"errorCode\": 900"
+					+ "}");
+			return;
+		} else {
+			chain.doFilter(request, response);
+		}
+
+	}
+
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+	}
+
+	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
-
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("FILTER RUNNING");
-		// Check if there is a session 
-		// if not - send redirect to login page.
-//		if (((HttpServletRequest)request).getSession(false) == null)
-//		{
-//			((HttpServletResponse)response).sendRedirect("login page");
-//		}
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
-		
-		
-		
-	}
-
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
 }

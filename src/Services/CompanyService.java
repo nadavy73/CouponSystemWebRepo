@@ -1,15 +1,17 @@
 package Services;
 
-
-import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
 
-@Path("company")
+
+@XmlRootElement
+@Path("/company")
+@Produces(MediaType.APPLICATION_JSON)
 public class CompanyService {
 
 	@Context
@@ -19,7 +21,7 @@ public class CompanyService {
 	public CompanyService() {
 
 	}
-
+	//V
 	@POST
 	@Path("/login/{name}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -27,7 +29,7 @@ public class CompanyService {
 			@PathParam("password")String password)
 	{
 		try{
-			CompanyFacade cf= new CompanyFacade().login(userName, password, ClientType.ADMIN);
+			CompanyFacade cf= new CompanyFacade().login(userName, password, ClientType.COMPANY);
 			request.getSession().setAttribute(FACADE_KEY, cf);
 			return "login successfull";
 		}
@@ -38,25 +40,33 @@ public class CompanyService {
 		
 	}
 
-	@PUT
+	//V
+	@POST
 	@Path("/createCoupon")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Coupon createCoupon (Coupon coupon) 
-			throws AdminFacadeException
-	{
-		CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
+	public Coupon createCoupon(Coupon coupon) throws CompanyFacadeException, AlreadyExistException {	
+	
+		System.out.println("**************** " + coupon);
 		
+		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
+	
+		cf.createCoupon(coupon);
+
 		try {
-			facade.createCoupon(coupon);
-		} catch (CompanyFacadeException| AlreadyExistException e) {
+			cf.createCoupon(coupon);
+		} catch (AlreadyExistException e) {
 			e.printStackTrace();
 		}
 			return coupon;
 	}
 	
+	
+	//V
 	@DELETE
 	@Path("/removeCoupon")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Coupon removeCoupon (Coupon coupon) 
 			
 	{
@@ -70,9 +80,12 @@ public class CompanyService {
 			return coupon;
 	}
 	
-	@PUT
+	
+	//V
+	@POST
 	@Path("/updateCoupon")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Coupon updateCoupon (Coupon coupon) 
 			
 	{
@@ -86,10 +99,11 @@ public class CompanyService {
 			return coupon;
 	}
 	
+	//V
 	@GET
-	@Path("/getCoupon")
+	@Path("/getCoupon/{couponId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Coupon getCoupon(long couponId) 
+	public Coupon getCoupon(@PathParam("couponId") long couponId) 
 	{
 		CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 		

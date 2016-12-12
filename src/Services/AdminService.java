@@ -5,13 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
 
 @XmlRootElement
-
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminService {
@@ -23,8 +21,6 @@ public class AdminService {
 	public AdminService() {
 
 	}
-
-	
 	//V
 	@POST
 	@Path("/login/{name}/{password}")
@@ -84,7 +80,7 @@ public class AdminService {
 	
 	
 	
-	
+	//V
 	@POST 
 	@Path("/updateCompany")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -196,10 +192,11 @@ public class AdminService {
 			return customer;
 	}
 	
-	
-	@PUT
+	//V
+	@POST 
 	@Path("/updateCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Customer updateCustomer(Customer customer) 
 		
 	{
