@@ -51,7 +51,7 @@ public class CompanyService {
 		
 		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 	
-		cf.createCoupon(coupon);
+		
 
 		try {
 			cf.createCoupon(coupon);

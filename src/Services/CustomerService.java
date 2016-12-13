@@ -59,7 +59,7 @@ public class CustomerService {
 	}
 	
 	
-
+//V
 	@PUT
 	@Path("/purchaseCoupon")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -69,14 +69,7 @@ public class CustomerService {
 	{
 		CustomerFacade facade = (CustomerFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		
-		
-		
-		try {
-			facade.purchaseCoupon(id);
-		} catch (CustomerFacadeException | CouponException e) {
-			e.printStackTrace();
-		}
+
 			return facade.purchaseCoupon(id);
 	}
 	

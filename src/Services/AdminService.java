@@ -80,22 +80,7 @@ public class AdminService {
 	
 	
 	
-	//V
-	@POST 
-	@Path("/updateCompany")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Company updateCompany (Company company)
-	{
-		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
-		
-		try {
-			facade.UpdateCompany(company);
-		} catch (AdminFacadeException e) {
-			e.printStackTrace();
-		}
-			return company;
-	}
+	
 	
 	
 	//V
@@ -209,6 +194,23 @@ public class AdminService {
 		}
 			return customer;
 	}
+	
+	//V
+		@POST 
+		@Path("/updateCompany")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Company updateCompany (Company company)
+		{
+			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+			
+			try {
+				facade.UpdateCompany(company);
+			} catch (AdminFacadeException e) {
+				e.printStackTrace();
+			}
+				return company;
+		}
 
 	
 	//V
