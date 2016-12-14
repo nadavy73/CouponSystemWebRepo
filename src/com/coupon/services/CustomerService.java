@@ -1,4 +1,4 @@
-package com.coupon.services
+package com.coupon.services;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -41,13 +41,13 @@ public class CustomerService {
 	}
 	//V
 	@POST
-	@Path("/login/{name}/{password}")
+	@Path("/login/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String login(@PathParam("name")String userName, 
+	public String login(@PathParam("username")String username, 
 			@PathParam("password")String password)
 	{
 		try{
-			CustomerFacade custf= new CustomerFacade().login(userName, password, ClientType.CUSTOMER);
+			CustomerFacade custf= new CustomerFacade().login(username, password, ClientType.CUSTOMER);
 			request.getSession().setAttribute(FACADE_KEY, custf);
 			return "login successfull";
 		}

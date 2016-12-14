@@ -1,4 +1,4 @@
-package com.coupon.services
+package com.coupon.services;
 
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -23,13 +23,13 @@ public class AdminService {
 	}
 	//V
 	@POST
-	@Path("/login/{name}/{password}")
+	@Path("/login/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String login(@PathParam("name")String userName, 
+	public String login(@PathParam("username")String username, 
 			@PathParam("password")String password)
 	{
 		try{
-			AdminFacade af= new AdminFacade().login(userName, password, ClientType.ADMIN);
+			AdminFacade af= new AdminFacade().login(username, password);
 			request.getSession().setAttribute(FACADE_KEY, af);
 			return "login successfull";
 		}

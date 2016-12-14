@@ -1,4 +1,4 @@
-package com.coupon.services
+package com.coupon.services;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -23,13 +23,13 @@ public class CompanyService {
 	}
 	//V
 	@POST
-	@Path("/login/{name}/{password}")
+	@Path("/login/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String login(@PathParam("name")String userName, 
+	public String login(@PathParam("username")String username, 
 			@PathParam("password")String password)
 	{
 		try{
-			CompanyFacade cf= new CompanyFacade().login(userName, password, ClientType.COMPANY);
+			CompanyFacade cf= new CompanyFacade().login(username, password, ClientType.COMPANY);
 			request.getSession().setAttribute(FACADE_KEY, cf);
 			return "login successfull";
 		}

@@ -1,0 +1,110 @@
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                      <form>
+    					<div class="form-group">
+      						<div class="input-group">
+        						<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        				<input type="text" class="form-control" placeholder="Search..." ng-model="searchCompany">
+      						</div>      
+    					</div>
+  					</form>
+                        
+                        <table class="table table-responsive table-hover table-condensed">
+                                <thead>
+                                    <tr style="font-weight: bold">
+                                        
+                                        <td>
+                                        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            							Company Name
+            							<span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          								</a>
+        								</td>
+        								
+                                        
+                                        <td>
+                                        <a href="#" ng-click="sortType = 'password'; sortReverse = !sortReverse">
+            							Password
+            							<span ng-show="sortType == 'password' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'password' && sortReverse" class="fa fa-caret-up"></span>
+          								</a>
+        								</td>
+        								
+        								
+        								
+                                        <td>
+                                        <a href="#" ng-click="sortType = 'email'; sortReverse = !sortReverse">
+            							Email
+            							<span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
+          								</a>
+        								</td>
+                                        
+                                         </tr>
+                                </thead>
+                                
+                               
+                                
+                                <tr ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
+                                
+                                <td>
+        						<span 
+        						editable-text="company.name" 
+        						e-name="name" 
+        						e-form="companyform" 
+        						onbeforesave="nameValidation($data)">
+         				 		{{ company.name }}
+        						</span>
+      							</td>
+                                        
+								<td>
+               					<!--Password-->
+                				<span editable-text="company.password"
+                      			e-name="password"
+                      			e-form="companyform"
+                      			e-placeholder="password"
+                      			onbeforesave="passwordValidation($data)">
+
+                            	{{company.password}}
+                        		</span>
+            					</td>
+					<td>
+                			<!--email-->
+                			<span 
+                			editable-text="company.email"
+                      		e-name="email"
+                     	 	e-form="companyform"
+                      		e-placeholder="email">
+                            {{company.email}}
+                    		</span>
+            		</td>
+            <td style="white-space: nowrap">
+        	<!-- form --> 
+        	
+        	<form editable-form name="companyform" 
+        			onbeforesave="saveUser($data, user.id)" 
+        			ng-show="companyform.$visible" 
+        			class="form-buttons form-inline pull-right">
+          		<button type="submit" ng-disabled="companyform.$waiting" class="btn btn-primary">
+            	save
+          		</button>    
+          		<button type="button" ng-disabled="companyform.$waiting" ng-click="companyform.$cancel()" class="btn btn-primary">
+            	cancel
+          		</button>
+        	</form>                          
+				
+				<div class="buttons pull-right" ng-show="!companyform.$visible">
+                    
+                 <button id="{{'edit' + $index}}" class="btn btn-primary" ng-click="companyform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
+                 <button class="btn btn-danger" ng-click="removeCompany()"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+                </div>
+			 </td>    
+		</tr>
+	</tbody>
+</table>
+                          <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add row</i></button>
+                        
+                    </div>
+                </div>
+        

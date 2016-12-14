@@ -1,4 +1,4 @@
-package com.course.filters;
+package com.coupon.filters;
 
 import java.io.IOException;
 
