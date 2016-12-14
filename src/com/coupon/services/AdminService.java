@@ -1,17 +1,15 @@
-package Services;
+package com.coupon.services
 
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
 
 @XmlRootElement
-
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminService {
@@ -23,8 +21,6 @@ public class AdminService {
 	public AdminService() {
 
 	}
-
-	
 	//V
 	@POST
 	@Path("/login/{name}/{password}")
@@ -85,21 +81,6 @@ public class AdminService {
 	
 	
 	
-	@POST 
-	@Path("/updateCompany")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Company updateCompany (Company company)
-	{
-		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
-		
-		try {
-			facade.UpdateCompany(company);
-		} catch (AdminFacadeException e) {
-			e.printStackTrace();
-		}
-			return company;
-	}
 	
 	
 	//V
@@ -196,10 +177,11 @@ public class AdminService {
 			return customer;
 	}
 	
-	
-	@PUT
+	//V
+	@POST 
 	@Path("/updateCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Customer updateCustomer(Customer customer) 
 		
 	{
@@ -212,6 +194,23 @@ public class AdminService {
 		}
 			return customer;
 	}
+	
+	//V
+		@POST 
+		@Path("/updateCompany")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Company updateCompany (Company company)
+		{
+			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+			
+			try {
+				facade.UpdateCompany(company);
+			} catch (AdminFacadeException e) {
+				e.printStackTrace();
+			}
+				return company;
+		}
 
 	
 	//V
