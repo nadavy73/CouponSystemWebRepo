@@ -6,6 +6,9 @@
       						<div class="input-group">
         						<div class="input-group-addon"><i class="fa fa-search"></i></div>
         				<input type="text" class="form-control" placeholder="Search..." ng-model="searchCompany">
+        				<span class="input-group-btn">
+                    	<button data-ng-click="ClearSearchText()" class="btn btn-primary"> Clear </button>
+                		</span>
       						</div>      
     					</div>
   					</form>
@@ -103,7 +106,7 @@
 		</tr>
 	</tbody>
 </table>
-                          <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add row</i></button>
+                          <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add new Company</i></button>
                         
                     </div>
                 </div>

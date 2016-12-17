@@ -1,64 +1,34 @@
 admin.controller("customerCtrl", function($scope, $filter, $http) {
 	
-	$scope.details = [
-	        {
-	            id: 1,
-	        	name:'Muhammed',
-	            password:'Shanid',
-	            
-	        },
-	        {
-	        	id: 2,
-	        	'name':'John',
-	            'password':'Abraham',
-	            
-	        },
-	        {
-	        	id: 3,
-	        	name:'Roy',
-	            password:'Mathew',
-	            
-	        }];
-	    
+	$http.get("http://www.w3schools.com/angular/customers.php")
+    .then(function (response) {$scope.customers = response.data.records;});
+
 	//Add new Customer
 	$scope.addNewCustomer = function(){
 		$scope.inserted = {
-				id: $scope.details.length+1, 
-              name: details.name,
-              password: details.password,
+		id: $scope.customers.length+1, 
+        name: customerss.name,
+        password: customers.password,
 				};
-	            $scope.details.push($scope.inserted);
+	            $scope.customers.push($scope.inserted);
 	        };
 	       
 	      //Remove Customer
 	        $scope.removeCustomer = function(index) {
-	          $scope.details.splice(index, 1);
+	          $scope.customers.splice(index, 1);
 	        };
 	        
 	        
-//	        //Remove Company
-//	        $scope.removeCompany = function(){
-//	            var newDataList=[];
-//	            $scope.selectedAll = false;
-//	            angular.forEach($scope.personalDetails, function(selected){
-//	                if(!selected.selected){
-//	                    newDataList.push(selected);
-//	                }
-//	            }); 
-//	            $scope.personalDetails = newDataList;
-//	        };
-	    
 	        $scope.saveCustomer = function(data, id) {
 	            //$scope.details not updated yet
 	            angular.extend(data, {id: id});
 	            return $http.post('/saveUser', data);
 	          };
 	        
-	          
-	          
 	          $scope.customers = [];
-	          $scope.loadcustomers = function() {
-	            return $scope.customers.length ? null : $http.get('coupon/admin/getallcustomers')
+	          
+	          $scope.loadCustomers = function() {
+	            return $scope.customers.length ? null : $http.get("coupon/admin/getAllCustomers")
 	            		
 	           .success(function(data) {
 	              $scope.customers = data;
@@ -75,7 +45,7 @@ admin.controller("customerCtrl", function($scope, $filter, $http) {
 	        	    }
 	        	  };  
 	         
-	        	  $scope.showStatus = function(detail) {
+	        $scope.showStatus = function(detail) {
 	        		    var selected = [];
 	        		    if(detail.password) {
 	        		      selected = $filter('filter')($scope.statuses, {value: detail.password});
@@ -84,14 +54,11 @@ admin.controller("customerCtrl", function($scope, $filter, $http) {
 	        		  };  
 	        	  
 	        	  
-	        		  $scope.checkName = function(data, id) {
+	        $scope.checkName = function(data, id) {
 	        			    if (id === 2 && data !== 'awesome') {
 	        			      return "Username 2 should be `awesome`";
 	        			    }
 	        			  };	  
-	        	  
-	        	  
-	        	  
 	        	  
 	        	  
 	        $scope.checkAll = function () {

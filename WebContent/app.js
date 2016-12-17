@@ -3,42 +3,46 @@
 //declare modules
 var login = angular.module('login', ['ui.router', 'ngResource', 'ngAnimate']);
 var admin = angular.module('admin', ['ui.router', 'ngAnimate','ngMaterial']);
+var company = angular.module('company', ['ui.router', 'ngAnimate','ngMaterial']);
 
 var app = angular.module('couponApp', ['ui.router', 'ui.bootstrap', 'flash',
 	'ngRoute',
-    'ngCookies',
+	'ngCookies',
     'xeditable',
     
+    //main modules
     'login',
     'admin',
-    
+    'company'
     
 ]);
 
 app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
+	//////////////////////
+	///LOGIN///////////////
+	/////////////////////
 	$stateProvider
         .state('login', {
         url: '/login',	
         controller: 'loginCtrl',
         templateUrl: 'app/login/views/login.html',
         
-        })
+        });
         
+	
+	/////////////////////////
+	////////ADMIN////////////
+	/////////////////////////
          $stateProvider
          	.state('admin', {
         	url:'/admin', 
-            controller: 'appCtrl',
+            controller: 'adminMainCtrl',
             templateUrl: 'app/admin/views/admin.main.html'
-        })
+        });
         
-//        .when("/company", {
-//        	controller: "companyCtrl", 
-//        	templateUrl:"app/admin/views/company.view.html"
-//        		
-//        })
         
-        //Company page state
+        //Admin-Company page state
         $stateProvider
         	.state('admin.company', {
         		url: '/company',
@@ -47,7 +51,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         	
         });
         
-        //Customer page state
+        //Admin-Customer page state
         $stateProvider
         	.state('admin.customer', {
         		url: '/customer',
@@ -56,16 +60,25 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         
     });
         
-        //Customer page state
-        $stateProvider
-        	.state('admin.xeditable', {
-        		url: '/xeditable',
-        		templateUrl: 'app/admin/views/xeditable.html',
-        		controller: 'EditableRowCtrl',
         
+        /////////////////////////
+    	////////COMPANY////////////
+    	/////////////////////////
+       $stateProvider
+     		.state('company', {
+     			url:'/company', 
+     			controller: 'companyMainCtrl',
+     			templateUrl: 'app/company/companyView/company.main.html'
     });
+    
         
-        
+        ///Company-Coupon//
+        $stateProvider
+     	.state('company.coupon', {
+     		url:'/companyCoupon', 
+     		controller: 'companyCouponCtrl',
+     		templateUrl: 'app/company/companyView/companyCoupon.html'
+    });
         
         $urlRouterProvider.otherwise('login');
 }])
@@ -85,6 +98,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
 //            }
 //        });
 //    }]);
+
 
 
 app.run(function(editableOptions) {

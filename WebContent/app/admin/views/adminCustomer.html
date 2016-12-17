@@ -1,9 +1,11 @@
+
+    
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form ng-click="addNew()">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -15,21 +17,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-ng-repeat="personalDetail in personalDetails" class= "settingListItem ng-scope" data-ng-dbclick= "editEvent(event)">
+                                    <tr data-ng-repeat="customer in customers">
                                         <td>
-                                            <input type="checkbox" data-ng-model="personalDetail.selected"/></td>
+                                            <input type="checkbox" data-ng-model="customer.selected"/></td>
                                         <td>
-                                            <input type="text" class="form-control" data-ng-model="personalDetail.id" required/></td>
+                                            <input type="text" class="form-control" data-ng-model="customer.id" required/>{{customer.id}}</td>
                                         <td>
-                                            <input type="text" class="form-control" data-ng-model="personalDetail.name" required/></td>
+                                            <input type="text" class="form-control" data-ng-model="customer.name" required/>{{customer.name}}</td>
                                         <td>
-                                            <input type="email" class="form-control" data-ng-model="personalDetail.password" required/></td>
+                                            <input type="email" class="form-control" data-ng-model="customer.password" required/>{{customer.password}}</td>
                                          <td>   
                                             
                                             
 									<div class="buttons" ng-show="!companyform.$visible">
                     
-                    					<button class="btn btn-info" ng-click="getCompanyCoupons (company.id, $index)">coupons</button>
                     					<button id="{{'edit' + $index}}" class="btn btn-primary" ng-click="companyform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
                    						 <button class="btn btn-danger" ng-click="removeCustomer($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
                 					</div>
@@ -37,11 +38,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-  								<button type="submit" class="btn btn-primary right" ng-click="addUser()"><i class="fa fa-plus">Add Company</i></button>
+  								<button type="submit" class="btn btn-primary right" ng-click="addUser()"><i class="fa fa-plus">Add New Customer</i></button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+      

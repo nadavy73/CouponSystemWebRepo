@@ -59,37 +59,30 @@ admin.controller("companyCtrl", ['$scope', function($scope) {
             });
         };
     
-        $scope.removeCompany = function (index) {
-            alert("B4 if null");
-            if ($scope.companies[index].id != null) {
-                alert("NOT null");
-                companyProxy.remove($scope.companies[index].id)
-                    .then(
-                        function successCallback(response) {
-                            console.log('DELETED:');
-                            console.log(response.data);
-                            // Delete comapny from model
-                            $scope.companies.splice(index, 1);
-                        },
-                        function errorCallback(response) {
-                            couponUtil.handleBadResponse('ERROR:', response);
-                        });
-            } else {
-                $scope.companies.splice(index, 1);
-            }
+//        $scope.removeCompany = function (index) {
+//            alert("B4 if null");
+//            if ($scope.companies[index].id != null) {
+//                alert("NOT null");
+//                companyProxy.remove($scope.companies[index].id)
+//                    .then(
+//                        function successCallback(response) {
+//                            console.log('DELETED:');
+//                            console.log(response.data);
+//                            // Delete comapny from model
+//                            $scope.companies.splice(index, 1);
+//                        },
+//                        function errorCallback(response) {
+//                            couponUtil.handleBadResponse('ERROR:', response);
+//                        });
+//            } else {
+//                $scope.companies.splice(index, 1);
+//            }
+//        };
+        
+        $scope.removeCompany = function(index){
+        	 $scope.companies.splice(index, 1);
         };
         
-//        $scope.remove = function(){
-//            var newDataList=[];
-//            $scope.selectedAll = false;
-//            angular.forEach($scope.companies, function(selected){
-//                if(!selected.selected){
-//                    newDataList.push(selected);
-//                }
-//            }); 
-//            $scope.companies = newDataList;
-//        };
-    
     $scope.checkAll = function () {
         if (!$scope.selectedAll) {
             $scope.selectedAll = true;
