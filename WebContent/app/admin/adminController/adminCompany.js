@@ -1,32 +1,20 @@
-admin.controller("companyCtrl", ['$scope', function($scope) {
+admin.controller("companyCtrl", ['$scope','CompaniesService', function($scope,CompaniesService) {
     
 	  $scope.sortType     = 'name'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
 	  $scope.searchCompany   = '';     // set the default search/filter term
 	
+	  $scope.CompArr = [];
 	
-	$scope.companies = [
-        {
-            
-        	'name':'Muhammed',
-            'password':'Shanid',
-            'email':'shanid@shanid.com'
-        },
-        {
-        	
-        	'name':'John',
-            'password':'Abraham',
-            'email':'john@john.com'
-        },
-        {
-        	
-        	'name':'Roy',
-            'password':'Mathew',
-            'email':'roy@roy.com'
-        }];
-    
-    
-    
+
+	  //var arr = CompaniesService.getCompanies();
+	  CompaniesService.getCompanies().then(function (data) {
+		  
+		
+		  $scope.companies = data.data;
+		  
+		  angular.element("#loader").hide();
+	  });
     
     $scope.nameValidation = function (name) {
         if (name.length < 1) {
@@ -52,12 +40,18 @@ admin.controller("companyCtrl", ['$scope', function($scope) {
 
     
     $scope.addNew = function(company){
+    	
+  
             $scope.companies.push({ 
-                'name': "", 
-                'password': "",
-                'email': "",
+                'compName': $scope.fullname, 
+                'passWord': $scope.password,
+                'eMail':$scope.email
             });
-        };
+            
+            CompaniesService.addCompany({'compName' : $scope.fullname,eMail:$scope.email,passWord : $scope.password})
+           //Todo:
+    
+    };
     
 //        $scope.removeCompany = function (index) {
 //            alert("B4 if null");

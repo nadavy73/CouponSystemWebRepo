@@ -9,24 +9,23 @@ login.factory('LoginService',
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function(){
-                var response = { success: username === clientType && password === '1234' && clientType == clientType};
-                if(!response.success) {
-                    response.message = 'Username or password or clientType is incorrect';
-                }
-                callback(response);
-            }, 1000);
+//            $timeout(function(){
+//                var response = { success: username === clientType && password === '1234' && clientType == clientType};
+//                if(!response.success) {
+//                    response.message = 'Username or password or clientType is incorrect';
+//                }
+//                callback(response);
+//            }, 1000);
 
 
             /* Use this for real authentication
              ----------------------------------------------*/
-//            $http.get("http://localhost:8080/WebCouponProject/coupon/login/"
-//                    + username + "/"
-//                    + password + "/"
-//                    + clientType)
-//                .success(function (response) {
-//                    callback(response);
-//                });
+            $http.post("http://localhost:8080/WebCouponProject/rest/"+ clientType + "/login/"
+                    + username + "/"
+                    + password)
+                .success(function (response) {
+                    callback(response);
+                });
 
         };
  

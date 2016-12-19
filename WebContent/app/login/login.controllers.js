@@ -7,15 +7,16 @@ login.controller('loginCtrl',
 //        AuthenticationService.ClearCredentials();
     	
     	//Default 
-    	$scope.clientType = "customer";
+    	$scope.clientType = "admin";
         $scope.username = '';
         $scope.password = '';
            	
         $scope.login = function () {
             $scope.dataLoading = true;
             LoginService.Login($scope.username, $scope.password, $scope.clientType, function(response) {
-                if(response.success) {
-            		LoginService.SetCredentials($scope.username, $scope.password, $scope.clientType);
+            	debugger;
+                if(response=="ok") {
+//            		LoginService.SetCredentials($scope.username, $scope.password, $scope.clientType);
             		$rootScope.clientType = $scope.clientType;
             		$state.go ($scope.clientType);
                 } else {

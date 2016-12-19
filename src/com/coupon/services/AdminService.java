@@ -17,7 +17,12 @@ public class AdminService {
 	@Context
 	private HttpServletRequest request;
 	private static final String FACADE_KEY = "facade";
-
+	
+	public class returnValue {
+		public String status = "ok";
+	}
+	
+	
 	public AdminService() {
 
 	}
@@ -25,13 +30,15 @@ public class AdminService {
 	@POST
 	@Path("/login/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String login(@PathParam("username")String username, 
+	public String login(@PathParam("username") String username, 
 			@PathParam("password")String password)
 	{
 		try{
-			AdminFacade af= new AdminFacade().login(username, password);
+			
+			new AdminFacade();
+			AdminFacade af= AdminFacade.login(username, password);
 			request.getSession().setAttribute(FACADE_KEY, af);
-			return "login successfull";
+			return "ok";
 		}
 		catch(LoginException e)
 		{
@@ -40,7 +47,7 @@ public class AdminService {
 		
 	}
 	
-	//V
+	//V 
 	@PUT
 	@Path("/createCompany")
 	@Produces(MediaType.APPLICATION_JSON)

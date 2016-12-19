@@ -34,7 +34,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
 	/////////////////////////
 	////////ADMIN////////////
 	/////////////////////////
-         $stateProvider
+    $stateProvider
          	.state('admin', {
         	url:'/admin', 
             controller: 'adminMainCtrl',

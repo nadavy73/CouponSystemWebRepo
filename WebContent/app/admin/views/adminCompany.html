@@ -12,7 +12,8 @@
       						</div>      
     					</div>
   					</form>
-                        
+                        <div id="loader" style="dispaly:none;">
+                        <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
                         <table class="table table-responsive table-hover table-condensed">
                                 <thead>
                                     <tr style="font-weight: bold">
@@ -52,34 +53,35 @@
                                 <tr ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
                                 
                                 <td>
+                             
         						<span 
-        						editable-text="company.name" 
-        						e-name="name" 
+        						editable-text="{{company.compName}}" 
+        						e-name="compName" 
         						e-form="companyform" 
         						onbeforesave="nameValidation($data)">
-         				 		{{ company.name }}
+         				 		{{ company.compName }}
         						</span>
       							</td>
                                         
 								<td>
                					<!--Password-->
-                				<span editable-text="company.password"
-                      			e-name="password"
+                				<span editable-text="company.passWord"
+                      			e-name="Password"
                       			e-form="companyform"
-                      			e-placeholder="password"
+                      			e-placeholder="Password"
                       			onbeforesave="passwordValidation($data)">
 
-                            	{{company.password}}
+                            	{{company.passWord}}
                         		</span>
             					</td>
 					<td>
                 			<!--email-->
                 			<span 
-                			editable-text="company.email"
-                      		e-name="email"
+                			editable-text="company.eMail"
+                      		e-name="eMail"
                      	 	e-form="companyform"
-                      		e-placeholder="email">
-                            {{company.email}}
+                      		e-placeholder="eMail">
+                            {{company.eMail}}
                     		</span>
             		</td>
             <td style="white-space: nowrap">
@@ -106,8 +108,24 @@
 		</tr>
 	</tbody>
 </table>
-                          <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add new Company</i></button>
-                        
+                          
+                       
                     </div>
+                    
+                    <form id="add-company-form">
+                    <div class="form-group">
+                    <label>Fullname:
+                    </label>
+                    <input type="text" class="form-control" ng-model="fullname">
+                                        <label>password:
+                    </label>
+                    <input type="text" class="form-control" ng-model="password">
+                                        <label>email:
+                    </label>
+                    <input type="text" class="form-control" ng-model="email">
+                    
+                    </div>
+                    </form>
+                    <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add new Company</i></button>
                 </div>
         
