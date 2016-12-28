@@ -11,9 +11,11 @@
                 		</span>
       						</div>      
     					</div>
-  					</form>
+  					  </form>
+  					
                         <div id="loader" style="dispaly:none;">
                         <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
+                        
                         <table class="table table-responsive table-hover table-condensed">
                                 <thead>
                                     <tr style="font-weight: bold">
@@ -47,6 +49,7 @@
                              
         						<span 
         						editable-text="{{customer.custName}}" 
+        						e-ng-model="fullname"
         						e-name="custName" 
         						e-form="customerform" 
         						onbeforesave="nameValidation($data)">
