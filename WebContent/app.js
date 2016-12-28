@@ -55,8 +55,9 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         $stateProvider
         	.state('admin.customer', {
         		url: '/customer',
-        		templateUrl: 'app/admin/views/adminCustomer.html',
         		controller: 'customerCtrl',
+        		templateUrl: "app/admin/views/adminCustomer.html"
+        		
         
     });
         
