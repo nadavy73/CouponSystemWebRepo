@@ -1,14 +1,15 @@
-admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($scope,CompaniesService, $http) {
+admin.controller("companyCtrl", ['$scope','CompaniesService','$http', 
+		function($scope,CompaniesService, $http) {
     
 	 var url ="http://localhost:8080/WebCouponProject/rest/admin/";  
-	  $scope.sortType     = 'ID'; // set the default sort type
+	  $scope.sortType     = 'id'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
 	  $scope.searchCompany   = '';     // set the default search/filter term
 	
-	  $scope.CompArr = [];
-	
-
-	  //var arr = CompaniesService.getCompanies();
+	  $scope.companies = [];
+	 
+	  
+	  
 	  CompaniesService.getCompanies().then(function (data) {
 		  $scope.companies = data.data;
 		  
@@ -39,10 +40,10 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($
 
     $scope.addCompany = function() {
         $scope.inserted = {
-          'ID': $scope.companies.length+1,
+          'id': $scope.companies.id,
           'compName': '',
-          'passWord': '',
-          'eMail': '' 
+          'password': '',
+          'email': '' 
         };
         $scope.companies.push($scope.inserted);
       
@@ -59,25 +60,25 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($
 
          
    	$scope.removeCompany = function(index) {
+   		
     	CompaniesService.removeCompany($scope.companies[index].id)
     	.then(
     		function successCallback (response){
-    			debugger;
-        		         // success callback
-    				console.log('DELETED:');
-                    console.log(response.data);
-                    // Delete company from model
-                    $scope.companies.splice(index, 1);
-        		 }, 
+    			// success callback
+    			console.log('DELETED:');
+                console.log(response.data);
+                // Delete company from model
+                $scope.companies.splice(index, 1);
+    			}, 
         		       function(response){
         		         // failure call back
         			 console.log('NOT DELETED:');
         		       });
         	  };
-		
-	  
-   	  
-    $scope.updateCompany= function (company){
+        	  
+        	  
+        	
+	$scope.updateCompany= function (company){
     	CompaniesService.updateCompany().then(function (data) {
 		  $scope.companies = data.data;
 		  
@@ -86,10 +87,8 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($
     
     $scope.saveUser = function(data, index) {
     	
-    	if ($scope.companies[index].id == null) {
-//    	angular.extend(data, {'ID': data});
-//          CompaniesService.addCompany(company)
-    		CompaniesService.addCompany(data)
+    	if ($scope.companies[index].compName === null) {
+    	  CompaniesService.addCompany(data)
     		.then(
             function successCallback(response) {
             	console.log('ADDED:');
@@ -102,7 +101,7 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($
                 });
     	}
     		else {
-//    	angular.extend(data, {'ID': data});
+   	
     	CompaniesService.updateCompany($scope.companies[index].id, data).then(
                     function successCallback(response) {
                     	console.log('Company updated', response);

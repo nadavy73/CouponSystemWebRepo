@@ -5,7 +5,7 @@
     					<div class="form-group">
       						<div class="input-group">
         						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        				<input type="text" class="form-control" placeholder="Search..." ng-model="searchCompany">
+        				<input type="text" class="form-control" placeholder="Search..." data-ng-model="searchCompany">
         				<span class="input-group-btn">
                     	<button data-ng-click="ClearSearchText()" class="btn btn-primary"> Clear </button>
                 		</span>
@@ -19,10 +19,10 @@
                                     <tr style="font-weight: bold">
                                         
                            <td>
-                           <a href="#" ng-click="sortType = 'ID'; sortReverse = !sortReverse">
+                           <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
             				Id
-            				<span ng-show="sortType == 'ID' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'ID' && sortReverse" class="fa fa-caret-up"></span>
+            				<span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
+           					<span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
           					</a>
         					</td>
         								
@@ -37,20 +37,20 @@
         								
                                         
 							<td>
-                            <a href="#" ng-click="sortType = 'passWord'; sortReverse = !sortReverse">
+                            <a href="#" ng-click="sortType = 'password'; sortReverse = !sortReverse">
             				Password
-            				<span ng-show="sortType == 'passWord' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'passWord' && sortReverse" class="fa fa-caret-up"></span>
+            				<span ng-show="sortType == 'password' && !sortReverse" class="fa fa-caret-down"></span>
+           					<span ng-show="sortType == 'password' && sortReverse" class="fa fa-caret-up"></span>
           					</a>
         					</td>
         								
         								
         								
                             <td>
-                            <a href="#" ng-click="sortType = 'eMail'; sortReverse = !sortReverse">
+                            <a href="#" ng-click="sortType = 'email'; sortReverse = !sortReverse">
             				Email
-            				<span ng-show="sortType == 'eMail' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'eMail' && sortReverse" class="fa fa-caret-up"></span>
+            				<span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
+           					<span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
           					</a>
         					</td>
                                         
@@ -63,9 +63,11 @@
                                 
                                 <td>
                                 <span
+                                        						
+                                e-ng-model= "id"
                                 e-form="companyform"
                                 e-placeholder= "Id">
-                             	{{ company.ID }}
+                             	{{ company.id }}
         						 
         						</span>     							
       							</td>
@@ -86,25 +88,25 @@
                                         
 								<td>
                					<!--Password-->
-                				<span editable-text="company.passWord"
+                				<span editable-text="company.password"
                 				e-ng-model= "password"
-                      			e-name="passWord"
+                      			e-name="password"
                       			e-form="companyform"
-                      			e-placeholder="passWord"
+                      			e-placeholder="password"
                       			onbeforesave="passwordValidation($data)">
 
-                            	{{company.passWord}}
+                            	{{company.password}}
                         		</span>
             					</td>
 							<td>
                 			<!--email-->
                 			<span 
-                			editable-text="company.eMail"
+                			editable-text="company.email"
                 			e-ng-model= "email"
-                      		e-name="eMail"
+                      		e-name="email"
                      	 	e-form="companyform"
-                      		e-placeholder="eMail">
-                            {{company.eMail}}
+                      		e-placeholder="email">
+                            {{company.email}}
                     		</span>
             
             </td>
@@ -136,8 +138,7 @@
 </table>
                           
                       
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary" ng-click="addCompany()"><i class="fa fa-plus"> &nbsp; Add new Company</i></button>
+            </div>
+			<button type="button" class="btn btn-primary" ng-click="addCompany()"><i class="fa fa-plus"> &nbsp; Add new Company</i></button>
                 </div>
         

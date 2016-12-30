@@ -1,8 +1,8 @@
 'use strict';
  
 admin.factory('CompaniesService',
-    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+    ['$http',
+    function ($http) {
         var service = {};
         	
         var url ="http://localhost:8080/WebCouponProject/rest/admin/";
@@ -19,8 +19,6 @@ admin.factory('CompaniesService',
             });
         }
         
-        
-        
         service.addCompany = function(company) {
       	  return $http({
               method: 'PUT',
@@ -30,26 +28,13 @@ admin.factory('CompaniesService',
           })
       };
       	  
-      	  
-//		service.addCompany = function(fromClient) {
-//        	  return $http.put(url+"createCompany",fromClient)
-//        	  .success(function(data,status,headers,config)
-//        			  {
-//        		  console.log(data);
-//        			  })
-//        			  .error(function(data,status){
-//        				  console.log("error:"+data)
-//        			  })
-//        		  
-//        	  
-//          }
-        
-        service.removeCompany = function(ID) {
+      	//Remove Company  
+        service.removeCompany = function(id) {
         	return 	 $http({ 
         		method : 'DELETE',
         		url : url + "removeCompany",
         		headers: {'Content-Type': 'text/plain'},
-        		data: ID
+        		data: id
         	});
         };
         	
@@ -68,26 +53,5 @@ admin.factory('CompaniesService',
         	 });
         };
         	
-        	
-        	
-        	
-        	
-        	
-        	
-//        	$http.post(url+"updateCompany", fromClient)
-// 
-//        	  .success(function(data,status,headers,config)
-//        		 {
-//        		  console.log(data);
-//        			  })
-//        			  .error(function(data,status){
-//        				  console.log("error:"+data)
-//        			  })
-//        }
-//        
-    
-        
-        
-        
-        return service;
+       return service;
 }]);
