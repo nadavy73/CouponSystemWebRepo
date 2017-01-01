@@ -1,6 +1,7 @@
-admin.controller("companyCtrl", ['$scope','CompaniesService', function($scope,CompaniesService) {
+admin.controller("companyCtrl", ['$scope','CompaniesService','$http', function($scope,CompaniesService, $http) {
     
-	  $scope.sortType     = 'name'; // set the default sort type
+	 var url ="http://localhost:8080/WebCouponProject/rest/admin/";  
+	  $scope.sortType     = 'ID'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
 	  $scope.searchCompany   = '';     // set the default search/filter term
 	
@@ -9,15 +10,13 @@ admin.controller("companyCtrl", ['$scope','CompaniesService', function($scope,Co
 
 	  //var arr = CompaniesService.getCompanies();
 	  CompaniesService.getCompanies().then(function (data) {
-		  
-		
 		  $scope.companies = data.data;
 		  
 		  angular.element("#loader").hide();
 	  });
     
-    $scope.nameValidation = function (name) {
-        if (name.length < 1) {
+    $scope.compNameValidation = function (compName) {
+        if (compName.length < 1) {
             return "User name can't be empty";
         } else {
             return true;
@@ -38,60 +37,85 @@ admin.controller("companyCtrl", ['$scope','CompaniesService', function($scope,Co
     
     };
 
-    
-    $scope.addNew = function(company){
-    	
-  
-            $scope.companies.push({ 
-                'compName': $scope.fullname, 
-                'passWord': $scope.password,
-                'eMail':$scope.email
-            });
-            
-            CompaniesService.addCompany({'compName' : $scope.fullname,eMail:$scope.email,passWord : $scope.password})
-           //Todo:
-    
+    $scope.addCompany = function() {
+        $scope.inserted = {
+          'ID': $scope.companies.length+1,
+          'compName': '',
+          'passWord': '',
+          'eMail': '' 
+        };
+        $scope.companies.push($scope.inserted);
+      
+//        CompaniesService.addCompany({
+//        	
+//    			'compName' : $scope.compName,
+//    			'eMail':	$scope.email,
+//    			'passWord' : $scope.password})
+//        	
+//        
+//        		
+    	};
+      
+
+         
+   	$scope.removeCompany = function(index) {
+    	CompaniesService.removeCompany($scope.companies[index].id)
+    	.then(
+    		function successCallback (response){
+    			debugger;
+        		         // success callback
+    				console.log('DELETED:');
+                    console.log(response.data);
+                    // Delete company from model
+                    $scope.companies.splice(index, 1);
+        		 }, 
+        		       function(response){
+        		         // failure call back
+        			 console.log('NOT DELETED:');
+        		       });
+        	  };
+		
+	  
+   	  
+    $scope.updateCompany= function (company){
+    	CompaniesService.updateCompany().then(function (data) {
+		  $scope.companies = data.data;
+		  
+		});
     };
     
-//        $scope.removeCompany = function (index) {
-//            alert("B4 if null");
-//            if ($scope.companies[index].id != null) {
-//                alert("NOT null");
-//                companyProxy.remove($scope.companies[index].id)
-//                    .then(
-//                        function successCallback(response) {
-//                            console.log('DELETED:');
-//                            console.log(response.data);
-//                            // Delete comapny from model
-//                            $scope.companies.splice(index, 1);
-//                        },
-//                        function errorCallback(response) {
-//                            couponUtil.handleBadResponse('ERROR:', response);
-//                        });
-//            } else {
-//                $scope.companies.splice(index, 1);
-//            }
-//        };
-        
-        $scope.removeCompany = function(index){
-        	 $scope.companies.splice(index, 1);
+    $scope.saveUser = function(data, index) {
+    	
+    	if ($scope.companies[index].id == null) {
+//    	angular.extend(data, {'ID': data});
+//          CompaniesService.addCompany(company)
+    		CompaniesService.addCompany(data)
+    		.then(
+            function successCallback(response) {
+            	console.log('ADDED:');
+                console.log(response.data);
+                    $scope.companies[index] = response.data;
+                },
+                function errorCallback(response) {
+                	console.log('NOT DELETED:', response);
+                    $scope.companies.splice(index, 1);
+                });
+    	}
+    		else {
+//    	angular.extend(data, {'ID': data});
+    	CompaniesService.updateCompany($scope.companies[index].id, data).then(
+                    function successCallback(response) {
+                    	console.log('Company updated', response);
+                        // update model
+                        $scope.companies[index] = response.data;
+                    },
+                    function errorCallback(response) {
+                        console.log('ERROR:', response);
+                    });
+            }
         };
-        
-    $scope.checkAll = function () {
-        if (!$scope.selectedAll) {
-            $scope.selectedAll = true;
-        } else {
-            $scope.selectedAll = false;
-        }
-        angular.forEach($scope.companies, function(company) {
-        	company.selected = $scope.selectedAll;
-        });
-    };    
-   
-    $scope.saveUser = function(data, id) {
-        //$scope.user not updated yet
-        angular.extend(data, {id: id});
-        return $http.post('/saveUser', data);
-      };
+    		
+    	
+    
     
 }]);

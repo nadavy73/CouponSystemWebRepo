@@ -1,5 +1,6 @@
 admin.controller("customerCtrl",['$scope','CustomersService', function($scope,CustomersService) {
 	
+	var url ="http://localhost:8080/WebCouponProject/rest/admin/";
 	$scope.sortType     = 'custName'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
 	  $scope.searchCustomer   = '';     // set the default search/filter term
@@ -37,15 +38,19 @@ $scope.passwordValidation = function (password) {
 
 	
 	//Add new Customer
-	$scope.addNew = function(customer){
-    	
-		  
-        $scope.customers.push({ 
-            'custName': $scope.fullname, 
-            'custPassword': $scope.password
-        });
+	$scope.addCustomer = function(){
+		$scope.inserted = {
+            'custName': '', 
+            'custPassword': ''
+		};
+            $scope.companies.push($scope.inserted);
         
-        CustomersService.addCustomer({'custName' : $scope.fullname,custPassword : $scope.password})
+        
+        
+        
+        
+        
+        
        //Todo:
 
 };

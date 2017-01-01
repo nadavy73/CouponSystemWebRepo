@@ -73,9 +73,11 @@
         	<!-- form --> 
         	
         	<form editable-form name="customerform" 
-        			onbeforesave="saveUser($data, user.id)" 
+        			onbeforesave="saveUser($data, customer.id)" 
         			ng-show="customerform.$visible" 
-        			class="form-buttons form-inline pull-right">
+        			class="form-buttons form-inline pull-right"
+          			shown="inserted == customer">
+          		
           		<button type="submit" ng-disabled="customerform.$waiting" class="btn btn-primary">
             	save
           		</button>    
@@ -96,13 +98,7 @@
                           
                        
                     </div>
-                    <form id="add-customer-form">
-                    <div class="form-group">
-                    <label>Fullname: </label>
-                    <input type="text" class="form-control" ng-model="fullname">
-                    <label>password: </label>
-                    <input type="text" class="form-control" ng-model="password">
-                    </form>
-                    <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
+                    
+                    <button type="button" class="btn btn-primary" ng-click="addCustomer()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
                 </div>
         

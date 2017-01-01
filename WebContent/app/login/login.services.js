@@ -25,8 +25,8 @@ login.factory('LoginService',
                     + password)
                 .success(function (response) {
                     callback(response);
-                });
-
+                 });
+            
         };
  
         service.SetCredentials = function (username, password, clientType) {

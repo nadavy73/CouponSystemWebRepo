@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import Exceptions.*;
 import Facades.*;
 import JavaBeans.*;
@@ -67,19 +68,40 @@ public class AdminService {
 			return company;
 	}
 	
-	//V
+		//Update Company
+		@POST 
+		@Path("/updateCompany")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Company updateCompany(Company company) 
+			
+		{
+			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+			
+			
+			try {
+				facade.UpdateCompany(company);
+			} catch (AdminFacadeException  e) {
+				e.printStackTrace();
+			}
+				return company;
+		}
+	
+	//Delete Company 
 	@DELETE
 	@Path("/removeCompany")
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Company removeCompany(Company company) 
+	public Company removeCompany(long id) throws AdminFacadeException, DoesNotExistException 
 	
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
+		Company company = facade.GetCompany(id);
+
 		try {
 			facade.removeCompany(company);
-		} catch (AdminFacadeException e) {
+			} catch (AdminFacadeException e) {
 			e.printStackTrace();
 		}
 			return company;
@@ -202,24 +224,7 @@ public class AdminService {
 			return customer;
 	}
 	
-	//V
-		@POST 
-		@Path("/updateCompany")
-		@Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public Company updateCompany (Company company)
-		{
-			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
-			
-			try {
-				facade.UpdateCompany(company);
-			} catch (AdminFacadeException e) {
-				e.printStackTrace();
-			}
-				return company;
-		}
-
-	
+		
 	//V
 	@GET
 	@Path("/getCustomerByID/{custId}")

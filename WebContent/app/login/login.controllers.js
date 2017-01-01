@@ -1,27 +1,23 @@
 //'use strict';
  
 login.controller('loginCtrl',
-    ['$scope', '$rootScope', '$location', '$state', 'LoginService',
-    function ($scope, $rootScope, $location, $state, LoginService) {
-        // reset login status
-//        AuthenticationService.ClearCredentials();
-    	
+    ['$scope', '$rootScope', '$state', 'LoginService',
+    function ($scope, $rootScope, $state, LoginService) {
+        
+
     	//Default 
     	$scope.clientType = "admin";
         $scope.username = '';
         $scope.password = '';
            	
         $scope.login = function () {
-            $scope.dataLoading = true;
             LoginService.Login($scope.username, $scope.password, $scope.clientType, function(response) {
             	debugger;
                 if(response=="ok") {
-//            		LoginService.SetCredentials($scope.username, $scope.password, $scope.clientType);
             		$rootScope.clientType = $scope.clientType;
             		$state.go ($scope.clientType);
                 } else {
                     $scope.error = response.message;
-                    $scope.dataLoading = false;
                 }
             });
         };
