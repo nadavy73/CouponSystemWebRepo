@@ -81,32 +81,33 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
     
     $scope.saveUser = function(data, index) {
     	
-    	if ($scope.companies[index].compName === null) {
+//    	if ($scope.companies[index].compName === null) {
     	  CompaniesService.addCompany(data)
     		.then(
             function successCallback(response) {
             	console.log('ADDED:');
                 console.log(response.data);
-                    $scope.companies[index] = response.data;
+                $scope.companies[index] = response.data;
+                
                 },
                 function errorCallback(response) {
                 	console.log('NOT DELETED:', response);
                     $scope.companies.splice(index, 1);
                 });
     	}
-    		else {
-   	
-    	CompaniesService.updateCompany($scope.companies[index].id, data).then(
-                    function successCallback(response) {
-                    	console.log('Company updated', response);
-                        // update model
-                        $scope.companies[index] = response.data;
-                    },
-                    function errorCallback(response) {
-                        console.log('ERROR:', response);
-                    });
-            }
-        };
+//    		else {
+//   	
+//    	CompaniesService.updateCompany($scope.companies[index].id, data).then(
+//                    function successCallback(response) {
+//                    	console.log('Company updated', response);
+//                        // update model
+//                        $scope.companies[index] = response.data;
+//                    },
+//                    function errorCallback(response) {
+//                        console.log('ERROR:', response);
+//                    });
+//            }
+//        };
     		
     	
     
