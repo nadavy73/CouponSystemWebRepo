@@ -108,10 +108,6 @@ public class AdminService {
 	}
 	
 	
-	
-	
-	
-	
 	//V
 	@GET
 	@Path("/getCompanyByID/{compId}")

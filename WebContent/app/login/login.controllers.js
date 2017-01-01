@@ -12,8 +12,7 @@ login.controller('loginCtrl',
            	
         $scope.login = function () {
             LoginService.Login($scope.username, $scope.password, $scope.clientType, function(response) {
-            	debugger;
-                if(response=="ok") {
+            	if(response=="ok") {
             		$rootScope.clientType = $scope.clientType;
             		$state.go ($scope.clientType);
                 } else {

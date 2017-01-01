@@ -2,7 +2,7 @@
     <wb-module deploy-name="WebCouponProject">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="CouponSystemOferNadav.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Coupons/Coupons">
+        <dependent-module archiveName="CouponSystemOferNadav.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/System_Coupon/System_Coupon">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="WebCouponProject"/>
