@@ -18,7 +18,8 @@ admin.factory('CompaniesService',
 
             });
         }
-        
+      
+        //Create New Company
         service.addCompany = function(company) {
       	  return $http({
               method: 'PUT',
@@ -28,7 +29,9 @@ admin.factory('CompaniesService',
           })
       };
       	  
-      	//Remove Company  
+      	
+      
+      //Remove Company  
         service.removeCompany = function(id) {
         	return 	 $http({ 
         		method : 'DELETE',

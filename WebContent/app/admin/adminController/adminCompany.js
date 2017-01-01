@@ -9,7 +9,7 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
 	  $scope.companies = [];
 	 
 	  
-	  
+	  //get All Companies
 	  CompaniesService.getCompanies().then(function (data) {
 		  $scope.companies = data.data;
 		  
@@ -38,6 +38,7 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
     
     };
 
+    //Add new Row
     $scope.addCompany = function() {
         $scope.inserted = {
           'id': $scope.companies.id,
@@ -47,18 +48,11 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
         };
         $scope.companies.push($scope.inserted);
       
-//        CompaniesService.addCompany({
-//        	
-//    			'compName' : $scope.compName,
-//    			'eMail':	$scope.email,
-//    			'passWord' : $scope.password})
-//        	
-//        
-//        		
+       		
     	};
       
 
-         
+    //remove function    
    	$scope.removeCompany = function(index) {
    		
     	CompaniesService.removeCompany($scope.companies[index].id)

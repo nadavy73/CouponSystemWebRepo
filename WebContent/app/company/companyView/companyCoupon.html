@@ -1,19 +1,90 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        
+                      
                       <form>
     					<div class="form-group">
       						<div class="input-group">
         						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        				<input type="text" class="form-control" placeholder="Search..." ng-model="searchCoupon">
+        				<input type="text" class="form-control" placeholder="Search..." data-ng-model="searchCoupon">
         				<span class="input-group-btn">
                     	<button data-ng-click="ClearSearchText()" class="btn btn-primary"> Clear </button>
                 		</span>
       						</div>      
     					</div>
   					</form>
+                         <div id="loader" style="dispaly:none;">
+                        <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
                         
-                        <table class="table table-responsive table-hover table-condensed">
+                        <!--Filters-->
+<div class="row">
+    <!--Filter By Type-->
+    <div class="col-md-3">
+        <div class="input-group">
+            <span class="input-group-addon" id="type-addon">Type:</span>
+            <div class="col-md-6 select-style">
+                <select class="form-control"
+                        aria-describedby="type-addon"
+                        id="typeSelect"
+                        ng-change="byType()"
+                        ng-model="couponType"
+                        ng-options="type for type in couponType">
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--Filter By Price-->
+    <div class="col-md-3">
+        <div class="input-group">
+                <span class="input-group-addon"
+                      id="Price-addon">Up to price:
+                </span>
+            <input type="number"
+                   min="1"
+                   ng-model="couponFilter.upToPrice"
+                   placeholder="Price"
+                   class="form-control"
+                   aria-describedby="Price-addon"/>
+            <span class="input-group-btn">
+                    <button class="btn btn-secondary"
+                            type="button"
+                            ng-click="byPrice()">Go!
+                    </button>
+                </span>
+        </div>
+    </div>
+    <!--Filter By Date-->
+    <div class="col-md-3">
+        <div class="input-group">
+                <span class="input-group-addon"
+                      id="date-addon">Up to date:
+                </span>
+            <span class="input-group-addon">
+            <input type="radio"
+                   ng-model="couponFilter.dateRadio"
+                   aria-label="Radio button for following text input"
+                   name="startEndRadio"
+                   value="start"/> Start
+            <input type="radio"
+                   ng-model="couponFilter.dateRadio"
+                   aria-label="Radio button for following text input"
+                   name="startEndRadio"
+                   value="end"/> End
+            </span>
+            <input type="date"
+                   ng-model="couponFilter.date"
+                   class="form-control"
+                   aria-describedby="date-addon"/>
+            <span class="input-group-btn">
+                    <button class="btn btn-secondary"
+                            type="button"
+                            ng-click="ByDate()">Go!
+                    </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+		<table class="table table-responsive table-hover table-condensed">
                                 <thead>
                                     <tr style="font-weight: bold">
                                         
@@ -34,70 +105,67 @@
           								</a>
         								</td>
         								
-        								
+        								<td>
+                                        <a href="#" ng-click="sortType = 'image'; sortReverse = !sortReverse">
+            							Image
+            							<span ng-show="sortType == 'image' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'image' && sortReverse" class="fa fa-caret-up"></span>
+          								</a>
+        								</td>
         								
                                         <td>
-                                        <a href="#" ng-click="sortType = 'StartDate'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'startDate'; sortReverse = !sortReverse">
             							Start Date
-            							<span ng-show="sortType == 'StartDate' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'StartDate' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'startDate' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'startDate' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
         								
         								 <td>
-                                        <a href="#" ng-click="sortType = 'EndDate'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'endDate'; sortReverse = !sortReverse">
             							End Date
-            							<span ng-show="sortType == 'EndDate' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'EndDate' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'endDate' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'endDate' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
         								
         								 <td>
-                                        <a href="#" ng-click="sortType = 'Amount'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'amount'; sortReverse = !sortReverse">
             							Amount
-            							<span ng-show="sortType == 'Amount' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'Amount' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'amount' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'amount' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
         								 <td>
-                                        <a href="#" ng-click="sortType = 'Type'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
             							Type
-            							<span ng-show="sortType == 'Type' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'Type' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'type' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'type' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
         								
         								 <td>
-                                        <a href="#" ng-click="sortType = 'Message'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'message'; sortReverse = !sortReverse">
             							Message
-            							<span ng-show="sortType == 'Message' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'Messagee' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'message' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'messagee' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
         								
         								 <td>
-                                        <a href="#" ng-click="sortType = 'Price'; sortReverse = !sortReverse">
+                                        <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse">
             							Price
-            							<span ng-show="sortType == 'Price' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'Price' && sortReverse" class="fa fa-caret-up"></span>
+            							<span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
           								</a>
         								</td>
         								
-        								
-        								 <td>
-                                        <a href="#" ng-click="sortType = 'Image'; sortReverse = !sortReverse">
-            							Image
-            							<span ng-show="sortType == 'Image' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'Image' && sortReverse" class="fa fa-caret-up"></span>
-          								</a>
-        								</td>
-                                        
-                                         </tr>
+        								</tr>
                                 </thead>
                                 
                                
@@ -110,7 +178,7 @@
         						editable-text="coupon.id" 
         						e-name="name" 
         						e-form="couponform">
-         				 		{{ $index }}
+         				 		{{ coupon.id }}
         						</span>
       							</td>
                                         
@@ -122,108 +190,116 @@
                       			e-placeholder="title"
                       			onbeforesave="titleValidation($data)">
 
-                            	{{coupon.title}}
+                            	{{ coupon.title }}
                         		</span>
             		</td>
+					
+					<td>  		
+                    		<!--Image-->
+                			<span 
+                			editable-text="coupon.image"
+                      		e-name="image"
+                      		e-form="couponform"
+                      		e-placeholder="Image">
+                      		<input type="file" name="post_image"/>
+                            {{ coupon.image }}
+                    		</span>
+            		</td>
+					
 					<td>
                 			<!--StartDate-->
                 			<span 
-                			editable-text="coupon.StartDate"
+                			editable-text="coupon.startDate"
                       		e-name="StartDate"
                      	 	e-form="couponform"
                       		e-placeholder="StartDate">
-                            {{coupon.StartDate}}
+                            {{ coupon.startDate }}
                     		</span>
                     </td>
                     <td>
                     		<!--EndDate-->
                 			<span 
-                			editable-text="coupon.EndDate"
+                			editable-text="coupon.endDate"
                       		e-name="EndDate"
                      	 	e-form="couponform"
                       		e-placeholder="EndDate">
-                            {{coupon.EndDate}}
+                            {{ coupon.endDate }}
                     		</span>
                     </td>
                     <td>		
                     		<!--Amount-->
                 			<span 
-                			editable-text="coupon.Amount"
+                			editable-text="coupon.amount"
                       		e-name="Amount"
                      	 	e-form="couponform"
                       		e-placeholder="Amount">
-                            {{coupon.Amount}}
+                            {{ coupon.amount }}
                     		</span>
                    </td>
                    <td> 		
                     		<!--Type-->
                 			<span 
-                			editable-text="coupon.Type"
-                      		e-name="Type"
+                			editable-text="coupon.type"
+                      		e-name="type"
                      	 	e-form="couponform"
                       		e-placeholder="Type">
-                            {{coupon.Type}}
+                            {{coupon.type}}
                     		</span>
                   </td>
                   <td>  		
                     		<!--Message-->
                 			<span 
-                			editable-text="coupon.Message"
-                      		e-name="Message"
+                			editable-text="coupon.message"
+                      		e-name="message"
                      	 	e-form="couponform"
                       		e-placeholder="Message">
-                            {{coupon.Message}}
+                            {{ coupon.message }}
                     		</span>
             	</td>
-            	
             	
             	<td>  		
                     		<!--Price-->
                 			<span 
-                			editable-text="coupon.Price"
-                      		e-name="Price"
+                			editable-text="coupon.price"
+                      		e-name="price"
                      	 	e-form="couponform"
                       		e-placeholder="Price">
-                            {{coupon.Price}}
+                            {{ coupon.price }}
                     		</span>
             	</td>
             	
-            	<td>  		
-                    		<!--Image-->
-                			<span 
-                			editable-text="coupon.Image"
-                      		e-name="Image"
-                     	 	e-form="couponform"
-                      		e-placeholder="Image">
-                            {{coupon.Image}}
-                    		</span>
-            	</td>
+            	
             <td style="white-space: nowrap">
         	<!-- form --> 
         	
         	<form editable-form name="couponform" 
-        			onbeforesave="saveUser($data, user.id)" 
+        			onbeforesave="saveUser($data, $index)" 
         			ng-show="couponform.$visible" 
-        			class="form-buttons form-inline pull-right">
+        			class="form-buttons form-inline pull-right"
+        			shown="inserted == coupon">
+          		
           		<button type="submit" ng-disabled="couponform.$waiting" class="btn btn-primary">
-            	save
+            		Save
           		</button>    
           		<button type="button" ng-disabled="couponform.$waiting" ng-click="couponform.$cancel()" class="btn btn-primary">
-            	cancel
+            		Cancel
           		</button>
         	</form>                          
 				
 				<div class="buttons pull-right" ng-show="!couponform.$visible">
                     
                  <button id="{{'edit' + $index}}" class="btn btn-primary" ng-click="couponform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
-                 <button class="btn btn-danger" ng-click="removecoupon()"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+                 <button class="btn btn-danger" ng-click="removecoupon($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
                 </div>
 			 </td>    
 		</tr>
 	</tbody>
 </table>
-                          <button type="button" class="btn btn-primary" ng-click="addNew()"><i class="fa fa-plus"> &nbsp; Purchase New Coupon</i></button>
+                          <div>
+                          <button type="button" class="btn btn-primary" ng-click="addNewCoupon()"><i class="fa fa-plus"> &nbsp; Add New Coupon</i></button>
                         
                     </div>
-                </div>
+</div>
+</div>
+
         
