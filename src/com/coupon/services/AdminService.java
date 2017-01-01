@@ -61,7 +61,8 @@ public class AdminService {
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
-			facade.createCompany(company);
+			int companyId = facade.createCompany(company);
+			company.setId(companyId);
 		} catch (AdminFacadeException | AlreadyExistException e) {
 			e.printStackTrace();
 		}

@@ -27,9 +27,18 @@ admin.factory('CustomersService',
       			  .error(function(data,status){
       				  console.log("error:"+data)
       			  })
-      		  
-      	  
         }
+        
+        service.removeCustomer = function(fromClient) {
+        	  return $http.delete(url+"removeCustomer",fromClient)
+        	  .sucess(function(data,status,headers,config)
+        			  {
+        		  console.log("data");
+        			  })
+        			  .error(function(data,status){
+        				  console.log("error:"+data)
+        			  })
+          }
         
     return service;
 }]);
