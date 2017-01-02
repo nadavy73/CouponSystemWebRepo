@@ -27,7 +27,7 @@ public class AdminService {
 	public AdminService() {
 
 	}
-	//V
+	//VV
 	@POST
 	@Path("/login/{username}/{password}")
 	@Produces(MediaType.TEXT_PLAIN)
