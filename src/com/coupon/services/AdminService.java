@@ -90,10 +90,9 @@ public class AdminService {
 	
 	//Delete Company 
 	@DELETE
-	@Path("/removeCompany")
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("/removeCompany/{customerId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Company removeCompany(long id) throws AdminFacadeException, DoesNotExistException 
+	public Company removeCompany(@PathParam("customerId")long id) throws AdminFacadeException, DoesNotExistException 
 	
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
