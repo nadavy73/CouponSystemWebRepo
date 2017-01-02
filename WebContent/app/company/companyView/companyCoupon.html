@@ -201,7 +201,10 @@
                       		e-name="image"
                       		e-form="couponform"
                       		e-placeholder="Image">
-                      		<input type="file" name="post_image"/>
+                      		<img class="thumb" ng-src="{{coupon}}"/>
+                      		<input type='file' 
+                      		ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" 
+                      		multiple/>
                             {{ coupon.image }}
                     		</span>
             		</td>
