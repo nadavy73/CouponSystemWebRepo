@@ -52,12 +52,9 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
           'email': '' 
         };
         $scope.companies.push($scope.inserted);
+};
       
-       		
-    	};
-      
-
-    //remove function    
+	//remove Company    
    	$scope.removeCompany = function(index) {
    		console.log(index);
    		console.log($scope.companies[index].id);

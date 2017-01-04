@@ -25,9 +25,9 @@
            					<span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
           					</a>
         					</td>
-        								
-        								
-							<td>
+        					
+        					
+        					<td>
                             <a href="#" ng-click="sortType = 'compName'; sortReverse = !sortReverse">
             				Company Name
             				<span ng-show="sortType == 'compName' && !sortReverse" class="fa fa-caret-down"></span>
@@ -55,11 +55,9 @@
         					</td>
                                         
 					</tr>
-                                </thead>
+			</thead>
                                 
-                               
-                                
-                                <tr data-ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
+					<tr data-ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
                                 
                                 <td>
                                 <span
@@ -74,8 +72,7 @@
                                 
                                 
                                 <td>
-                             
-        						<span 
+                             	<span 
         						editable-text="company.compName" 
         						e-ng-model= "compName"
         						e-name="compName" 
@@ -88,7 +85,8 @@
                                         
 								<td>
                					<!--Password-->
-                				<span editable-text="company.password"
+                				<span 
+                				editable-text="company.password"
                 				e-ng-model= "password"
                       			e-name="password"
                       			e-form="companyform"
@@ -98,7 +96,8 @@
                             	{{company.password}}
                         		</span>
             					</td>
-
+				<td style="white-space: nowrap">
+        		<!-- form --> 
 				
 
 							<td>

@@ -1,21 +1,21 @@
 admin.controller("customerCtrl",['$scope','CustomersService', function($scope,CustomersService) {
 	
 	var url ="http://localhost:8080/WebCouponProject/rest/admin/";
-	$scope.sortType     = 'custName'; // set the default sort type
+	$scope.sortType     = 'id'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
 	  $scope.searchCustomer   = '';     // set the default search/filter term
 	
-	  $scope.CustArr = [];
+	  $scope.customers = [];
 	  
-	  
+	  //get All Customers
 	  CustomersService.getCustomers().then(function (data){
 		  	$scope.customers = data.data;
-		  
-		  angular.element("#loader").hide();
+
+		  	angular.element("#loader").hide();
 	  });
 
-$scope.nameValidation = function (name) {
-    if (name.length < 1) {
+$scope.custNameValidation = function (custName) {
+    if (custName.length < 1) {
         return "User name can't be empty";
     } else {
         return true;
@@ -37,80 +37,70 @@ $scope.passwordValidation = function (password) {
 };
 
 	
-	//Add new Customer
-	$scope.addCustomer = function(){
+	//Add new Row
+	$scope.addCustomer = function() {
 		$scope.inserted = {
-            'custName': '', 
+            'id': $scope.customers.id, 
+			'custName': '', 
             'custPassword': ''
 		};
-            $scope.companies.push($scope.inserted);
-        
-        
-        
-        
-        
-        
-        
-       //Todo:
-
-};
+            $scope.customers.push($scope.inserted);
+	};
 	       
 	      //Remove Customer
-	        $scope.removeCustomer = function(index) {
-	          $scope.customers.splice(index, 1);
-	        };
-	        
-	        
-	        $scope.saveCustomer = function(data, id) {
-	            //$scope.details not updated yet
-	            angular.extend(data, {id: id});
-	            return $http.post('/saveUser', data);
-	          };
-	        
-	          $scope.customers = [];
-	          
-	          $scope.loadCustomers = function() {
-	            return $scope.customers.length ? null : $http.get("coupon/admin/getAllCustomers")
-	            		
-	           .success(function(data) {
-	              $scope.customers = data;
-	            });
-	          };
-	          
-	          
-	          $scope.showCustomer = function(detail) {
-	        	    if(detail.customer && $scope.customers.length) {
-	        	      var selected = $filter('filter')($scope.groups, {id: user.group});
-	        	      return selected.length ? selected[0].text : 'Not set';
-	        	    } else {
-	        	      return detail.name;
-	        	    }
-	        	  };  
-	         
-	        $scope.showStatus = function(detail) {
-	        		    var selected = [];
-	        		    if(detail.password) {
-	        		      selected = $filter('filter')($scope.statuses, {value: detail.password});
-	        		    }
-	        		    return selected.length ? selected[0].text : 'Not set';
-	        		  };  
-	        	  
-	        	  
-	        $scope.checkName = function(data, id) {
-	        			    if (id === 2 && data !== 'awesome') {
-	        			      return "Username 2 should be `awesome`";
-	        			    }
-	        			  };	  
-	        	  
-	        	  
-	        $scope.checkAll = function () {
-	            if (!$scope.selectedAll) {
-	                $scope.selectedAll = true;
-	            } else {
-	                $scope.selectedAll = false;
-	            }
-	            angular.forEach($scope.personalDetails, function (personalDetails) {
-	                personalDetails.selected = $scope.selectedAll;
-	            });
-	        };    
-	}]);
+	      $scope.removeCustomer = function(index) {
+	    	  console.log(index);
+	    	  console.log($scope.customers[index].id);
+	    	  CustomersService.removeCustomer($scope.customers[index].id)
+	    	  .then(
+	    	    		function successCallback (response){
+	    	    			// success callback
+	    	    			console.log('DELETED:');
+	    	                console.log(response.data);
+	    	                // Delete customer from model
+	    	                $scope.customers.splice(index, 1);
+	    	    			}, 
+	    	        		       function(response){
+	    	        		         // failure call back
+	    	        			 console.log('NOT DELETED:');
+	    	        		       });
+	    	        	  };
+	       
+	    	        	  $scope.updateCustomer= function (customer){
+	    	        	    	CustomersService.updateCustomer().then(function (data) {
+	    	        			  $scope.customers = data.data;
+	    	        			  
+	    	        			});
+	    	        	    };
+	    	        	    
+	    	        	    $scope.saveUser = function(data, index) {
+	    	        	    	if ($scope.customers[index].id == null) {
+	    	        	    	  CustomersService.addCustomer(data).then(
+	    	        	            function successCallback(response) {
+	    	        	            	console.log('ADDED:');
+	    	        	                console.log(response.data);
+	    	        	                $scope.customers[index] = response.data;
+	    	        	                
+	    	        	                },
+	    	        	                function errorCallback(response) {
+	    	        	                	console.log('NOT DELETED:', response);
+	    	        	                    $scope.customers.splice(index, 1);
+	    	        	                });
+	    	        	    	}
+	    	        	    		else {
+	    	        	   	
+	    	        	    	CustomersService.updateCustomer($scope.customers[index].id, data).then(
+	    	        	                    function successCallback(response) {
+	    	        	                    	console.log('Customer updated', response);
+	    	        	                        // update model
+	    	        	                        $scope.customers[index] = response.data;
+	    	        	                    },
+	    	        	                    function errorCallback(response) {
+	    	        	                        console.log('ERROR:', response);
+	    	        	                    });
+	    	        	    		}
+	    	        	        };
+	    	        	    		
+	    	        	    	
+	    	        	        
+	    	        	    }]);
