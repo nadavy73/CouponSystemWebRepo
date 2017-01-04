@@ -78,3 +78,13 @@ a{
 {
 	width:150px !important;
 }
+
+.thumb{
+    width:100px;
+    margin:5px;
+    float:left;
+}
+
+.uploader{
+    clear:both;
+}

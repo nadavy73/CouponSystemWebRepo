@@ -47,7 +47,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
             $scope.inserted= { 
             	'id': null,
                 'title':'',
-                'startDate':'',
+                'startDate': new Date(),
                 'endDate': '',
                 'amount': '',
                 'type': '', 
@@ -60,15 +60,23 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     
     	
     //Remove function
-    $scope.removeCoupon = function($indec){
-        	companyCouponService.removeCoupon($scope.coupons[index].id)
+    $scope.removeCoupon = function(id){
+    	console.log(id);
+   		console.log($scope.id);	
+    	
+    	
+    	companyCouponService.removeCoupon($scope.id)
         	.then(
             		function successCallback (response){
             			// success callback
             			console.log('DELETED:');
                         console.log(response.data);
                         // Delete company from model
-                        $scope.coupons.splice(index, 1);
+                        for (var i in arr){
+                        	if (arr[i]==id)
+                        		splice => i
+                        }
+//                        $scope.coupons.splice(index, 1);
             			}, 
                 		       function(response){
                 		         // failure call back
@@ -88,7 +96,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          //Edit/Add new Coupon
          $scope.saveUser = function(data, index) {
          	
-         	if ($scope.coupons[index].title === null) {
+         	if ($scope.coupons[index].id === null) {
          		companyCouponService.createCoupon(data)
          		.then(
                  function successCallback(response) {

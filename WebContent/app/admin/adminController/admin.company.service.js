@@ -35,7 +35,7 @@ admin.factory('CompaniesService',
         service.removeCompany = function(id) {
         	return 	 $http({ 
         		method : 'DELETE',
-        		url : url + "removeCompany",
+        		url : url + "removeCompany/" + id,
         		headers: {'Content-Type': 'text/plain'},
         		data: id
         	});

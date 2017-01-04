@@ -19,11 +19,21 @@ company.factory('companyCouponService',
             });
         };
         
+        
+//        service.dateToStringFormat = function (date) {
+//            var StringFormattedDate =
+//                date.getFullYear() +
+//                "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
+//                "-" + ("0" + date.getDate()).slice(-2);
+//            return StringFormattedDate;
+//        };
+        
+       
         //Create New Coupon
         service.createCoupon = function(coupon) {
         	
-        	coupon.startDate = couponUtil.dateToStringFormat(coupon.startDate);
-            coupon.endDate = coupon.endDate = couponUtil.dateToStringFormat(coupon.endDate);
+//        	coupon.startDate = service.dateToStringFormat(coupon.startDate);
+//            coupon.endDate = coupon.endDate = service.dateToStringFormat(coupon.endDate);
 
       	  return $http({
               method: 'PUT',

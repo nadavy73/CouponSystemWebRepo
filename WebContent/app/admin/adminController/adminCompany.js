@@ -16,10 +16,15 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
 		  angular.element("#loader").hide();
 	  });
     
-    $scope.compNameValidation = function (compName) {
-        if (compName.length < 1) {
+    $scope.compNameValidation = function (compName, index) {
+        var addToArray=true;
+    	if (compName.length < 1) {
             return "User name can't be empty";
-        } else {
+        } 
+        if ($scope.companies[index].compName === compName){
+        addToArray=false;	
+        }
+        else {
             return true;
         }
     };   
@@ -54,7 +59,8 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
 
     //remove function    
    	$scope.removeCompany = function(index) {
-   		
+   		console.log(index);
+   		console.log($scope.companies[index].id);
     	CompaniesService.removeCompany($scope.companies[index].id)
     	.then(
     		function successCallback (response){
@@ -80,10 +86,8 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
     };
     
     $scope.saveUser = function(data, index) {
-    	
-//    	if ($scope.companies[index].compName === null) {
-    	  CompaniesService.addCompany(data)
-    		.then(
+    	if ($scope.companies[index].id == null) {
+    	  CompaniesService.addCompany(data).then(
             function successCallback(response) {
             	console.log('ADDED:');
                 console.log(response.data);
@@ -95,21 +99,20 @@ admin.controller("companyCtrl", ['$scope','CompaniesService','$http',
                     $scope.companies.splice(index, 1);
                 });
     	}
-//    		else {
-//   	
-//    	CompaniesService.updateCompany($scope.companies[index].id, data).then(
-//                    function successCallback(response) {
-//                    	console.log('Company updated', response);
-//                        // update model
-//                        $scope.companies[index] = response.data;
-//                    },
-//                    function errorCallback(response) {
-//                        console.log('ERROR:', response);
-//                    });
-//            }
-//        };
+    		else {
+   	
+    	CompaniesService.updateCompany($scope.companies[index].id, data).then(
+                    function successCallback(response) {
+                    	console.log('Company updated', response);
+                        // update model
+                        $scope.companies[index] = response.data;
+                    },
+                    function errorCallback(response) {
+                        console.log('ERROR:', response);
+                    });
+    		}
+        };
     		
     	
-    
-    
-}]);
+        
+    }]);

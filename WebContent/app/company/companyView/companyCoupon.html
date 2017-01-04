@@ -175,9 +175,10 @@
                          <td>
                          		<!--Id-->
         						<span 
-        						editable-text="coupon.id" 
-        						e-name="name" 
-        						e-form="couponform">
+        						e-ng-model= "id"
+        						e-name="id" 
+        						e-form="couponform
+        						e-placeholder= "Id">
          				 		{{ coupon.id }}
         						</span>
       							</td>
@@ -187,8 +188,8 @@
                 				<span editable-text="coupon.title"
                       			e-name="title"
                       			e-form="couponform"
-                      			e-placeholder="title"
-                      			onbeforesave="titleValidation($data)">
+                      			e-placeholder="title">
+                      			
 
                             	{{ coupon.title }}
                         		</span>
@@ -213,27 +214,28 @@
 					<td>
                 			<!--StartDate-->
                 			<span 
-                			editable-text="coupon.startDate"
+                			editable-date="coupon.startDate"
                       		e-name="StartDate"
                      	 	e-form="couponform"
                       		e-placeholder="StartDate">
-                            {{ coupon.startDate }}
+                            {{ coupon.startDate | date:'dd-MM-yyyy' }}
                     		</span>
                     </td>
                     <td>
                     		<!--EndDate-->
                 			<span 
-                			editable-text="coupon.endDate"
+                			editable-date="coupon.endDate"
                       		e-name="EndDate"
                      	 	e-form="couponform"
                       		e-placeholder="EndDate">
-                            {{ coupon.endDate }}
+                           {{ coupon.endDate | date:'dd-MM-yyyy' }}
                     		</span>
                     </td>
                     <td>		
                     		<!--Amount-->
                 			<span 
-                			editable-text="coupon.amount"
+                			editable-number="coupon.amount"
+                      		e-step="any"
                       		e-name="Amount"
                      	 	e-form="couponform"
                       		e-placeholder="Amount">
@@ -247,7 +249,7 @@
                       		e-name="type"
                      	 	e-form="couponform"
                       		e-placeholder="Type">
-                            {{coupon.type}}
+                            {{ coupon.type }}
                     		</span>
                   </td>
                   <td>  		
@@ -264,7 +266,7 @@
             	<td>  		
                     		<!--Price-->
                 			<span 
-                			editable-text="coupon.price"
+                			editable-number="coupon.price"
                       		e-name="price"
                      	 	e-form="couponform"
                       		e-placeholder="Price">
@@ -292,15 +294,15 @@
 				
 				<div class="buttons pull-right" ng-show="!couponform.$visible">
                     
-                 <button id="{{'edit' + $index}}" class="btn btn-primary" ng-click="couponform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
-                 <button class="btn btn-danger" ng-click="removecoupon($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+                 <button class="btn btn-primary" ng-click="couponform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
+                 <button class="btn btn-danger" ng-click="removecoupon(id)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
                 </div>
 			 </td>    
 		</tr>
 	</tbody>
 </table>
                           <div>
-                          <button type="button" class="btn btn-primary" ng-click="addNewCoupon()"><i class="fa fa-plus"> &nbsp; Add New Coupon</i></button>
+                          <button type="button" class="btn btn-primary" ng-click="addNewCouponRow()"><i class="fa fa-plus"> &nbsp; Add New Coupon</i></button>
                         
                     </div>
 </div>

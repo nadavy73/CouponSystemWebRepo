@@ -73,19 +73,18 @@ public class CompanyService {
 	
 	//V
 	@DELETE
-	@Path("/removeCoupon")
+	@Path("/removeCoupon/{couponId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Coupon removeCoupon (Coupon coupon) 
+	public Coupon removeCoupon (@PathParam("couponId") long couponId) throws CompanyFacadeException, DoesNotExistException 
 			
 	{
 		CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		try {
+		Coupon coupon= facade.getCoupon(couponId);
+		
 			facade.removeCoupon(coupon);
-		} catch (CompanyFacadeException | DoesNotExistException e) {
-			e.printStackTrace();
-		}
+		
 			return coupon;
 	}
 	
