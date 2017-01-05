@@ -13,7 +13,7 @@ app.controller("adminMainCtrl", ['$rootScope', '$scope', '$state', '$location', 
 	            $("body").addClass('sidebar-open');
 	        }
 	        else {
-	            if(value===1){
+	            if(value==1){
 	            if ($("body").hasClass('sidebar-collapse'))
 	                $("body").removeClass('sidebar-collapse');
 	            else

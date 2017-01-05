@@ -1,5 +1,6 @@
-admin.controller("customerCtrl",['$scope','CustomersService', function($scope,CustomersService) {
-	
+admin.controller("customerCtrl",['$scope','CustomersService','$http',
+	function($scope,CustomersService, $http) {
+	            
 	var url ="http://localhost:8080/WebCouponProject/rest/admin/";
 	$scope.sortType     = 'id'; // set the default sort type
 	  $scope.sortReverse  = false;  // set the default sort order
@@ -44,7 +45,7 @@ $scope.passwordValidation = function (password) {
 			'custName': '', 
             'custPassword': ''
 		};
-            $scope.customers.push($scope.inserted);
+        $scope.customers.push($scope.inserted);
 	};
 	       
 	      //Remove Customer
