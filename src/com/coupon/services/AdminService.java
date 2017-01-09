@@ -17,7 +17,7 @@ public class AdminService {
 
 	@Context
 	private HttpServletRequest request;
-	private static final String FACADE_KEY = "facade";
+	public static final String FACADE_KEY = "facade";
 	
 	public class returnValue {
 		public String status = "ok";

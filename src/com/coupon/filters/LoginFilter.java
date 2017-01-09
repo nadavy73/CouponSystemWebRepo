@@ -6,10 +6,15 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
+import com.coupon.services.AdminService;
 
-@WebFilter("/loginFilter")
+import sun.security.util.Debug;
+
+
+//@WebFilter(urlPatterns={"/rest/*"})
 public class LoginFilter implements Filter {
 
 	@Override
@@ -19,22 +24,32 @@ public class LoginFilter implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-		if (httpRequest.getSession(false) == null) {
-			
-			httpResponse.setStatus(400);
-			
-			response.setContentType(MediaType.APPLICATION_JSON);
-			
-			ServletOutputStream out = response.getOutputStream();
-			out.println("{"
-					+ "\"errorMessag\":\"null session\","
-					+ " \"errorCode\": 900"
-					+ "}");
-			return;
-		} else {
+		HttpSession session = httpRequest.getSession(false);
+		
+		
+		if (httpRequest.getRequestURI().contains("/login/"))
+		{
 			chain.doFilter(request, response);
+			return;
 		}
+		else
+		{
+			if (session == null) {
+				System.out.println("no session!");
+				httpResponse.sendRedirect("/WebCouponProject/#/login");
+				return;
+				
+			} else if (session.getAttribute(AdminService.FACADE_KEY) == null){
+				System.out.println("no facade in session!");
+				httpResponse.sendRedirect("/WebCouponProject/#/login");
+				return;
+			} else {
+				
+				chain.doFilter(request, response);
+			}
+		}
+		
+		
 
 	}
 
