@@ -1,10 +1,8 @@
 company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http', 'couponTypesFactory',
 		'couponFilterFactory' ,function($scope, $rootScope,companyCouponService, $http, couponFactory,
 		         couponTypesFactory, couponFilterFactory) {
-	// Coupons model array
-	$scope.coupons = [];
-	$scope.couponType= [ "RESTAURANT", "ELECTRICITY", "FOOD", "HEALTH",
-            "SPORTS", "CAMPING", "TRAVELLING"];
+	
+	
 	//Search functions
 	$scope.sortType     = 'id'; // set the default sort type
 	$scope.sortReverse  = false;  // set the default sort order
@@ -12,43 +10,61 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 	
 	// Clear Search Text
     $scope.ClearSearchText = function () {
-        $scope.searchText = '';
+    $scope.searchText = '';
     };
     
-	$scope.clientType = $rootScope.clientType;
+//	$scope.clientType = $rootScope.clientType;
     
-//    $scope.couponFilter = couponFilterFactory();
-    // List of coupon types
-//    $scope.types = couponTypesFactory;
+    
+	// Coupons model array
+	$scope.coupons = [];
+		
+//	self.data = {
+//			  "couponTypes": [{
+//					 'typeCode': 'RE', 	'typeName': 'Restaurant'}, 
+//					{ 'typeCode': 'EL', 	'typeName': 'Electricity'}, 
+//					{ 'typeCode': 'FO','typeName': 'Food' }, 
+//					{ 'typeCode': 'HE',	'typeName': 'Health' },
+//					{ 'typeCode': 'SP',	'typeName': 'Sport' },
+//					{ 'typeCode': 'CA',	'typeName': 'Camping' },
+//					{ 'typeCode': 'TR',	'typeName': 'Travelling'}
+//					
+//			    ]
+//			  };
+//	$scope.couponTypes = self.data.couponTypes;
+//	
 	
-    $scope.titleValidation = function (data) {
-    	var coupTitle = [];
-    	for (var i = 0; i < $scope.coupons.length; i++) {
-    		coupTitle.push($scope.coupons[i].title);
-        } 
-    		return "Coupon's Title can't be empty! Please Enter a Title ";
-
-    };   
+	
+	    
+//    	$scope.couponFilter = couponFilterFactory();
+// 		List of coupon types
+//    	$scope.types = couponTypesFactory;
+	
+//    $scope.titleValidation = function (data) {
+//    	var coupTitle = [];
+//    	for (var i = 0; i < $scope.coupons.length; i++) {
+//    		coupTitle.push($scope.coupons[i].title);
+//        } 
+//    		return "Coupon's Title can't be empty! Please Enter a Title ";
+//
+//    };   
     
     
     
     //get All Coupons
-    companyCouponService.getCoupons()
-    	.then(function (data) {
+    companyCouponService.getCoupons().then(function (data) {
 		  $scope.coupons = data.data;
 		  
 		  angular.element("#loader").hide();
 	  });
     
     
-    
     //Add new Row
     $scope.addNewCouponRow = function(){
             $scope.inserted= { 
-            	'id': null,
+            	'id': $scope.coupons.id,
                 'title':'',
-                'startDate': new Date(),
-                'endDate': '',
+                'startDate': '',
                 'amount': '',
                 'type': '', 
                 'message': '',
@@ -59,24 +75,18 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     };
     
     	
-    //Remove function
-    $scope.removeCoupon = function(id){
-    	console.log(id);
-   		console.log($scope.id);	
+    //Remove coupon
+    $scope.removeCoupon = function(index){
+    	console.log(index);
+   		console.log($scope.coupons[index].id);	
     	
-    	
-    	companyCouponService.removeCoupon($scope.id)
-        	.then(
-            		function successCallback (response){
+    companyCouponService.removeCoupon($scope.coupons[index].id)
+        	.then(function successCallback (response){
             			// success callback
             			console.log('DELETED:');
                         console.log(response.data);
                         // Delete company from model
-                        for (var i in arr){
-                        	if (arr[i]==id)
-                        		splice => i
-                        }
-//                        $scope.coupons.splice(index, 1);
+                        $scope.coupons.splice(index, 1);
             			}, 
                 		       function(response){
                 		         // failure call back
@@ -94,9 +104,8 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          
          
          //Edit/Add new Coupon
-         $scope.saveUser = function(data, index) {
-         	
-         	if ($scope.coupons[index].id === null) {
+         $scope.saveCoupon = function(data, index) {
+         	if ($scope.coupons[index].id == null) {
          		companyCouponService.createCoupon(data)
          		.then(
                  function successCallback(response) {

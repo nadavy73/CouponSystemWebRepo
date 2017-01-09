@@ -61,7 +61,7 @@ public class AdminService {
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
-			int companyId = facade.createCompany(company);
+			long companyId = facade.createCompany(company);
 			company.setId(companyId);
 		} catch (AdminFacadeException | AlreadyExistException e) {
 			e.printStackTrace();
@@ -90,20 +90,17 @@ public class AdminService {
 	
 	//Delete Company 
 	@DELETE
-	@Path("/removeCompany/{customerId}")
+	@Path("/removeCompany/{companyId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Company removeCompany(@PathParam("customerId")long id) throws AdminFacadeException, DoesNotExistException 
+	public Company removeCompany(@PathParam("companyId")long id) throws AdminFacadeException, DoesNotExistException 
 	
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		Company company = facade.GetCompany(id);
 
-		try {
-			facade.removeCompany(company);
-			} catch (AdminFacadeException e) {
-			e.printStackTrace();
-		}
+		facade.removeCompany(company);
+			
 			return company;
 	}
 	
@@ -172,33 +169,31 @@ public class AdminService {
 	@Path("/createCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Customer createCustomer (Customer customer) 
+	public Customer createCustomer (Customer customer) throws AdminFacadeException, AlreadyExistException 
 
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		try {
-			facade.createCustomer(customer);
-		} catch (AdminFacadeException | AlreadyExistException e) {
-			e.printStackTrace();
-		}
+		
+		long customerId = facade.createCustomer(customer);
+		customer.setId(customerId);
+		
 			return customer;
 	}
 
 	//V
 	@DELETE
-	@Path("/removeCustomer")
+	@Path("/removeCustomer/{customerId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Customer removeCompany(Customer customer) 
+	public Customer removeCustomer(@PathParam("customerId") long id) throws AdminFacadeException, DoesNotExistException 
 	
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		try {
+		Customer customer= facade.GetCustomer(id);
+
 			facade.RemoveCustomer(customer);
-		} catch (AdminFacadeException | DoesNotExistException e) {
-			e.printStackTrace();
-		}
+		
 			return customer;
 	}
 	

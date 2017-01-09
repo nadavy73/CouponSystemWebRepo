@@ -19,21 +19,11 @@ company.factory('companyCouponService',
             });
         };
         
-        
-//        service.dateToStringFormat = function (date) {
-//            var StringFormattedDate =
-//                date.getFullYear() +
-//                "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
-//                "-" + ("0" + date.getDate()).slice(-2);
-//            return StringFormattedDate;
-//        };
-        
-       
         //Create New Coupon
         service.createCoupon = function(coupon) {
         	
-//        	coupon.startDate = service.dateToStringFormat(coupon.startDate);
-//            coupon.endDate = coupon.endDate = service.dateToStringFormat(coupon.endDate);
+//        coupon.startDate = service.dateToStringFormat(coupon.startDate);
+//        coupon.endDate = service.dateToStringFormat(coupon.endDate);
 
       	  return $http({
               method: 'PUT',
@@ -47,7 +37,7 @@ company.factory('companyCouponService',
         service.removeCoupon = function(id) {
         	return 	 $http({ 
         		method : 'DELETE',
-        		url : url + "removeCoupon",
+        		url : url + "removeCoupon/" + id,
         		headers: {'Content-Type': 'text/plain'},
         		data: id
         	});
@@ -58,8 +48,8 @@ company.factory('companyCouponService',
         service.updateCoupon= function(id, coupon) {
         	var couponToUpdate = angular.copy(coupon)
         	couponToUpdate.id = id;
-        	couponToUpdate.price = coupon.price;
-            couponToUpdate.endDate = coupon.endDate;
+//        	couponToUpdate.price = coupon.price;
+//            couponToUpdate.endDate = coupon.endDate;
             
         	return $http({
                 method: 'POST',
@@ -90,7 +80,7 @@ company.factory('companyCouponService',
         
        service.byStartDate = function (date) {
             //format date to dd-mm-yyyy
-            date = couponUtil.dateToStringFormat(date);
+//    	   date = service.dateToStringFormat(date);
             return $http({
                 method: 'POST',
                 url: url + "getCouponByStartDate",
@@ -99,8 +89,17 @@ company.factory('companyCouponService',
             });
         };
         
+     // returns date in string format that the server can handel
+//        service.dateToStringFormat = function (date) {
+//            var StringFormatedDate =
+//                date.getFullYear() +
+//                "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
+//                "-" + ("0" + date.getDate()).slice(-2);
+//            return StringFormatedDate;
+//        };
+        
         service.byEndDate = function (date) {
-            date = couponUtil.dateToStringFormat(date);
+//            date = service.dateToStringFormat(date);
             return $http({
                 method: 'POST',
                 url: url + "getCouponByEndDate",

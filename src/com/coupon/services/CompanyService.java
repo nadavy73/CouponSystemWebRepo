@@ -1,5 +1,6 @@
 package com.coupon.services;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -54,16 +55,18 @@ public class CompanyService {
 	@Path("/createCoupon")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Coupon createCoupon(Coupon coupon) throws CompanyFacadeException, AlreadyExistException {	
+	public Coupon createCoupon(Coupon coupon) 
+			throws CompanyFacadeException {	
 	
 		System.out.println("**************** " + coupon);
 		
 		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 	
 		
-
 		try {
-			cf.createCoupon(coupon);
+			long couponId= cf.createCoupon(coupon);
+			coupon.setId(couponId);
+			
 		} catch (AlreadyExistException e) {
 			e.printStackTrace();
 		}
@@ -79,11 +82,11 @@ public class CompanyService {
 	public Coupon removeCoupon (@PathParam("couponId") long couponId) throws CompanyFacadeException, DoesNotExistException 
 			
 	{
-		CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
+		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		Coupon coupon= facade.getCoupon(couponId);
+		Coupon coupon= cf.getCoupon(couponId);
 		
-			facade.removeCoupon(coupon);
+			cf.removeCoupon(coupon);
 		
 			return coupon;
 	}

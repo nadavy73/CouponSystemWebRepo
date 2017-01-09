@@ -1,6 +1,6 @@
 'use strict';
  
-admin.factory('CompaniesService',
+admin.factory('adminCompanyService',
     ['$http',
     function ($http) {
         var service = {};

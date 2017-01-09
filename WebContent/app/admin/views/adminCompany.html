@@ -18,118 +18,102 @@
                                 <thead>
                                     <tr style="font-weight: bold">
                                         
-                           <td>
-                           <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
-            				Id
-            				<span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
-          					</a>
-        					</td>
-        								
-        								
-							<td>
-                            <a href="#" ng-click="sortType = 'compName'; sortReverse = !sortReverse">
+                           	<td>
+                           Id
+            				</td>
+        					
+        					
+        					<td>
             				Company Name
-            				<span ng-show="sortType == 'compName' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'compName' && sortReverse" class="fa fa-caret-up"></span>
-          					</a>
+            				
         					</td>
         								
                                         
 							<td>
-                            <a href="#" ng-click="sortType = 'password'; sortReverse = !sortReverse">
             				Password
-            				<span ng-show="sortType == 'password' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'password' && sortReverse" class="fa fa-caret-up"></span>
-          					</a>
+            				
         					</td>
         								
         								
         								
                             <td>
-                            <a href="#" ng-click="sortType = 'email'; sortReverse = !sortReverse">
             				Email
-            				<span ng-show="sortType == 'email' && !sortReverse" class="fa fa-caret-down"></span>
-           					<span ng-show="sortType == 'email' && sortReverse" class="fa fa-caret-up"></span>
-          					</a>
+            				
         					</td>
                                         
 					</tr>
-                                </thead>
+			</thead>
                                 
-                               
+	<tr data-ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
                                 
-                                <tr data-ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
-                                
-                                <td>
-                                <span
-                                        						
-                                e-ng-model= "id"
-                                e-form="companyform"
-                                e-placeholder= "Id">
-                             	{{ company.id }}
-        						 
-        						</span>     							
-      							</td>
-                                
-                                
-                                <td>
-                             
-        						<span 
-        						editable-text="company.compName" 
-        						e-ng-model= "compName"
-        						e-name="compName" 
-        						e-form="companyform"
-        						e-placeholder= "Company" 
-        						onbeforesave="nameValidation($data)">
-         				 		{{ company.compName }}
-        						</span>
-      							</td>
-                                        
-								<td>
-               					<!--Password-->
-                				<span editable-text="company.password"
-                				e-ng-model= "password"
-                      			e-name="password"
-                      			e-form="companyform"
-                      			e-placeholder="password"
-                      			onbeforesave="passwordValidation($data)">
+     <td>
+   		<span	
+          e-ng-model= "id"
+          e-form="companyform"
+          e-placeholder= "Id">
+          	{{ company.id }}
+		 
+		</span>     							
+	</td>
+                    
+                    
+	<td>
+		<span 
+		editable-text="company.compName" 
+		e-ng-model= "compName"
+		e-name="compName" 
+		e-form="companyform"
+		e-placeholder= "Company" 
+		onbeforesave="nameValidation($data)">
+	 		{{ company.compName }}
+		</span>
+	</td>
+                                    
+	<td>
+        <!--Password-->
+		<span 
+		editable-text="company.password"
+		e-ng-model= "password"
+   		e-name="password"
+   		e-form="companyform"
+   		e-placeholder="password"
+   		onbeforesave="passwordValidation($data)">
 
-                            	{{company.password}}
-                        		</span>
-            					</td>
+            {{company.password}}
+        </span>
+	</td>
 
 
-						<td>
 
-                			<!--email-->
-                			<span 
-                			editable-text="company.email"
-                			e-ng-model= "email"
-                      		e-name="email"
-                     	 	e-form="companyform"
-                      		e-placeholder="email">
-                            {{company.email}}
-                    		</span>
-            
-            </td>
+	<td>
 
-            <td style="white-space: nowrap">
-        	<!-- form --> 
+    	<!--email-->
+    	<span 
+    	editable-text="company.email"
+    	e-ng-model= "email"
+    	e-name="email"
+    	e-form="companyform"
+    	e-placeholder="email">
+    		{{company.email}}
+        </span>
+    </td>
+
+	<td style="white-space: nowrap">
+    	<!-- form --> 
         	
-        	<form editable-form name="companyform"
-        			onbeforesave="saveUser($data, $index)"
-        			ng-show="companyform.$visible" 
-        			class="form-buttons form-inline pull-right" 
-        			shown="inserted == company">
+        <form editable-form name="companyform"
+        		onbeforesave="saveUser($data, $index)"
+        		ng-show="companyform.$visible" 
+        		class="form-buttons form-inline pull-right" 
+        		shown="inserted == company">
           		
-          		<button type="submit" ng-disabled="companyform.$waiting" class="btn btn-primary">
-            		Save
-          		</button>    
-          		<button type="button" ng-disabled="companyform.$waiting" ng-click="companyform.$cancel()" class="btn btn-primary">
+        	<button type="submit" ng-disabled="companyform.$waiting" class="btn btn-primary">
+        		Save
+        	</button>    
+        	<button type="button" ng-disabled="companyform.$waiting" ng-click="companyform.$cancel()" class="btn btn-primary">
             		Cancel
-          		</button>
-        	</form>                          
+         	</button>
+        </form>                          
 				
 				<div class="buttons pull-right" ng-show="!companyform.$visible">
                     

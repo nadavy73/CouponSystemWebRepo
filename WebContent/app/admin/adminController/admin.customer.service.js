@@ -20,7 +20,7 @@ admin.factory('CustomersService',
         
         service.addCustomer = function(fromClient) {
       	  return $http.put(url+"createCustomer",fromClient)
-      	  .sucess(function(data,status,headers,config)
+      	  .success(function(data,status,headers,config)
       			  {
       		  console.log("data");
       			  })
@@ -28,17 +28,28 @@ admin.factory('CustomersService',
       				  console.log("error:"+data)
       			  })
         }
-        
-        service.removeCustomer = function(fromClient) {
-        	  return $http.delete(url+"removeCustomer",fromClient)
-        	  .sucess(function(data,status,headers,config)
-        			  {
-        		  console.log("data");
-        			  })
-        			  .error(function(data,status){
-        				  console.log("error:"+data)
-        			  })
-          }
+      
+        //Remove Customer
+        service.removeCustomer = function(id) {
+        	return 	 $http({ 
+        		method : 'DELETE',
+        		url : url + "removeCustomer/" + id,
+        		headers: {'Content-Type': 'text/plain'},
+        		data: id
+        	});
+        };  
+        	
+        	
+        	
+//        	return $http.delete(url+"removeCustomer",fromClient)
+//        	  .success(function(data,status,headers,config)
+//        			  {
+//        		  console.log("data");
+//        			  })
+//        			  .error(function(data,status){
+//        				  console.log("error:"+data)
+//        			  })
+//          }
         
     return service;
 }]);

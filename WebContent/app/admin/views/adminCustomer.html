@@ -21,6 +21,15 @@
                                     <tr style="font-weight: bold">
                                         
                                         <td>
+                           				<a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
+            								Id
+            							<span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
+           								<span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+          								</a>
+        								</td>
+        								
+                                          
+                                        <td>
                                         <a href="#" ng-click="sortType = 'custName'; sortReverse = !sortReverse">
             							Customer Name
             							<span ng-show="sortType == 'custName' && !sortReverse" class="fa fa-caret-down"></span>
@@ -46,13 +55,24 @@
                                 <tr ng-repeat="customer in customers | orderBy:sortType:sortReverse | filter:searchCustomer">
                                 
                                 <td>
-                             
-        						<span 
-        						editable-text="{{customer.custName}}" 
+                                <span
+                                        						
+                                e-ng-model= "id"
+                                e-form="customerform"
+                                e-placeholder= "Id">
+                             	{{ customer.id }}
+        						 
+        						</span>     							
+      							</td>
+                                
+                                <td>
+                             	<span 
+        						editable-text="customer.custName" 
         						e-ng-model="fullname"
         						e-name="custName" 
         						e-form="customerform" 
-        						onbeforesave="nameValidation($data)">
+        						e-placeholder= "Customer" 
+        						onbeforesave="custNameValidation($data)">
          				 		{{ customer.custName }}
         						</span>
       							</td>
@@ -61,8 +81,9 @@
                					<!--Password-->
                 				<span editable-text="customer.custPassword"
                       			e-name="custPassword"
-                      			e-form="companyform"
-                      			e-placeholder="custPassword"
+                      			e-ng-model= "custPassword"
+                      			e-form="customerform"
+                      			e-placeholder="Password"
                       			onbeforesave="passwordValidation($data)">
 
                             	{{customer.custPassword}}
@@ -73,7 +94,7 @@
         	<!-- form --> 
         	
         	<form editable-form name="customerform" 
-        			onbeforesave="saveUser($data, customer.id)" 
+        			onbeforesave="saveUser($data, $index)" 
         			ng-show="customerform.$visible" 
         			class="form-buttons form-inline pull-right"
           			shown="inserted == customer">
@@ -88,8 +109,8 @@
 				
 				<div class="buttons pull-right" ng-show="!customerform.$visible">
                     
-                 <button id="{{'edit' + $index}}" class="btn btn-primary" ng-click="customerform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
-                 <button class="btn btn-danger" ng-click="removeCustomer()"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+                 <button class="btn btn-primary" ng-click="customerform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
+                 <button class="btn btn-danger" ng-click="removeCustomer($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
                 </div>
 			 </td>    
 		</tr>
@@ -98,7 +119,6 @@
                           
                        
                     </div>
-                    
-                    <button type="button" class="btn btn-primary" ng-click="addCustomer()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
+					<button type="button" class="btn btn-primary" ng-click="addCustomer()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
                 </div>
         
