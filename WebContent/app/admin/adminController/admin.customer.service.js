@@ -1,8 +1,10 @@
 'use strict';
  
 admin.factory('CustomersService',
-    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+		['$http',
+		//    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
+    function ($http) {
+//    (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
         	
         var url ="http://localhost:8080/WebCouponProject/rest/admin/";
@@ -18,16 +20,25 @@ admin.factory('CustomersService',
             });
         }
         
-        service.addCustomer = function(fromClient) {
-      	  return $http.put(url+"createCustomer",fromClient)
-      	  .success(function(data,status,headers,config)
-      			  {
-      		  console.log("data");
-      			  })
-      			  .error(function(data,status){
-      				  console.log("error:"+data)
-      			  })
-        }
+      //Create New Customer
+        service.addCustomer = function(customer) {
+      	 return $http({
+                method: 'PUT',
+                url: url + "createCustomer",
+                headers: {'Content-Type': 'application/json'},
+                data: customer
+            })
+        };
+        	
+//        	return $http.put(url+"createCustomer",fromClient)
+//      	  .success(function(data,status,headers,config)
+//      			  {
+//      		  console.log("data");
+//      			  })
+//      			  .error(function(data,status){
+//      				  console.log("error:"+data)
+//      			  })
+//        }
       
         //Remove Customer
         service.removeCustomer = function(id) {
@@ -50,6 +61,20 @@ admin.factory('CustomersService',
 //        				  console.log("error:"+data)
 //        			  })
 //          }
+        
+      //Update Customer
+        service.updateCustomer= function(id, customer) {
+        	var customerToUpdate = angular.copy(customer);
+            customerToUpdate.id = id;
+            
+        	return $http({
+                method: 'POST',
+                url: url + "updateCustomer",
+                headers: {'Content-Type': 'application/json'},
+                data: customerToUpdate
+        	
+        	 });
+        };
         
     return service;
 }]);

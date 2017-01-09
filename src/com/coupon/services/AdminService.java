@@ -17,7 +17,7 @@ public class AdminService {
 
 	@Context
 	private HttpServletRequest request;
-	private static final String FACADE_KEY = "facade";
+	public static final String FACADE_KEY = "facade";
 	
 	public class returnValue {
 		public String status = "ok";
@@ -48,6 +48,27 @@ public class AdminService {
 		
 	}
 	
+	//V
+		@PUT
+		@Path("/createCustomer")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Customer createCustomer (Customer customer) 
+				throws AdminFacadeException, AlreadyExistException 
+
+		{
+			System.out.println(customer);
+			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+			try {
+				long customerId = facade.createCustomer(customer);
+				customer.setId(customerId);
+			} catch (AdminFacadeException | AlreadyExistException e) {
+				e.printStackTrace();
+			}
+				return customer;
+		
+		}
+	
 	//V 
 	@PUT
 	@Path("/createCompany")
@@ -57,7 +78,6 @@ public class AdminService {
 			throws AdminFacadeException
 	{
 		System.out.println(company);
-		
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
@@ -164,22 +184,7 @@ public class AdminService {
 	}
 	
 	
-	//V
-	@PUT
-	@Path("/createCustomer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Customer createCustomer (Customer customer) throws AdminFacadeException, AlreadyExistException 
-
-	{
-		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
-		
-		
-		long customerId = facade.createCustomer(customer);
-		customer.setId(customerId);
-		
-			return customer;
-	}
+	
 
 	//V
 	@DELETE
