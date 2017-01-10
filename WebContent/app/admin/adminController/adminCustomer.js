@@ -1,24 +1,24 @@
 admin.controller("customerCtrl",['$scope','CustomersService','$http',
 	function($scope,CustomersService, $http) {
 	            
-	var url ="http://localhost:8080/WebCouponProject/rest/admin/";
-	$scope.sortType     = 'id'; // set the default sort type
-	  $scope.sortReverse  = false;  // set the default sort order
-	  $scope.searchCustomer   = '';     // set the default search/filter term
+//	var url ="http://localhost:8080/WebCouponProject/rest/admin/";
+//	$scope.sortType     = 'id'; // set the default sort type
+//	  $scope.sortReverse  = false;  // set the default sort order
+//	  $scope.searchCustomer   = '';     // set the default search/filter term
 	
 	  $scope.customers = [];
 	  
-	  //get All Customers
-	  CustomersService.getCustomers().then(function (data){
-		  	$scope.customers = data.data;
-
-		  	angular.element("#loader").hide();
-	  });
+	  
 
 $scope.custNameValidation = function (custName) {
     if (custName.length < 1) {
         return "User name can't be empty";
     } else {
+        return true;
+    }if ($scope.customers[index].custName === custName){
+        addToArray=false;	
+    }
+    else {
         return true;
     }
 };   
@@ -36,6 +36,14 @@ $scope.passwordValidation = function (password) {
     }
 
 };
+
+//get All Customers
+CustomersService.getCustomers().then(function (data){
+	  	$scope.customers = data.data;
+	  	
+	  	angular.element("#loader").hide();
+	  	console.log($scope.customers);
+});
 
 	
 	//Add new Row

@@ -2,9 +2,7 @@
  
 admin.factory('CustomersService',
 		['$http',
-		//    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function ($http) {
-//    (Base64, $http, $cookieStore, $rootScope, $timeout) {
+		function ($http) {
         var service = {};
         	
         var url ="http://localhost:8080/WebCouponProject/rest/admin/";
@@ -30,15 +28,7 @@ admin.factory('CustomersService',
             })
         };
         	
-//        	return $http.put(url+"createCustomer",fromClient)
-//      	  .success(function(data,status,headers,config)
-//      			  {
-//      		  console.log("data");
-//      			  })
-//      			  .error(function(data,status){
-//      				  console.log("error:"+data)
-//      			  })
-//        }
+
       
         //Remove Customer
         service.removeCustomer = function(id) {
@@ -51,16 +41,7 @@ admin.factory('CustomersService',
         };  
         	
         	
-        	
-//        	return $http.delete(url+"removeCustomer",fromClient)
-//        	  .success(function(data,status,headers,config)
-//        			  {
-//        		  console.log("data");
-//        			  })
-//        			  .error(function(data,status){
-//        				  console.log("error:"+data)
-//        			  })
-//          }
+        
         
       //Update Customer
         service.updateCustomer= function(id, customer) {

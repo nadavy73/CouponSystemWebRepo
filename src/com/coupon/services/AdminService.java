@@ -170,9 +170,9 @@ public class AdminService {
 		try {
 			for (Company company : facade.getAllCompanies()) {
 				
-			System.out.println("$$$$$$$$$$$$$$$$$$$");	
+			System.out.println();	
 			System.out.println(company);
-			System.out.println("$$$$$$$$$$$$$$$$$$$");
+			System.out.println();
 			}
 			
 			return facade.getAllCompanies().toArray(new Company[]{});
@@ -248,6 +248,12 @@ public class AdminService {
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
+				for (Customer customer : facade.getAllCustomers()) {
+					
+				System.out.println();	
+				System.out.println(customer);
+				System.out.println();
+				}
 			return facade.getAllCustomers();
 		} catch (AdminFacadeException | DoesNotExistException e) {
 			e.printStackTrace();
@@ -257,3 +263,4 @@ public class AdminService {
 	}
 
 }
+
