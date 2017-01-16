@@ -14,7 +14,7 @@ import com.coupon.services.AdminService;
 import sun.security.util.Debug;
 
 
-//@WebFilter(urlPatterns={"/rest/*"})
+@WebFilter()
 public class LoginFilter implements Filter {
 
 	@Override
