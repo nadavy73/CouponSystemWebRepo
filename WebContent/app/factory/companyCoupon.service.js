@@ -22,9 +22,8 @@ company.factory('companyCouponService',
         //Create New Coupon
         service.createCoupon = function(coupon) {
         	
-//        coupon.startDate = service.dateToStringFormat(coupon.startDate);
-//        coupon.endDate = service.dateToStringFormat(coupon.endDate);
-
+//        coupon.startDate = service.getFormattedDate(coupon.startDate);
+//        coupon.endDate = service.getFormattedDate(coupon.endDate);
       	  return $http({
               method: 'PUT',
               url: url + "createCoupon",
@@ -46,10 +45,10 @@ company.factory('companyCouponService',
         	
         //Update Coupon
         service.updateCoupon= function(id, coupon) {
-        	var couponToUpdate = angular.copy(coupon)
+        	var couponToUpdate = angular.copy(coupon);
         	couponToUpdate.id = id;
 //        	couponToUpdate.price = coupon.price;
-//            couponToUpdate.endDate = coupon.endDate;
+//        	couponToUpdate.endDate = coupon.endDate;
             
         	return $http({
                 method: 'POST',
@@ -79,8 +78,8 @@ company.factory('companyCouponService',
         };
         
        service.byStartDate = function (date) {
-            //format date to dd-mm-yyyy
-//    	   date = service.dateToStringFormat(date);
+           //format date to dd/MM/yyyy
+//    	   date = service.getFormattedDate(date);
             return $http({
                 method: 'POST',
                 url: url + "getCouponByStartDate",
@@ -98,8 +97,20 @@ company.factory('companyCouponService',
 //            return StringFormatedDate;
 //        };
         
+        
+        // returns date in string format (dd/MM/yyyy) that the server can handel
+//        service.getFormattedDate = function (date) {
+//        	var year = date.getFullYear();
+//      	  	var month = (1 + date.getMonth()).toString();
+//      	  	month = month.length > 1 ? month : '0' + month;
+//      	  	var day = date.getDate().toString();
+//      	  	day = day.length > 1 ? day : '0' + day;
+//      	  	return day + '/' + month + '/' + year;
+//      	  	
+//        };
+        
         service.byEndDate = function (date) {
-//            date = service.dateToStringFormat(date);
+//          date = service.getFormattedDate(date);
             return $http({
                 method: 'POST',
                 url: url + "getCouponByEndDate",

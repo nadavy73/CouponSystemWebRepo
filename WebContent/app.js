@@ -26,7 +26,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         .state('login', {
         url: '/login',	
         controller: 'loginCtrl',
-        templateUrl: 'app/login/views/login.html',
+        templateUrl: 'app/views/login.html',
         
         });
         
@@ -38,7 +38,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
          	.state('admin', {
         	url:'/admin', 
             controller: 'adminMainCtrl',
-            templateUrl: 'app/admin/views/admin.main.html'
+            templateUrl: 'app/views/admin.main.html'
         });
         
         
@@ -47,7 +47,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         	.state('admin.company', {
         		url: '/company',
         		controller: 'companyCtrl',
-        		templateUrl: "app/admin/views/adminCompany.html"
+        		templateUrl: "app/views/adminCompany.html"
         	
         });
         
@@ -56,7 +56,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         	.state('admin.customer', {
         		url: '/customer',
         		controller: 'customerCtrl',
-        		templateUrl: "app/admin/views/adminCustomer.html"
+        		templateUrl: "app/views/adminCustomer.html"
         		
         
     });
@@ -69,7 +69,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
      		.state('company', {
      			url:'/company', 
      			controller: 'companyMainCtrl',
-     			templateUrl: 'app/company/companyView/company.main.html'
+     			templateUrl: 'app/views/company.main.html'
     });
     
         
@@ -78,7 +78,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
      	.state('company.coupon', {
      		url:'/companyCoupon', 
      		controller: 'companyCouponCtrl',
-     		templateUrl: 'app/company/companyView/companyCoupon.html'
+     		templateUrl: 'app/views/companyCoupon.html'
     });
         
         $urlRouterProvider.otherwise('login');

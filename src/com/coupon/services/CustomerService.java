@@ -36,6 +36,11 @@ public class CustomerService {
 	private HttpServletRequest request;
 	private static final String FACADE_KEY = "facade";
 
+	public class returnValue {
+		public String status = "ok";
+	}
+	
+	
 	public CustomerService() {
 
 	}
@@ -49,7 +54,7 @@ public class CustomerService {
 		try{
 			CustomerFacade custf= new CustomerFacade().login(username, password, ClientType.CUSTOMER);
 			request.getSession().setAttribute(FACADE_KEY, custf);
-			return "login successfull";
+			return "ok";
 		}
 		catch(LoginException e)
 		{

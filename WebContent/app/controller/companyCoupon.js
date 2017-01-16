@@ -1,11 +1,9 @@
-company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http', 'couponTypesFactory',
-		'couponFilterFactory' ,function($scope, $rootScope,companyCouponService, $http, couponFactory,
-		         couponTypesFactory, couponFilterFactory) {
-	
+company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http', '$filter' ,
+	function($scope, $rootScope,companyCouponService, $http, $filter) {
 	
 	//Search functions
-	$scope.sortType     = 'id'; // set the default sort type
-	$scope.sortReverse  = false;  // set the default sort order
+//	$scope.sortType     = 'id'; // set the default sort type
+//	$scope.sortReverse  = false;  // set the default sort order
 	$scope.searchCoupon   = '';     // set the default search/filter term
 	
 	// Clear Search Text
@@ -13,29 +11,42 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     $scope.searchText = '';
     };
     
-//	$scope.clientType = $rootScope.clientType;
-    
     
 	// Coupons model array
 	$scope.coupons = [];
 		
-//	self.data = {
-//			  "couponTypes": [{
-//					 'typeCode': 'RE', 	'typeName': 'Restaurant'}, 
-//					{ 'typeCode': 'EL', 	'typeName': 'Electricity'}, 
-//					{ 'typeCode': 'FO','typeName': 'Food' }, 
-//					{ 'typeCode': 'HE',	'typeName': 'Health' },
-//					{ 'typeCode': 'SP',	'typeName': 'Sport' },
-//					{ 'typeCode': 'CA',	'typeName': 'Camping' },
-//					{ 'typeCode': 'TR',	'typeName': 'Travelling'}
-//					
-//			    ]
-//			  };
-//	$scope.couponTypes = self.data.couponTypes;
-//	
-	
-	
-	    
+	$scope.couponTypes = {
+			  "types": [{
+				  	typeCode: 'RE', 	
+				  	typeName: 'Restaurant'
+					 }, { 
+					typeCode: 'EL', 
+					typeName: 'Electricity'
+					 }, { 
+					typeCode: 'FO',
+					typeName: 'Food' 
+					 }, {
+					typeCode: 'HE',	
+					typeName: 'Health' 
+					},{ 
+					typeCode: 'SP',	
+					typeName: 'Sport' 
+					},{ 
+					typeCode: 'CA',	
+					typeName: 'Camping' 
+					},{ 
+					typeCode: 'TR',	
+					typeName: 'Travelling'
+						}
+					],
+			defaultOption: {
+			typeCode: 'FO',
+			typeName: 'Food'
+	} 
+	//This sets the default value of the select in the ui
+	};
+			 
+		    
 //    	$scope.couponFilter = couponFilterFactory();
 // 		List of coupon types
 //    	$scope.types = couponTypesFactory;
@@ -58,34 +69,39 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 		  angular.element("#loader").hide();
 	  });
     
-    
+   
     //Add new Row
     $scope.addNewCouponRow = function(){
-            $scope.inserted= { 
-            	'id': $scope.coupons.id,
+		
+    	$scope.coupons.startDate = new Date($scope.coupons.startDate);    
+    	$scope.coupons.endDate = new Date($scope.coupons.endDate);    
+
+    	$scope.inserted= { 
+    			'id': $scope.coupons.id,
                 'title':'',
-                'startDate': '',
+                'startDate':'',
+                'endDate': '',
                 'amount': '',
-                'type': '', 
+                'type': $scope.couponTypes.defaultOption.typeName, 
                 'message': '',
                 'price': '',
-                'image':''
+                'image':'',
             };
             $scope.coupons.push($scope.inserted);
     };
     
     	
-    //Remove coupon
+    //Remove Coupon
     $scope.removeCoupon = function(index){
     	console.log(index);
    		console.log($scope.coupons[index].id);	
-    	
+   	if (confirm("Are you sure you want to delete this coupon?"))	
     companyCouponService.removeCoupon($scope.coupons[index].id)
         	.then(function successCallback (response){
             			// success callback
             			console.log('DELETED:');
                         console.log(response.data);
-                        // Delete company from model
+                        // Delete coupon from model
                         $scope.coupons.splice(index, 1);
             			}, 
                 		       function(response){
@@ -106,8 +122,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          //Edit/Add new Coupon
          $scope.saveCoupon = function(data, index) {
          	if ($scope.coupons[index].id == null) {
-         		companyCouponService.createCoupon(data)
-         		.then(
+         		companyCouponService.createCoupon(data).then(
                  function successCallback(response) {
                  	console.log('ADDED:');
                      console.log(response.data);
@@ -120,11 +135,10 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          	}
          		else {
         	
-         			companyCouponService.updateCoupon($scope.coupons[index].id, data)
-         				.then(
+         			companyCouponService.updateCoupon($scope.coupons[index].id, data).then(
                          function successCallback(response) {
-                         	console.log('Company updated', response);
-                             // update model
+                         	console.log('Coupon updated', response);
+                            // update model
                              $scope.coupons[index] = response.data;
                          },
                          function errorCallback(response) {
@@ -229,7 +243,55 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                 $scope.$apply(function() {
                     $scope.coupons.push(e.target.result);
                 });
-            }      
-             
+            }    
+//          var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
+
+            
+            //date validation
+            $scope.checkDate = function(data) {
+            var date_regex = /^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/ ;
+            testResult = date_regex.test(data);
+              console.log(testResult);
+        			if (!testResult)
+        		    	return "Please enter a valid date - dd/MM/YYYY";
+            };
+            
+            $scope.validateDates = function(data) {
+            	    console.log('IN VALIDATEDATES');
+            	    console.log(data.startDate);
+            	    console.log(data.endDate);
+            	      
+            	    var startDt = new Date(data.startDate);
+            		var endDt = new Date(data.endDate);
+            		console.log(startDt);
+            	    console.log(endDt);
+            	     if (startDt > endDt) {
+            	     return "DATE START has to be smaller than DATE END."; 
+            	    	 console.log('startDt > endDt');
+            	     $scope.showPageError = true;
+            					$scope.pageErrorText = "DATE START has to be smaller than DATE END.";
+            			    	return false;	
+            	     }
+            	     else
+            	     	return true;
+
+            	      
+            	    };
+            	    $scope.showConfirm = function(ev) {
+            	        // Appending dialog to document.body to cover sidenav in docs app
+            	        var confirm = $mdDialog.confirm()
+            	              .title('Would you like to delete this Coupon?')
+            	              .textContent('After Deleting this you will not be able to retore it.')
+            	              .ariaLabel('Lucky day')
+            	              .targetEvent(ev)
+            	              .ok('Delete!')
+            	              .cancel('Cancel Action');
+
+            	        $mdDialog.show(confirm).then(function() {
+            	          $scope.status = 'You decided to delete this coupon.';
+            	        }, function() {
+            	          $scope.status = 'You decided to keep this coupon.';
+            	        });
+            	      };
     
 }]);

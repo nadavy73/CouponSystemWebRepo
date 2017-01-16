@@ -1,6 +1,5 @@
 package com.coupon.services;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -53,21 +52,20 @@ public class CompanyService {
 	//V
 	@PUT
 	@Path("/createCoupon")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Coupon createCoupon(Coupon coupon) 
-			throws CompanyFacadeException {	
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Coupon createCoupon(Coupon coupon) throws CouponException 
+	 {	
 	
 		System.out.println("**************** " + coupon);
 		
 		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 	
-		
 		try {
 			long couponId= cf.createCoupon(coupon);
 			coupon.setId(couponId);
 			
-		} catch (AlreadyExistException e) {
+		} catch (AlreadyExistException | CompanyFacadeException e) {
 			e.printStackTrace();
 		}
 			return coupon;
@@ -78,13 +76,12 @@ public class CompanyService {
 	@DELETE
 	@Path("/removeCoupon/{couponId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Coupon removeCoupon (@PathParam("couponId") long couponId) throws CompanyFacadeException, DoesNotExistException 
+	public Coupon removeCoupon (@PathParam("couponId") long id) throws CompanyFacadeException, DoesNotExistException 
 			
 	{
 		CompanyFacade cf = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		Coupon coupon= cf.getCoupon(couponId);
+		Coupon coupon= cf.getCoupon(id);
 		
 			cf.removeCoupon(coupon);
 		
@@ -92,23 +89,23 @@ public class CompanyService {
 	}
 	
 	
-	//V
+	//Update Coupon
 	@POST
 	@Path("/updateCoupon")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Coupon updateCoupon (Coupon coupon) 
-			
-	{
+			throws CompanyFacadeException, DoesNotExistException 
+	{			
+		//getting the companyFacade saved in the session
 		CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-		try {
-			facade.updateCoupon(coupon);
-		} catch (CompanyFacadeException | DoesNotExistException e) {
-			e.printStackTrace();
-		}
-			return coupon;
-	}
+		//the updateCoupon function
+		facade.updateCoupon(coupon);
+		
+		// return updated coupon
+		return facade.getCoupon(coupon.getId());
+}
 	
 	//V
 	@POST

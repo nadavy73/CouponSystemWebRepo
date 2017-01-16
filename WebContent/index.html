@@ -8,21 +8,21 @@
   	
   	<link href="plugins/angular-material/angular-material.min.css" rel="stylesheet"/>
     <!--CSS-->
-    <link href="css/bootstrap.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/nga.all.min.css" rel="stylesheet" />
-    <link href="css/themes.css" rel="stylesheet" />
-    <link href="css/dashboard.css" rel="stylesheet" />
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="style/css/bootstrap.css" rel="stylesheet" />
+    <link href="style/css/site.css" rel="stylesheet" />
+    <link href="style/css/style.css" rel="stylesheet" />
+    <link href="style/css/nga.all.min.css" rel="stylesheet" />
+    <link href="style/css/themes.css" rel="stylesheet" />
+    <link href="style/css/dashboard.css" rel="stylesheet" />
+    <link href="style/css/font-awesome.min.css" rel="stylesheet" />
     <link href="plugins/bootstrap-slider/slider.css" rel="stylesheet" />
-    <link href="css/flexslider.css" rel="stylesheet" />
+    <link href="style/css/flexslider.css" rel="stylesheet" />
     <link href="plugins/owl-carousel/owl.theme.css" rel="stylesheet" />
     <link href="plugins/owl-carousel/owl.transitions.css" rel="stylesheet" />
     <link href="plugins/owl-carousel/owl.carousel.css" rel="stylesheet" />
   	<link rel="stylesheet" href="js/xeditable/xeditable.css">
   	
-  	<link rel="shortcut icon" href="favicon.ico"/>
+  	<link rel="shortcut icon" href="favicon.ico" />
   	
   	
   	
@@ -47,7 +47,6 @@
     <script src="js/angular-material.min.js"></script>
     <script src="js/angular-aria.min.js"></script>
     <script src="js/angular-messages.min.js"></script>
-
     <script src="js/angular-flash.js"></script>
     <script src="js/angular-sanitize.js"></script>
     <script src="js/ui-bootstrap-tpls-0.13.0.min.js"></script>
@@ -61,31 +60,24 @@
     <script src="app.js"></script>
     <script src="app/appMain/config.js"></script>
     
-    <!-- Login -->
-    <script src="app/login/login.services.js"></script>
-    <script src="app/login/login.controllers.js"></script>
+    <!-- controllers -->
+     
+   	<script src="app/controller/adminMainCtrl.js"></script>
+   	<script src="app/controller/adminCompany.js"></script>
+   	<script src="app/controller/adminCustomer.js"></script>
+    
+    <script src="app/controller/companyMainCtrl.js"></script>
+   	<script src="app/controller/companyCoupon.js"></script>
+   	
+   	<script src="app/controller/login.controllers.js"></script>
    	
    	<!-- Factory -->
-   <script src="factory/couponTypes.factory.js"></script>
-	<script src="factory/couponFilter.factory.js"></script>
-   	
-   	
-   	
-   	
-   	 <!-- Admin -->
-   	 <script src="app/admin/adminController/adminMainCtrl.js"></script>
-   	 <script src="app/admin/adminController/adminCompany.js"></script>
-   	 <script src="app/admin/adminController/adminCustomer.js"></script>
-    <script src="app/admin/adminController/admin.company.service.js"></script>
-    <script src="app/admin/adminController/admin.customer.service.js"></script>
+   	<script src="app/factory/login.services.js"></script>	
+   	<script src="app/factory/admin.company.service.js"></script>
+    <script src="app/factory/admin.customer.service.js"></script>
+	<script src="app/factory/companyCoupon.service.js"></script>
     
-    <!-- Company-->
-  	<script src="app/company/companyController/companyMainCtrl.js"></script>
-   	<script src="app/company/companyController/companyCoupon.js"></script>
-    <script src="app/company/companyController/companyCoupon.service.js"></script>
-   
-    
-    <div flash-message="5000"></div>
+   <div flash-message="5000"></div>
      <ui-view></ui-view>
   </body>
 

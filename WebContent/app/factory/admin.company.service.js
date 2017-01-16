@@ -20,7 +20,7 @@ admin.factory('adminCompanyService',
         }
       
         //Create New Company
-        service.addCompany = function(company) {
+        service.createCompany = function(company) {
       	  return $http({
               method: 'PUT',
               url: url + "createCompany",

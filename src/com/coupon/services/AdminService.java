@@ -54,8 +54,6 @@ public class AdminService {
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Customer createCustomer (Customer customer) 
-				throws AdminFacadeException, AlreadyExistException 
-
 		{
 			System.out.println(customer);
 			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
