@@ -14,7 +14,60 @@
   	</form>
 		<div id="loader" style="dispaly:none;">
         <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
-                        
+   
+   <!--Filters-->
+<div class="row">
+    <!--Filter By Type-->
+    <div class="col-md-3">
+        <div class="input-group">
+            <span class="input-group-addon" id="type-addon">Coupon Type:</span>
+            <div class="col-md-6 select-style">
+                <select class="form-control"
+                        aria-describedby="type-addon"
+                        id="typeSelect"
+                        ng-model="filterItem.couponType"
+                        ng-options="coupon.type for item in filterOptions.couponTypes">
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--Filter By Price-->
+    <div class="col-md-3">
+        <div class="input-group">
+                <span class="input-group-addon"
+                      id="Price-addon">Up to price:
+                </span>
+            <input type="number"
+                   min="1"
+                   ng-model="couponFilter.upToPrice"
+                   placeholder="Price"
+                   class="form-control"
+                   aria-describedby="Price-addon"/>
+            <span class="input-group-btn">
+                    <button class="btn btn-secondary"
+                            type="button"
+                            ng-click="byPrice()">Go!
+                    </button>
+                </span>
+        </div>
+    </div>
+    <!--Filter By Date-->
+    <div class="col-md-3">
+        <div class="input-group">
+					
+        <tr>
+        <td>Start Date</td>
+        <td><input type="text" name="S_Date" ng-model="startDate"/></td>
+        <td>End Date</td>
+        <td><input type="text" name="E_Date" ng-model="endDate"/></td>
+        </tr>
+
+		</div>
+    </div>
+</div>
+                    
 	<table class="table table-responsive table-hover table-condensed">
 			<thead>
 				<tr style="font-weight: bold">
@@ -31,7 +84,7 @@
 			</thead>
                                 
                                
-	<tr data-ng-repeat="coupon in coupons | filter:searchCoupon">
+	<tr data-ng-repeat="coupon in coupons">
                                
 		<td>
             <!--Title-->
@@ -52,10 +105,10 @@
         			e-ng-model = "startDate"
         			e-name="startDate"
             	 	e-form="couponform"
-            	 	e-placeholder="StartDate"
+            	 	e-placeholder="Start Date"
             	 	onbeforesave="checkDate($data)">
             		
-            			{{ (coupon.startDate | date:dd/MM/yyyy )  }}
+            			{{ coupon.startDate | date:"dd/MM/yyyy"  }}
 				</span>
         </td>
       	<td>
@@ -65,10 +118,10 @@
             		e-ng-model = "endDate"
             		e-name="endDate"
             	 	e-form="couponform"
-            	 	e-placeholder="EndDate"
+            	 	e-placeholder="End Date"
             	 	onbeforesave="checkDate($data)">
             		
-                           {{ (coupon.endDate | date:dd/MM/yyyy) }}
+                           {{ coupon.endDate | date:"dd/MM/yyyy"  }}
             	</span>
         </td>
 		<td>		
@@ -85,14 +138,17 @@
         <td> 		
 			<!--Type-->
             	<span 
-            		editable-text="coupon.type"
+            		editable-select="coupon.type"
                 	e-name="type"
-                	e-form="couponform">
+                	e-form="couponform"
+                	e-ng-options="type as type for type in couponTypes"
+                	e-required>
                 		  {{ coupon.type }}
                 </span>
-            	
+            	 
 		</td>	
-                		
+               
+                          		
 		<td>  		
 			<!--Message-->
                 <span 
@@ -128,7 +184,7 @@
         	<!-- form --> 
         	
         	<form editable-form name="couponform" 
-        			onbeforesave="validateDates($data)"
+        			onbeforesave="validateDates($data); saveCoupon($data, $index)"
         			ng-show="couponform.$visible" 
         			class="form-buttons form-inline pull-right"
         			shown="inserted == coupon">
@@ -144,7 +200,7 @@
 				<div class="buttons pull-right" ng-show="!couponform.$visible">
                     
                  <button class="btn btn-primary" ng-click="couponform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
-                 <button class="btn btn-danger" ng-click="removeCoupon($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+                 <button class="btn btn-danger" ng-click="showConfirm($event); removeCoupon($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
                 </div>
 			 </td>    
 		</tr>

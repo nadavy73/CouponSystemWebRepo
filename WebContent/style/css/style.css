@@ -1,4 +1,4 @@
-
+﻿
 /*===padding styles=====*/
 .padding-none{
     padding:0px!important;
@@ -72,19 +72,4 @@ a{
 
 .text-white{
     color:#fff!important;
-}
-
-#add-company-form
-{
-	width:150px !important;
-}
-
-.thumb{
-    width:100px;
-    margin:5px;
-    float:left;
-}
-
-.uploader{
-    clear:both;
 }

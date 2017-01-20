@@ -1,5 +1,5 @@
-company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http', '$filter' ,
-	function($scope, $rootScope,companyCouponService, $http, $filter) {
+company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http',
+	function($scope, $rootScope, companyCouponService, $http) {
 	
 	//Search functions
 //	$scope.sortType     = 'id'; // set the default sort type
@@ -11,42 +11,14 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     $scope.searchText = '';
     };
     
-    
+    $scope.clientType = $rootScope.clientType;
 	// Coupons model array
 	$scope.coupons = [];
-		
-	$scope.couponTypes = {
-			  "types": [{
-				  	typeCode: 'RE', 	
-				  	typeName: 'Restaurant'
-					 }, { 
-					typeCode: 'EL', 
-					typeName: 'Electricity'
-					 }, { 
-					typeCode: 'FO',
-					typeName: 'Food' 
-					 }, {
-					typeCode: 'HE',	
-					typeName: 'Health' 
-					},{ 
-					typeCode: 'SP',	
-					typeName: 'Sport' 
-					},{ 
-					typeCode: 'CA',	
-					typeName: 'Camping' 
-					},{ 
-					typeCode: 'TR',	
-					typeName: 'Travelling'
-						}
-					],
-			defaultOption: {
-			typeCode: 'FO',
-			typeName: 'Food'
-	} 
-	//This sets the default value of the select in the ui
-	};
-			 
-		    
+	
+	
+	$scope.couponTypes =  ["Restaurants", "Clothes", "Electronics","Health", "Camping", "Travelling", "Sport", "Food" ] ;
+
+	    
 //    	$scope.couponFilter = couponFilterFactory();
 // 		List of coupon types
 //    	$scope.types = couponTypesFactory;
@@ -82,7 +54,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                 'startDate':'',
                 'endDate': '',
                 'amount': '',
-                'type': $scope.couponTypes.defaultOption.typeName, 
+                'type': '',
                 'message': '',
                 'price': '',
                 'image':'',
@@ -147,25 +119,83 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  }
              };
          
+           //Contains the filter options
+             $scope.typesOptions = {
+               couponTypes: [
+                         {id : 2, name : 'Show All', type: 9 },
+                         {id : 3, name : 'Restaurants', type: 8 },
+                         {id : 4, name : 'Clothes', type: 7 },
+                         {id : 5, name : 'Electronics', type: 6 },
+                         {id : 6, name : 'Health', type: 5 },
+                         {id : 7, name : 'Camping', type: 4 },
+                         {id : 8, name : 'Travelling', type: 3 },
+                         {id : 9, name : 'Sport', type: 2 },
+                         {id : 10, name : 'Food', type: 1 }
+                        ]
+                      };
+           //Contains the sorting options
+           $scope.sortOptions = {
+        		   couponTypes: [
+               {id : 1, name : 'Price Highest to Lowest' },      
+               {id : 2, name : 'Price Lowest to Highest' },
+               ]
+           };
+           
+           //Mapped to the model to filter
+           $scope.filterItem = {
+             type: $scope.typesOptions.couponTypes[0]
+           }
+           
+           //Mapped to the model to sort
+           $scope.sortItem = {
+             type: $scope.sortOptions.couponTypes[0]
+           };
+           
+           //Watch the sorting model - when it changes, change the
+           //ordering of the sort (descending / ascending)
+           $scope.$watch('sortItem', function () {
+             console.log($scope.sortItem);
+             if ($scope.sortItem.type.id === 1) {
+               $scope.reverse = true;
+             } else {
+               $scope.reverse = false;
+             }
+           }, true);
+           
+           //Custom filter - filter based on the rating selected
+           $scope.customFilter = function (data) {
+             if (data.couponType === $scope.filterItem.couponType.type) {
+               return true;
+             } else if ($scope.filterItem.couponType.type === 9) {
+               return true;
+             } else {
+               return false;
+             }
+           };  
+             
+             
+             
+             
+             
              
           // Get coupon by type
              $scope.byType = function () {
-                 if ($scope.couponFilter.typeOnfocus == "All") {
+                 if ($scope.couponTypes == "All") {
                      $scope.getCoupons();
                  } else {
-                	 companyCouponService.byType($scope.couponFilter.typeOnfocus)
+                	 companyCouponService.byType($scope.couponTypes)
                          .then(
                              function successCallback(response) {
                                  $scope.coupons = response.data;
                                  if ($scope.coupons == '') {
-                                     $scope.couponFilter.message =
-                                         "No coupons of type '" + $scope.couponFilter.typeOnfocus + "'";
+//                                     $scope.couponFilter.message =
+//                                         "No coupons of type '" + $scope.couponTypes + "'";
                                  } else {
-                                     $scope.couponFilter.message = '';
+//                                     $scope.couponFilter.message = '';
                                  }
                              },
                              function errorCallback(response) {
-                                 couponUtil.handleBadResponse('ERROR:', response);
+                                 console.log("Error " + response);
                              });
                  }
              };
@@ -227,6 +257,42 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  }
              };   
    
+//             function parseDate(input) {
+//            	  var parts = input.split('/');
+//            	  // Note: months are 0-based
+//            	  return new Date(parts[2], parts[1]-1, parts[0]); 
+//            	}
+//             
+//             company.filter("myfilter", function() {
+//            	  return function(items, from, to) {
+//            	        var df = parseDate(from);
+//            	        var dt = parseDate(to);
+//            	        var arrayToReturn = [];        
+//            	        for (var i=0; i<items.length; i++){
+//            	            var tf = new Date(items[i].date1 * 1000),
+//            	                tt = new Date(items[i].date2 * 1000);
+//            	            if (tf > df && tt < dt)  {
+//            	                arrayToReturn.push(items[i]);
+//            	            }
+//            	        }
+//            	        
+//            	        return arrayToReturn;
+//            	  };
+//             });
+             
+             $scope.dateRangeFilter = function (property, startDate, endDate) {
+            	    return function (item) {
+            	        if (item[property] === null) return false;
+            	 
+            	        var itemDate = moment(item[property]);
+            	        var s = moment(startDate, "dd/MM/yyyy");
+            	        var e = moment(endDate, "dd/MM/yyyy");
+            	 
+            	        if (itemDate >= s && itemDate <= e) return true;
+            	        return false;
+            	    }
+            	};
+             
              
              $scope.imageUpload = function(event){
                  var files = event.target.files; //FileList object
@@ -244,8 +310,6 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                     $scope.coupons.push(e.target.result);
                 });
             }    
-//          var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
-
             
             //date validation
             $scope.checkDate = function(data) {
@@ -266,32 +330,23 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
             		console.log(startDt);
             	    console.log(endDt);
             	     if (startDt > endDt) {
-            	     return "DATE START has to be smaller than DATE END."; 
-            	    	 console.log('startDt > endDt');
-            	     $scope.showPageError = true;
-            					$scope.pageErrorText = "DATE START has to be smaller than DATE END.";
-            			    	return false;	
+            	    return "DATE START has to be smaller than DATE END."; 
+            	    console.log('startDt > endDt');
+            					console.log(startDt);
+                        	    console.log(endDt);
+                        	    console.log ("***********");
+            					return false;	
             	     }
             	     else
-            	     	return true;
-
-            	      
-            	    };
-            	    $scope.showConfirm = function(ev) {
-            	        // Appending dialog to document.body to cover sidenav in docs app
-            	        var confirm = $mdDialog.confirm()
-            	              .title('Would you like to delete this Coupon?')
-            	              .textContent('After Deleting this you will not be able to retore it.')
-            	              .ariaLabel('Lucky day')
-            	              .targetEvent(ev)
-            	              .ok('Delete!')
-            	              .cancel('Cancel Action');
-
-            	        $mdDialog.show(confirm).then(function() {
-            	          $scope.status = 'You decided to delete this coupon.';
-            	        }, function() {
-            	          $scope.status = 'You decided to keep this coupon.';
-            	        });
-            	      };
+            	    	console.log(startDt);
+            	     	console.log ("***********");
+             	     	console.log(endDt);
+            	    	 return true;
+            	     
+};
+           	   
     
 }]);
+
+
+ 
