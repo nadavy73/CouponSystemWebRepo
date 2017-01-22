@@ -4,6 +4,7 @@
 var login = angular.module('login', ['ui.router', 'ngResource', 'ngAnimate']);
 var admin = angular.module('admin', ['ui.router', 'ngAnimate','ngMaterial']);
 var company = angular.module('company', ['ui.router', 'ngAnimate','ngMaterial']);
+var customer = angular.module('customer', ['ui.router', 'ngAnimate','ngMaterial']);
 
 var app = angular.module('couponApp', ['ui.router', 'ui.bootstrap', 'flash',
 	'ngRoute',
@@ -13,15 +14,17 @@ var app = angular.module('couponApp', ['ui.router', 'ui.bootstrap', 'flash',
     //main modules
     'login',
     'admin',
-    'company'
+    'company',
+    'customer'
+    
     
 ]);
 
 app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-	//////////////////////
-	///LOGIN///////////////
-	/////////////////////
+	/////////////////
+	//////LOGIN//////
+	/////////////////
 	$stateProvider
         .state('login', {
         url: '/login',	
@@ -63,7 +66,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
         
         
         /////////////////////////
-    	////////COMPANY////////////
+    	////////COMPANY//////////
     	/////////////////////////
        $stateProvider
      		.state('company', {
@@ -82,23 +85,31 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
     });
         
         $urlRouterProvider.otherwise('login');
+
+
+        /////////////////////////
+    	////////CUSTOMER/////////
+    	/////////////////////////
+       $stateProvider
+     		.state('customer', {
+     			url:'/customer', 
+     			controller: 'customerMainCtrl',
+     			templateUrl: 'app/views/customer.main.html'
+    });
+    
+        
+        ///Customer-Coupon//
+        $stateProvider
+     	.state('customer.coupon', {
+     		url:'/customerCoupon', 
+     		controller: 'customerCouponCtrl',
+     		templateUrl: 'app/views/customerCoupon.html'
+    });
+        
+        $urlRouterProvider.otherwise('login');
 }])
  
-//app.run(['$rootScope', '$location', '$cookieStore', '$http',
-//    function ($rootScope, $location, $cookieStore, $http) {
-//        // keep user logged in after page refresh
-//        $rootScope.globals = $cookieStore.get('globals') || {};
-//        if ($rootScope.globals.currentUser) {
-//            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-//        }
-// 
-//        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-//            // redirect to login page if not logged in
-//            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
-//                $location.path('/login');
-//            }
-//        });
-//    }]);
+
 
 
 

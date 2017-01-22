@@ -1,5 +1,5 @@
-company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http',
-	function($scope, $rootScope, companyCouponService, $http) {
+customer.controller("customerCouponCtrl", ['$scope','$rootScope','customerCouponService','$http',
+	function($scope, $rootScope, customerCouponService, $http) {
 	
 	//Search functions
 	$scope.searchCoupon   = '';     // set the default search/filter term
@@ -18,7 +18,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 
 	
 	//get All Coupons
-    companyCouponService.getCoupons().then(function (data) {
+    customerCouponService.getCoupons().then(function (data) {
 		  $scope.coupons = data.data;
 		  
 		  angular.element("#loader").hide();
@@ -51,7 +51,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     	console.log(index);
    		console.log($scope.coupons[index].id);	
    	if (confirm("Are you sure you want to delete this coupon?"))	
-    companyCouponService.removeCoupon($scope.coupons[index].id)
+    customerCouponService.removeCoupon($scope.coupons[index].id)
         	.then(function successCallback (response){
             			// success callback
             			console.log('DELETED:');
@@ -66,8 +66,8 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                 	  };
          
        //update coupon      	  
-       $scope.updateCompany= function (coupon){
-        	 companyCouponService.updateCoupon().then(function (data) {
+       $scope.updateCustomer= function (coupon){
+        	 customerCouponService.updateCoupon().then(function (data) {
         		 $scope.coupons = data.data;
                 			  
         	 });
@@ -77,7 +77,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          //Edit/Add new Coupon
          $scope.saveCoupon = function(data, index) {
          	if ($scope.coupons[index].id == null) {
-         		companyCouponService.createCoupon(data).then(
+         		customerCouponService.createCoupon(data).then(
                  function successCallback(response) {
                  	console.log('ADDED:');
                      console.log(response.data);
@@ -90,7 +90,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          	}
          		else {
         	
-         			companyCouponService.updateCoupon($scope.coupons[index].id, data).then(
+         			customerCouponService.updateCoupon($scope.coupons[index].id, data).then(
                          function successCallback(response) {
                          	console.log('Coupon updated', response);
                             // update model
@@ -166,7 +166,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  if ($scope.couponTypes == "All") {
                      $scope.getCoupons();
                  } else {
-                	 companyCouponService.byType($scope.couponTypes)
+                	 customerCouponService.byType($scope.couponTypes)
                          .then(
                              function successCallback(response) {
                                  $scope.coupons = response.data;
@@ -187,7 +187,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  document.getElementById("typeSelect").selectedIndex = ($scope.couponType.length);
                  // Purchased by price
                  if ($scope.couponFilter.upToPrice != null) {
-                     companyCouponProxy.byPrice($scope.couponFilter.upToPrice)
+                     customerCouponProxy.byPrice($scope.couponFilter.upToPrice)
                          .then(
                              function successCallback(response) {
                                  $scope.coupons = response.data;
@@ -207,7 +207,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  var date = $scope.couponFilter.date;
                  if (date != null) {
                      if ($scope.couponFilter.dateRadio == "start") {
-                         companyCouponProxy.byStartDate(date)
+                         customerCouponProxy.byStartDate(date)
                              .then(
                                  function successCallback(response) {
                                      $scope.coupons = response.data;
@@ -221,7 +221,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                                      couponUtil.handleBadResponse('ERROR:', response);
                                  });
                      } else if ($scope.couponFilter.dateRadio == "end") {
-                         companyCouponProxy.byEndDate(date)
+                         customerCouponProxy.byEndDate(date)
                              .then(
                                  function successCallback(response) {
                                      $scope.coupons = response.data;
