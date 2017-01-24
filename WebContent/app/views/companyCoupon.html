@@ -20,19 +20,15 @@
     <!--Filter By Type-->
     <div class="col-md-3">
         <div class="input-group">
-            <span class="input-group-addon" id="type-addon">Coupon Type:</span>
-            <div class="col-md-6 select-style">
-                <select class="form-control"
-                        aria-describedby="type-addon"
-                        id="typeSelect"
-                        ng-model="filterItem.couponType"
-                        ng-options="coupon.type for item in filterOptions.couponTypes">
-                </select>
-            </div>
-        </div>
+            <span class="input-group-addon">Coupon Type:</span>
+            	<select class="form-control"
+					aria-describedby="type-addon"
+                    ng-model="filterType.option"
+					ng-options="item.name for item in CouponTypes.options">                </select>
+          </div>
     </div>
     
-    
+   
     <!--Filter By Price-->
     <div class="col-md-3">
         <div class="input-group">
@@ -41,7 +37,7 @@
                 </span>
             <input type="number"
                    min="1"
-                   ng-model="couponFilter.upToPrice"
+                   ng-model="limitNumber"
                    placeholder="Price"
                    class="form-control"
                    aria-describedby="Price-addon"/>
@@ -53,7 +49,9 @@
                 </span>
         </div>
     </div>
-    <!--Filter By Date-->
+    
+     	
+ 	<!--Filter By Date-->
     <div class="col-md-3">
         <div class="input-group">
 					
@@ -84,7 +82,7 @@
 			</thead>
                                 
                                
-	<tr data-ng-repeat="coupon in coupons">
+	<tr data-ng-repeat="coupon in coupons | filter:customFilter">
                                
 		<td>
             <!--Title-->

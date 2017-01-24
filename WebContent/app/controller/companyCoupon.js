@@ -120,53 +120,30 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
              };
          
            //Contains the filter options
-             $scope.typesOptions = {
-               couponTypes: [
-                         {id : 2, name : 'Show All', type: 9 },
-                         {id : 3, name : 'Restaurants', type: 8 },
-                         {id : 4, name : 'Clothes', type: 7 },
-                         {id : 5, name : 'Electronics', type: 6 },
-                         {id : 6, name : 'Health', type: 5 },
-                         {id : 7, name : 'Camping', type: 4 },
-                         {id : 8, name : 'Travelling', type: 3 },
-                         {id : 9, name : 'Sport', type: 2 },
-                         {id : 10, name : 'Food', type: 1 }
+             $scope.CouponTypes = {
+               options: [
+                         {id : 2, name : 'Show All', type: 'Show All' },
+                         {id : 3, name : 'Restaurants', type: 'Restaurants' },
+                         {id : 4, name : 'Clothes', type: 'Clothes' },
+                         {id : 5, name : 'Electronics', type: 'Electronics' },
+                         {id : 6, name : 'Health', type: 'Health' },
+                         {id : 7, name : 'Camping', type: 'Camping' },
+                         {id : 8, name : 'Travelling', type: 'Travelling' },
+                         {id : 9, name : 'Sport', type: 'Sport' },
+                         {id : 10, name : 'Food', type: 'Food' }
                         ]
                       };
-           //Contains the sorting options
-           $scope.sortOptions = {
-        		   couponTypes: [
-               {id : 1, name : 'Price Highest to Lowest' },      
-               {id : 2, name : 'Price Lowest to Highest' },
-               ]
-           };
-           
+             
            //Mapped to the model to filter
-           $scope.filterItem = {
-             type: $scope.typesOptions.couponTypes[0]
+           $scope.filterType = {
+             option: $scope.CouponTypes.options[0]
            }
            
-           //Mapped to the model to sort
-           $scope.sortItem = {
-             type: $scope.sortOptions.couponTypes[0]
-           };
-           
-           //Watch the sorting model - when it changes, change the
-           //ordering of the sort (descending / ascending)
-           $scope.$watch('sortItem', function () {
-             console.log($scope.sortItem);
-             if ($scope.sortItem.type.id === 1) {
-               $scope.reverse = true;
-             } else {
-               $scope.reverse = false;
-             }
-           }, true);
-           
            //Custom filter - filter based on the rating selected
-           $scope.customFilter = function (data) {
-             if (data.couponType === $scope.filterItem.couponType.type) {
-               return true;
-             } else if ($scope.filterItem.couponType.type === 9) {
+           $scope.customFilter = function (coupons) {
+             if (coupons.type === $scope.filterType.option.type) {
+            	 return true;
+             } else if ($scope.filterType.option.type === 'Show All') {
                return true;
              } else {
                return false;
@@ -174,9 +151,8 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
            };  
              
              
-             
-             
-             
+           $scope.currencyFormatting = function(value) { 
+        	   return value.toString() + " $"; };  
              
           // Get coupon by type
              $scope.byType = function () {
