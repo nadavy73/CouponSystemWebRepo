@@ -1,5 +1,5 @@
-company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponService','$http',
-	function($scope, $rootScope, companyCouponService, $http) {
+customer.controller("customerCouponCtrl", ['$scope','$rootScope','customerCouponService','$http',
+	function($scope, $rootScope, customerCouponService, $http) {
 	
 	//Search functions
 	$scope.searchCoupon   = '';     // set the default search/filter term
@@ -18,7 +18,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 
 	
 	//get All Coupons
-    companyCouponService.getCoupons().then(function (data) {
+    customerCouponService.getCoupons().then(function (data) {
 		  $scope.coupons = data.data;
 		  
 		  angular.element("#loader").hide();
@@ -51,7 +51,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     	console.log(index);
    		console.log($scope.coupons[index].id);	
    	if (confirm("Are you sure you want to delete this coupon?"))	
-    companyCouponService.removeCoupon($scope.coupons[index].id)
+    customerCouponService.removeCoupon($scope.coupons[index].id)
         	.then(function successCallback (response){
             			// success callback
             			console.log('DELETED:');
@@ -66,8 +66,8 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                 	  };
          
        //update coupon      	  
-       $scope.updateCompany= function (coupon){
-        	 companyCouponService.updateCoupon().then(function (data) {
+       $scope.updateCustomer= function (coupon){
+        	 customerCouponService.updateCoupon().then(function (data) {
         		 $scope.coupons = data.data;
                 			  
         	 });
@@ -77,7 +77,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          //Edit/Add new Coupon
          $scope.saveCoupon = function(data, index) {
          	if ($scope.coupons[index].id == null) {
-         		companyCouponService.createCoupon(data).then(
+         		customerCouponService.createCoupon(data).then(
                  function successCallback(response) {
                  	console.log('ADDED:');
                      console.log(response.data);
@@ -90,7 +90,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
          	}
          		else {
         	
-         			companyCouponService.updateCoupon($scope.coupons[index].id, data).then(
+         			customerCouponService.updateCoupon($scope.coupons[index].id, data).then(
                          function successCallback(response) {
                          	console.log('Coupon updated', response);
                             // update model
@@ -103,30 +103,53 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
              };
          
            //Contains the filter options
-             $scope.CouponTypes = {
-               options: [
-                         {id : 2, name : 'Show All', type: 'Show All' },
-                         {id : 3, name : 'Restaurants', type: 'Restaurants' },
-                         {id : 4, name : 'Clothes', type: 'Clothes' },
-                         {id : 5, name : 'Electronics', type: 'Electronics' },
-                         {id : 6, name : 'Health', type: 'Health' },
-                         {id : 7, name : 'Camping', type: 'Camping' },
-                         {id : 8, name : 'Travelling', type: 'Travelling' },
-                         {id : 9, name : 'Sport', type: 'Sport' },
-                         {id : 10, name : 'Food', type: 'Food' }
+             $scope.typesOptions = {
+               couponTypes: [
+                         {id : 2, name : 'Show All', type: 9 },
+                         {id : 3, name : 'Restaurants', type: 8 },
+                         {id : 4, name : 'Clothes', type: 7 },
+                         {id : 5, name : 'Electronics', type: 6 },
+                         {id : 6, name : 'Health', type: 5 },
+                         {id : 7, name : 'Camping', type: 4 },
+                         {id : 8, name : 'Travelling', type: 3 },
+                         {id : 9, name : 'Sport', type: 2 },
+                         {id : 10, name : 'Food', type: 1 }
                         ]
                       };
-             
+           //Contains the sorting options
+           $scope.sortOptions = {
+        		   couponTypes: [
+               {id : 1, name : 'Price Highest to Lowest' },      
+               {id : 2, name : 'Price Lowest to Highest' },
+               ]
+           };
+           
            //Mapped to the model to filter
-           $scope.filterType = {
-             option: $scope.CouponTypes.options[0]
+           $scope.filterItem = {
+             type: $scope.typesOptions.couponTypes[0]
            }
            
+           //Mapped to the model to sort
+           $scope.sortItem = {
+             type: $scope.sortOptions.couponTypes[0]
+           };
+           
+           //Watch the sorting model - when it changes, change the
+           //ordering of the sort (descending / ascending)
+           $scope.$watch('sortItem', function () {
+             console.log($scope.sortItem);
+             if ($scope.sortItem.type.id === 1) {
+               $scope.reverse = true;
+             } else {
+               $scope.reverse = false;
+             }
+           }, true);
+           
            //Custom filter - filter based on the rating selected
-           $scope.customFilter = function (coupons) {
-             if (coupons.type === $scope.filterType.option.type) {
-            	 return true;
-             } else if ($scope.filterType.option.type === 'Show All') {
+           $scope.customFilter = function (data) {
+             if (data.couponType === $scope.filterItem.couponType.type) {
+               return true;
+             } else if ($scope.filterItem.couponType.type === 9) {
                return true;
              } else {
                return false;
@@ -134,15 +157,16 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
            };  
              
              
-           $scope.currencyFormatting = function(value) { 
-        	   return value.toString() + " $"; };  
+             
+             
+             
              
           // Get coupon by type
              $scope.byType = function () {
                  if ($scope.couponTypes == "All") {
                      $scope.getCoupons();
                  } else {
-                	 companyCouponService.byType($scope.couponTypes)
+                	 customerCouponService.byType($scope.couponTypes)
                          .then(
                              function successCallback(response) {
                                  $scope.coupons = response.data;
@@ -163,7 +187,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  document.getElementById("typeSelect").selectedIndex = ($scope.couponType.length);
                  // Purchased by price
                  if ($scope.couponFilter.upToPrice != null) {
-                     companyCouponProxy.byPrice($scope.couponFilter.upToPrice)
+                     customerCouponProxy.byPrice($scope.couponFilter.upToPrice)
                          .then(
                              function successCallback(response) {
                                  $scope.coupons = response.data;
@@ -183,7 +207,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                  var date = $scope.couponFilter.date;
                  if (date != null) {
                      if ($scope.couponFilter.dateRadio == "start") {
-                         companyCouponProxy.byStartDate(date)
+                         customerCouponProxy.byStartDate(date)
                              .then(
                                  function successCallback(response) {
                                      $scope.coupons = response.data;
@@ -197,7 +221,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                                      couponUtil.handleBadResponse('ERROR:', response);
                                  });
                      } else if ($scope.couponFilter.dateRadio == "end") {
-                         companyCouponProxy.byEndDate(date)
+                         customerCouponProxy.byEndDate(date)
                              .then(
                                  function successCallback(response) {
                                      $scope.coupons = response.data;

@@ -1,0 +1,94 @@
+<header class="main-header">
+        <!-- Logo -->
+        <a class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>CS</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Coupon System</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    
+                <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="style/images/icons/angular.png" class="user-image" alt="User Image" />
+                            <span class="hidden-xs">Customer view </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="style/images/icons/angular.png" class="img-circle" alt="User Image">         
+                        
+                  			 <h3>Customer View</h3>
+                             
+                             <h4>Customer Name: {{username}}</h4> 
+                             <h4>Email: customerEmail@gmail.com</h4> 
+                              
+                            </li>     
+                    	</ul>
+                    </li>
+                    
+                     <li class="user-footer">
+                        <a href="http://localhost:8080/WebCouponProject/#/login"
+ 							class="btn btn-danger btn-flat">
+                           Log Out
+                        </a>
+                        
+                    </li>
+                </ul>
+            </div>
+        </nav> 
+</header>
+
+
+
+<!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="style/images/icons/angular.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>Coupon System</p>
+                    
+                </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="treeview">
+                	
+                	<a ui-sref="customer.coupon">
+                	<i class="fa fa-barcode"></i><span> MyCoupons</span>
+					</a>
+					
+					<a ui-sref="customer.coupon">
+                	<i class="fa fa-cog"></i><span> Settings</span>
+					</a>
+				</li>       
+             
+                
+                </ul>
+            
+            
+            </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <ui-view></ui-view>
+    </div>
+
+        
+   
+            
+     </div>	
