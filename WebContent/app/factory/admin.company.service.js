@@ -14,10 +14,8 @@ admin.factory('adminCompanyService',
         service.getCompanies = function (){
         	angular.element("#loader").show();   	
         	return $http.get(url+"getallcompanies")
-               .success(function (response) {
-
-            });
-        }
+               
+        };
       
         //Create New Company
         service.createCompany = function(company) {

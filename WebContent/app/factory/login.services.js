@@ -11,13 +11,16 @@ login.factory('LoginService',
             $http.post("http://localhost:8080/WebCouponProject/rest/"+ clientType + "/login/"
                     + username + "/"
                     + password)
-                .success(function (response) {
-                    callback(response);
+                .then(function (response) {
+                	if (response="ok"){
+                		 callback(response);
+                	}
+                   
                  });
-            
         };
  
-        return service;
+        return service; 
+
     }])
  
 
