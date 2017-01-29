@@ -138,6 +138,22 @@ public class CustomerService {
 		return null;
 	}
 
+	@GET
+	@Path("/getAllCouponsThatCanPurches")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Coupon> getAllCouponsThatCanPurches() 
+			throws DoesNotExistException
+	{
+		CustomerFacade facade = (CustomerFacade) request.getSession().getAttribute(FACADE_KEY);
+		
+		try {
+			return facade.getAllCouponsThatCanPurches();
+		} catch (CustomerFacadeException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
 
 
