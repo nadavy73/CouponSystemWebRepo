@@ -1,8 +1,8 @@
 //'use strict';
  
 login.controller('loginCtrl',
-    ['$scope', '$rootScope', '$state', 'LoginService',
-    function ($scope, $rootScope, $state, LoginService) {
+    ['$scope', '$rootScope', '$state', 'Flash', 'LoginService',
+    function ($scope, $rootScope, $state, Flash, LoginService) {
         
 
     	//Default 
@@ -11,12 +11,12 @@ login.controller('loginCtrl',
         $scope.password = '';
            	
         $scope.login = function () {
-            LoginService.Login($scope.username, $scope.password, $scope.clientType, function(response) {
-            	if(response=="ok") {
+            LoginService.login($scope.username, $scope.password, $scope.clientType, function(response) {
+            	if(response.data =="ok") {
             		$rootScope.clientType = $scope.clientType;
             		$state.go ($scope.clientType);
                 } else {
-                    $scope.error = response.message;
+                    Flash.create('danger', 'Username or password are incorrect', 'large-text');
                 }
             });
         };

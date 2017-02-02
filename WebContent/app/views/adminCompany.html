@@ -13,7 +13,7 @@
     	</div>
   	</form>
 		<div id="loader" style="dispaly:none;">
-        	<img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
+        	<img src="https://www.fundraising.com/Content/spinner.big.gif" width=50px height=50px></div>
             
 		<table class="table table-responsive table-hover table-condensed">
         	<thead>
@@ -26,18 +26,17 @@
 				</tr>	
 			</thead>
                                 
-	<tr data-ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:searchCompany">
-                                
-                        
-	<td>
+	<tr data-ng-repeat="company in companies | filter:searchCompany">
+    	<td>
 		<span 
-			editable-text="company.compName" 
-			e-ng-model= "compName"
-			e-name="compName" 
+			editable-text="company.name" 
+			e-ng-model="name"
+			e-name="name" 
 			e-form="companyform"
-			e-placeholder= "Company" 
-			onbeforesave="nameValidation($data)">
-		 		{{ company.compName }}
+			e-placeholder="Company" 
+			onbeforesave="validateName($data)">
+		 		
+		 		{{company.name}}
 		</span>
 	</td>
                                     
@@ -45,7 +44,7 @@
         <!--Password-->
 		<span 
 			editable-text="company.password"
-			e-ng-model= "password"
+			e-ng-model="password"
 	   		e-name="password"
 	   		e-form="companyform"
 	   		e-placeholder="password"
@@ -54,8 +53,6 @@
 	            {{company.password}}
         </span>
 	</td>
-
-
 
 	<td>
 

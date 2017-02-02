@@ -1,11 +1,8 @@
 admin.controller("companyCtrl", ['$scope','adminCompanyService','$http', 
-		function($scope,adminCompanyService, $http) {
+		function($scope,adminCompanyService, $http, validations) {
     
-//	 var url ="http://localhost:8080/WebCouponProject/rest/admin/";  
-//	  $scope.sortType     = 'id'; // set the default sort type
-//	  $scope.sortReverse  = false;  // set the default sort order
-	  $scope.searchCompany   = '';     // set the default search/filter term
-//	
+		$scope.searchCompany   = '';     // set the default search/filter term
+	
 	// Clear Search Text
 	    $scope.ClearSearchText = function () {
 	    $scope.searchText = '';
@@ -13,35 +10,52 @@ admin.controller("companyCtrl", ['$scope','adminCompanyService','$http',
 	  
 	  $scope.companies = [];
 	 
+	  /////////////////
+	 ////Validation/// 
+	 ////////////////// 
+	//Name Validation
+	  $scope.validateName = function (name) {
+			 var userExists = false;
+			 angular.forEach ($scope.companies, function (company) {
+				 if (userExists === false) 
+				 {
+					 	if(company.name === name)
+					 {
+						userExists = true;
+						console.log ("Duplicate!");
+						return userExists; 
+					 } 
+					 	else 
+					 {
+					 	userExists = false;
+						console.log ("Not Duplicate!");
+						return userExists;
+					 }
+				}
+			 });
+			if (userExists==true || name.length<1) 
+			{
+				return "Company Name already exist\n"
+					+ "Please enter different name"	;
+			} 
+		};  
+	 
+		//Password Validation
+		$scope.passwordValidation = function (password) {
+	        var pattern = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{4,9}/g;
+	        if (pattern.test(password) && (password.length < 10)) {
+	            return true;
+	        } else {
+	            return "Password must contain:\n"
+	                + "4-9 characters\n"
+	                + "At lest one upper case letter\n"
+	                + "At lest one lower case letter\n"
+	                + "At lest one digit";
+	        }
+	    
+	    };
 	  
-	  $scope.compNameValidation = function (compName, index) {
-        var addToArray=true;
-    	if (compName.length < 1) {
-            return "User name can't be empty";
-        } 
-        if ($scope.companies[index].compName === compName){
-        addToArray=false;	
-        }
-        else {
-            return true;
-        }
-    };   
-    
-    $scope.passwordValidation = function (password) {
-        var pattern = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{4,9}/g;
-        if (pattern.test(password) && (password.length < 10)) {
-            return true;
-        } else {
-            return "Password must contain:\n"
-                + "4-9 characters\n"
-                + "At lest one upper case letter\n"
-                + "At lest one lower case letter\n"
-                + "At lest one digit";
-        }
-    
-    };
-
-  //get All Companies
+    //get All Companies
 	  adminCompanyService.getCompanies().then(function (data) {
 		  $scope.companies = data.data;
 		  
@@ -53,7 +67,7 @@ admin.controller("companyCtrl", ['$scope','adminCompanyService','$http',
     $scope.addCompany = function() {
         $scope.inserted = {
           'id': $scope.companies.id,
-          'compName': '',
+          'name': '',
           'password': '',
           'email': '' 
         };

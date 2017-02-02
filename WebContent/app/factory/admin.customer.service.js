@@ -1,6 +1,6 @@
 'use strict';
  
-admin.factory('CustomersService',
+admin.factory('adminCustomersService',
 		['$http', function ($http) {
         var service = {};
         	
@@ -9,14 +9,15 @@ admin.factory('CustomersService',
         service.returnValue = {};
         service.returnValue.AllCustomers = {};
 
+        //Show All Customers
         service.getCustomers = function (){
-     angular.element("#loader").show();   	
+        	angular.element("#loader").show();   	
         	return $http.get(url+"getAllCustomers")
               
         };
         
       //Create New Customer
-        service.addCustomer = function(customer) {
+        service.createCustomer = function(customer) {
       	 return $http({
                 method: 'PUT',
                 url: url + "createCustomer",

@@ -6,11 +6,12 @@ admin.factory('adminCompanyService',
         var service = {};
         	
         var url ="http://localhost:8080/WebCouponProject/rest/admin/";
-        	
+        
+        
         service.returnValue = {};
         service.returnValue.AllCompanies = {};
 
-        
+        //Show All Companies
         service.getCompanies = function (){
         	angular.element("#loader").show();   	
         	return $http.get(url+"getallcompanies")
