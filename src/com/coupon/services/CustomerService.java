@@ -139,7 +139,7 @@ public class CustomerService {
 	}
 
 	@GET
-	@Path("/getAllCouponsThatCanPurches")
+	@Path("/getAllAvailableCoupons")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Coupon> getAllCouponsThatCanPurches() 
 			throws DoesNotExistException

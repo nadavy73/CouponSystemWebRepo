@@ -106,6 +106,16 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
      		templateUrl: 'app/views/customerCoupon.html'
     });
         
+       
+        ///Customer-All Coupons
+        $stateProvider
+     	.state('customer.allcoupons', {
+     		url:'/customerallCoupons', 
+     		controller: 'customerChoosesCouponCtrl',
+     		templateUrl: 'app/views/customerChooseCoupons.html'
+    });
+        
+       
         $urlRouterProvider.otherwise('login');
 }])
  

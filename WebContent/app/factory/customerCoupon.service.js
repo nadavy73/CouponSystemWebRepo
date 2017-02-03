@@ -10,10 +10,19 @@ customer.factory('customerCouponService',
         service.returnValue = {};
         service.returnValue.AllCoupons = {};
 
-        //Get All Coupons
+        //Get All Purchased Coupons
         service.getCoupons = function (){
         	angular.element("#loader").show();   	
         	return $http.get(url+"getAllPurchasedCoupons")
+               .success(function (response) {
+
+            });
+        };
+        
+      //Show All available Coupons
+        service.getAvailableCoupons = function (){
+        	angular.element("#loader").show();   	
+        	return $http.get(url+"getAllAvailableCoupons")
                .success(function (response) {
 
             });
