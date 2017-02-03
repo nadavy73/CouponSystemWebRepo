@@ -120,10 +120,7 @@ app.config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $ur
 }])
  
 
-
-
-
-app.run(function(editableOptions) {
-  editableOptions.theme = 'bs3';
+	app.run(function(editableOptions) {
+		editableOptions.theme = 'bs3';
 });
 

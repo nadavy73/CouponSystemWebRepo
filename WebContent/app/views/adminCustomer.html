@@ -1,124 +1,89 @@
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        
-                      <form>
-    					<div class="form-group">
-      						<div class="input-group">
-        						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        				<input type="text" class="form-control" placeholder="Search..." ng-model="searchCustomer">
-        				<span class="input-group-btn">
-                    	<button data-ng-click="ClearSearchText()" class="btn btn-primary"> Clear </button>
-                		</span>
-      						</div>      
-    					</div>
-  					  </form>
+<div class="panel panel-default">
+  <div class="panel-body">
+  
+  <form>
+  	<div class="form-group">
+  		<div class="input-group">
+  			<div class="input-group-addon"><i class="fa fa-search"></i></div>
+  				<input type="text" class="form-control" placeholder="Search..." data-ng-model="searchCustomer">
+  				<span class="input-group-btn">
+  					<button data-ng-click="ClearSearchText()" class="btn btn-primary"> Clear </button>
+            	</span>
+      	</div>      
+    </div>
+</form>
   					
-                        <div id="loader" style="dispaly:none;">
-                        <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif" width=50px height=50px></div>
+    <div id="loader" style="dispaly:none;">
+       	<img src="https://www.fundraising.com/Content/spinner.big.gif" width=50px height=50px></div>
                         
-                        <table class="table table-responsive table-hover table-condensed">
-                                <thead>
-                                    <tr style="font-weight: bold">
-                                        
-                                        <td>
-                           				<a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
-            								Id
-            							<span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
-          								</a>
-        								</td>
-        								
-                                          
-                                        <td>
-                                        <a href="#" ng-click="sortType = 'custName'; sortReverse = !sortReverse">
-            							Customer Name
-            							<span ng-show="sortType == 'custName' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'custName' && sortReverse" class="fa fa-caret-up"></span>
-          								</a>
-        								</td>
-        								
-                                        
-                                        <td>
-                                        <a href="#" ng-click="sortType = 'custPassword'; sortReverse = !sortReverse">
-            							Password
-            							<span ng-show="sortType == 'custPassword' && !sortReverse" class="fa fa-caret-down"></span>
-           								<span ng-show="sortType == 'custPassword' && sortReverse" class="fa fa-caret-up"></span>
-          								</a>
-        								</td>
-        								
-                                        
-                                         </tr>
-                                </thead>
+       <table class="table table-responsive table-hover table-condensed">
+        	<thead>
+            	<tr style="font-weight: bold">
+                	
+            		<td> Customer Name 	</td>		
+        			<td> Password 		</td>		
+        			        					                   
+				</tr>	
+			</thead>
                                 
                                
                                 
-                                <tr ng-repeat="customer in customers | orderBy:sortType:sortReverse | filter:searchCustomer">
-                                
-                                <td>
-                                <span
-                                        						
-                                e-ng-model= "id"
-                                e-form="customerform"
-                                e-placeholder= "Id">
-                             	{{ customer.id }}
-        						 
-        						</span>     							
-      							</td>
-                                
-                                <td>
-                             	<span 
-        						editable-text="customer.custName" 
-        						e-ng-model="fullname"
-        						e-name="custName" 
-        						e-form="customerform" 
-        						e-placeholder= "Customer" 
-        						onbeforesave="custNameValidation($data)">
-         				 		{{ customer.custName }}
-        						</span>
-      							</td>
-                                        
-								<td>
-               					<!--Password-->
-                				<span editable-text="customer.custPassword"
-                      			e-name="custPassword"
-                      			e-ng-model= "custPassword"
-                      			e-form="customerform"
-                      			e-placeholder="Password"
-                      			onbeforesave="passwordValidation($data)">
-
-                            	{{customer.custPassword}}
-                        		</span>
-            					</td>
+	<tr ng-repeat="customer in customers  | filter:searchCustomer">
+		
+		<!--Customer Name-->
+		<td>
+			<span
+				editable-text="customer.name" 
+        		e-ng-model="name"
+        		e-name="name" 
+        		e-form="customerform" 
+        		e-placeholder= "Customer" 
+        		onbeforesave="nameValidation($data)">
+         			{{ customer.name }}
+        	</span>
+      	</td>
+        
+        <!--Password-->                                
+		<td>
+            <span 
+            	editable-text="customer.custPassword"
+                e-name="custPassword"
+                e-ng-model= "custPassword"
+                e-form="customerform"
+                e-placeholder="Password"
+                onbeforesave="passwordValidation($data)">
+					{{customer.custPassword}}
+			</span>
+		</td>
 					
-            <td style="white-space: nowrap">
-        	<!-- form --> 
-        	
-        	<form editable-form name="customerform" 
-        			onbeforesave="saveUser($data, $index)" 
-        			ng-show="customerform.$visible" 
-        			class="form-buttons form-inline pull-right"
-          			shown="inserted == customer">
+		<td style="white-space: nowrap">
+        <!-- form --> 
+        
+	<form 	editable-form name="customerform" 
+        	onbeforesave="saveCustomer($data, $index)" 
+        	ng-show="customerform.$visible" 
+        	class="form-buttons form-inline pull-right"
+          	shown="inserted == customer">
           		
-          		<button type="submit" ng-disabled="customerform.$waiting" class="btn btn-primary">
+		<button type="submit" ng-disabled="customerform.$waiting" class="btn btn-primary">
             	save
-          		</button>    
-          		<button type="button" ng-disabled="customerform.$waiting" ng-click="customerform.$cancel()" class="btn btn-primary">
+		</button>    
+		
+		<button type="button" ng-disabled="customerform.$waiting" ng-click="customerform.$cancel()" class="btn btn-primary">
             	cancel
-          		</button>
-        	</form>                          
-				
-				<div class="buttons pull-right" ng-show="!customerform.$visible">
-                    
-                 <button class="btn btn-primary" ng-click="customerform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
-                 <button class="btn btn-danger" ng-click="removeCustomer($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
-                </div>
-			 </td>    
+        </button>
+	</form>                          
+	
+			<div class="buttons pull-right" ng-show="!customerform.$visible">
+				<button class="btn btn-primary" ng-click="customerform.$show()"><i class="fa fa-pencil">&nbsp; Edit</i></button>
+            	<button class="btn btn-danger" ng-click="removeCustomer($index)"><i class="fa fa-trash"> &nbsp; Delete </i></button>
+			</div>
+		</td>    
 		</tr>
 	</tbody>
 </table>
-                          
-                       
-                    </div>
-					<button type="button" class="btn btn-primary" ng-click="addCustomer()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
-                </div>
+		
+		</div>
+			<button type="button" class="btn btn-primary" ng-click="addCustomer()"><i class="fa fa-plus"> &nbsp; Add new Customer</i></button>
+		</div>
         

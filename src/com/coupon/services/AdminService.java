@@ -48,24 +48,9 @@ public class AdminService {
 		
 	}
 	
-	//V
-		@PUT
-		@Path("/createCustomer")
-		@Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-		public Customer createCustomer (Customer customer) 
-		{
-			System.out.println(customer);
-			AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
-			try {
-				long customerId = facade.createCustomer(customer);
-				customer.setId(customerId);
-			} catch (AdminFacadeException | AlreadyExistException e) {
-				e.printStackTrace();
-			}
-				return customer;
-		
-		}
+	//////////////////////////////////
+	//////////// Company//////////////
+	/////////////////////////////////
 	
 	//V 
 	@PUT
@@ -142,14 +127,14 @@ public class AdminService {
 	
 	//V
 	@GET
-	@Path("/getCompanyByName/{compName}")
+	@Path("/getCompanyByName/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Company GetCompanyByName (@PathParam("compName") String compName)	
+	public Company GetCompanyByName (@PathParam("name") String name)	
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
-			return facade.GetCompanyByName(compName);
+			return facade.GetCompanyByName(name);
 		} catch (AdminFacadeException | DoesNotExistException e) {
 			e.printStackTrace();
 		}
@@ -181,7 +166,28 @@ public class AdminService {
 		return null;
 	}
 	
+	//////////////////////////////////
+	//////////// Customers////////////
+	/////////////////////////////////
 	
+	//V
+	@PUT
+	@Path("/createCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Customer createCustomer (Customer customer) 
+	{
+		System.out.println(customer);
+		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+		try {
+			long customerId = facade.createCustomer(customer);
+			customer.setId(customerId);
+		} catch (AdminFacadeException | AlreadyExistException e) {
+			e.printStackTrace();
+		}
+			return customer;
+	
+	}
 	
 
 	//V
@@ -218,7 +224,7 @@ public class AdminService {
 			return customer;
 	}
 	
-		
+	
 	//V
 	@GET
 	@Path("/getCustomerByID/{custId}")
@@ -235,24 +241,39 @@ public class AdminService {
 		
 		return null;
 	}
-
+	
+	//V
+	@GET
+	@Path("/getCustomerByName/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Customer getCustomer(@PathParam("name") String name) 
+	{
+		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
+		
+		try {
+			return facade.GetCustomerByName(name);
+		} catch (AdminFacadeException | DoesNotExistException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	//V
 	@GET
 	@Path("/getAllCustomers")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Customer> getAllCustomers()
+	public Customer[] getAllCustomers()
 	{
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
 				for (Customer customer : facade.getAllCustomers()) {
 					
-				System.out.println();	
 				System.out.println(customer);
 				System.out.println();
 				}
-			return facade.getAllCustomers();
+			return facade.getAllCustomers().toArray(new Customer[]{});
 		} catch (AdminFacadeException | DoesNotExistException e) {
 			e.printStackTrace();
 		}

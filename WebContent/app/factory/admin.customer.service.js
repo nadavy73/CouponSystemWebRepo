@@ -1,10 +1,7 @@
 'use strict';
  
-admin.factory('CustomersService',
-		['$http',
-		//    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function ($http) {
-//    (Base64, $http, $cookieStore, $rootScope, $timeout) {
+admin.factory('adminCustomersService',
+		['$http', function ($http) {
         var service = {};
         	
         var url ="http://localhost:8080/WebCouponProject/rest/admin/";
@@ -12,16 +9,15 @@ admin.factory('CustomersService',
         service.returnValue = {};
         service.returnValue.AllCustomers = {};
 
+        //Show All Customers
         service.getCustomers = function (){
-     angular.element("#loader").show();   	
+        	angular.element("#loader").show();   	
         	return $http.get(url+"getAllCustomers")
-               .success(function (response) {
-
-            });
-        }
+              
+        };
         
       //Create New Customer
-        service.addCustomer = function(customer) {
+        service.createCustomer = function(customer) {
       	 return $http({
                 method: 'PUT',
                 url: url + "createCustomer",
