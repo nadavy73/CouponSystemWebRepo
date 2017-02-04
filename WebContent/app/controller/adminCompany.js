@@ -33,11 +33,17 @@ admin.controller("companyCtrl", ['$scope','adminCompanyService','$http',
 					 }
 				}
 			 });
-			if (userExists==true || name.length<1) 
+			if (name.length<1)
+			{
+				return "You must choose name\n"
+				+ "This field can not be empty"	;
+			}
+			if (userExists==true)
 			{
 				return "Company Name already exist\n"
 					+ "Please enter different name"	;
-			} 
+			}
+			 
 		};  
 	 
 		//Password Validation
@@ -88,7 +94,7 @@ admin.controller("companyCtrl", ['$scope','adminCompanyService','$http',
    	   				$scope.companies.splice(index, 1);
    	   				}, 
         		       function(response){
-        		         // failure call back
+        		       // failure call back
         			 console.log('NOT DELETED:');
         		       });
         	  };

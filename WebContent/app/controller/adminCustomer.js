@@ -16,31 +16,37 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 	  	 /////////////////
 		 ////Validation/// 
 		 ////////////////// 
-		  $scope.validateName = function (name) {
-				 var userExists = false;
-				 angular.forEach ($scope.customers, function (customer) {
-					 if (userExists === false) 
+	  $scope.validateName = function (name) {
+			 var userExists = false;
+			 angular.forEach ($scope.customers, function (customer) {
+				 if (userExists === false) 
+				 {
+					 	if(customer.name === name)
 					 {
-						 	if(customer.name === name)
-						 {
-							userExists = true;
-							console.log ("Duplicate!");
-							return userExists; 
-						 } 
-						 	else 
-						 {
-						 	userExists = false;
-							console.log ("Not Duplicate!");
-							return userExists;
-						 }
-					}
-				 });
-				if (userExists==true || name.length<1) 
-				{
-					return "Company Name already exist\n"
-						+ "Please enter different name"	;
-				} 
-			};  
+						userExists = true;
+						console.log ("Duplicate!");
+						return userExists; 
+					 } 
+					 	else 
+					 {
+					 	userExists = false;
+						console.log ("Not Duplicate!");
+						return userExists;
+					 }
+				}
+			 });
+			if (name.length<1)
+			{
+				return "You must choose name\n"
+				+ "This field can not be empty"	;
+			}
+			if (userExists==true)
+			{
+				return "Customer Name already exist\n"
+					+ "Please enter different name"	;
+			}
+			 
+		};    
 		 
 		  
 			$scope.passwordValidation = function (custPassword) {
@@ -73,19 +79,19 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 		console.log(index);
 		console.log($scope.customers[index].id);
 		if (confirm("Are you sure you want to delete this customer?"))
-			adminCustomersService.removeCustomer(
-					$scope.customers[index].id).then(
-					function successCallback(response) {
+			adminCustomersService.removeCustomer($scope.customers[index].id)
+				.then(function successCallback(response){
 						// success callback
 						console.log('DELETED:');
 						console.log(response.data);
 						// Delete customer from model
 						$scope.customers.splice(index, 1);
-					}, function(response) {
-						// failure call back
+						}, 
+							function(response) {
+							// failure call back
 						console.log('NOT DELETED:');
 					});
-	};
+				};
 
 	$scope.updateCustomer = function(customer) {
 		adminCustomersService.updateCustomer().then(function(data) {
