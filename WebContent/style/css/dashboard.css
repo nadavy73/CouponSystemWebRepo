@@ -1,15 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
-/*!
- *   Angular Bootstrap - Dashboard
- *   Author: Ranjithprabhu K
- *	 Website: http://ranjithprabhu.in
- *   License: Open source - MIT
- *           Please visit http://opensource.org/licenses/MIT for more information
-!*/
-/*
- * Core: General Layout Style
- * -------------------------
- */
+
 html,
 body {
   min-height: 100%;
@@ -48,7 +38,7 @@ body {
   position: relative;
 }
 .layout-boxed {
-  background: url('../img/boxed-bg.jpg') repeat fixed;
+  background: url('/style/img/boxed-bg.jpg') repeat fixed;
 }
 /*
  * Content Wrapper - contains the main content
@@ -462,9 +452,11 @@ a:focus {
 }
 .sidebar {
   padding-bottom: 10px;
+  
 }
 .sidebar-form input:focus {
   border-color: transparent;
+  
 }
 .user-panel {
   position: relative;
@@ -4007,7 +3999,8 @@ table.text-center th {
  * Plugin: Select2
  * ---------------
  */
-.select2-container--default.select2-container--focus,
+.select2-
+--default.select2-container--focus,
 .select2-selection.select2-container--focus,
 .select2-container--default:focus,
 .select2-selection:focus,
@@ -4735,4 +4728,5 @@ table.text-center th {
   .table-responsive > .table tr td {
     white-space: normal!important;
   }
+
 }

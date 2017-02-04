@@ -37,7 +37,7 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 				 });
 				if (userExists==true || name.length<1) 
 				{
-					return "Company Name already exist\n"
+					return "Customer Name already exist\n"
 						+ "Please enter different name"	;
 				} 
 			};  

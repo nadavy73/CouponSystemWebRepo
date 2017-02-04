@@ -1,13 +1,10 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-           My Design Portfolio
+           All Coupons
 
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Portfolio</li>
-        </ol>
+        
     </section>
     <!-- Main content -->
     <section class="content">
@@ -16,10 +13,10 @@
 
             <div class="wrap">
 
-                <div class="gallery-box" ng-repeat="portfolio in portfolioData">
+                <div class="gallery-box" ng-repeat="type in couponTypes">
                     <div class="boxInner">
-                        <img ng-src="style/images/portfolio/{{portfolio.image}}.jpg">
-                        <div class="titleBox">{{portfolio.title}}</div>
+                        <img ng-src="style/images/portfolio/{{type.image}}.jpg">
+                        <div class="titleBox">{{type.title}}</div>
                     </div>
                 </div>
             </div>

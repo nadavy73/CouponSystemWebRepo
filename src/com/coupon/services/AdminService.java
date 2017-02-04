@@ -1,6 +1,5 @@
 package com.coupon.services;
 
-import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -268,7 +267,8 @@ public class AdminService {
 		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(FACADE_KEY);
 		
 		try {
-				for (Customer customer : facade.getAllCustomers()) {
+				for (Customer customer : facade.getAllCustomers()) 
+				{
 					
 				System.out.println(customer);
 				System.out.println();

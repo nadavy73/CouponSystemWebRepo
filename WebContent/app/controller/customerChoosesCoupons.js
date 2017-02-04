@@ -2,10 +2,9 @@
 
 customer.controller("customerChoosesCouponCtrl", ['$rootScope', '$scope', '$state', '$location', 'Flash',
 	function ($rootScope, $scope, $state, $location, Flash) {
-//    var vm = this;
 
 
-    $scope.portfolioData = [
+    $scope.couponTypes = [
         {
             image: "camping",
             title: "Camping"

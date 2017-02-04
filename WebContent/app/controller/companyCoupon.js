@@ -27,8 +27,8 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     //Add new Row
     $scope.addNewCouponRow = function(){
 		
-    	$scope.coupons.startDate = new Date(coupons.startDate);    
-    	$scope.coupons.endDate = new Date(coupons.endDate);    
+    	$scope.coupons.startDate = new Date($scope.coupons.startDate);    
+    	$scope.coupons.endDate = new Date($scope.coupons.endDate);    
     	
     	$scope.inserted= { 
     			'id': $scope.coupons.id,
