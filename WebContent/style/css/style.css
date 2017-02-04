@@ -1,4 +1,4 @@
-﻿
+
 /*===padding styles=====*/
 .padding-none{
     padding:0px!important;
@@ -73,3 +73,16 @@ a{
 .text-white{
     color:#fff!important;
 }
+
+
+/*==========logo style======*/
+#bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+

@@ -23,6 +23,7 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 				 {
 					 	if(customer.name === name)
 					 {
+
 						userExists = true;
 						console.log ("Duplicate!");
 						return userExists; 
@@ -47,6 +48,7 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 			}
 			 
 		};    
+
 		 
 		  
 			$scope.passwordValidation = function (custPassword) {

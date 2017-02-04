@@ -14,16 +14,12 @@ customer.factory('customerCouponService',
         service.getCoupons = function (){
         	angular.element("#loader").show();   	
         	return $http.get(url+"getAllPurchasedCoupons")
-              
         };
         
       //Show All available Coupons
         service.getAvailableCoupons = function (){
         	angular.element("#loader").show();   	
         	return $http.get(url+"getAllAvailableCoupons")
-               .success(function (response) {
-
-            });
         };
         
         //Create New Coupon
