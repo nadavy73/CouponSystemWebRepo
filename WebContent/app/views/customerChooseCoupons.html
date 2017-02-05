@@ -1,39 +1,294 @@
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-           All Coupons
-
-        </h1>
+<div class="panel panel-default">
+	<div class="panel-body">
+                      
+	<div id="loader" style="dispaly:none;">
+        	<img src="https://www.fundraising.com/Content/spinner.big.gif" 
+        	width=50px 
+        	height=50px>
+	</div>
+        	
+   <h1>All coupons</h1>
+   <!--Filters-->
+	<!-- fieldset collapse start -->
+	<div class="cold-md-12">
+		<fieldset class="fsStyle">
+        <legend class = "legendStyle">
+        <a data-toggle="collapse" 
+        	data-target="#demo">Coupon Search</a>
+        </legend>
         
-    </section>
-    <!-- Main content -->
-    <section class="content">
-
-        <div class="no-touch">
-
-            <div class="wrap">
-
-                <div class="gallery-box" ng-repeat="type in couponTypes">
-                    <div class="boxInner">
-                        <img ng-src="style/images/portfolio/{{type.image}}.jpg">
-                        <div class="titleBox">{{type.title}}</div>
-                    </div>
-                </div>
+  
+   <!--Filter By Title (Free Text)-->     
+        <div class="form-inline">
+     <form>
+     	<div class="form-group">
+      		<div class="input-group">
+        		<div class="input-group-addon">
+        			<i class="fa fa-search">
+        			</i>
+        		</div>
+        			
+    	<input type="text" 
+      		   class="form-control" 
+      		   placeholder="Search Coupon Title..."
+      		   style="width:250px;" 
+      		   ng-model="searchCoupon.title"/>
+        		
+      	<span class="input-group-btn">
+      		<button data-ng-click="ClearSearchText()" 
+      				class="btn btn-primary"> Clear </button>
+		</span>
+				
+      		</div>      
+    	</div>
+  	</form>
+    
+    
+    
+     <!--Filter By Type-->        
+	<br/>
+    <div class="form-group">
+        <span>Search by Coupon &nbsp; </span>
+	</div>
+    <div class="form-group">
+		<select id="ddlSearchType" class="form-control placeholder-color"
+        		ng-model="filterType.option"
+                ng-options="item.name for item in CouponTypes.options"
+                options-class="{'placeholder-color':'placeholder', 'control-color':'data'} "
+                ng-focus="errorMessage=''">
+		</select>
+	</div>
+    </div>
+            
+        <!--Filter By Price--> 
+        <br/>
+        <div class="bottom-line"></div>
+        <div class="form-inline">
+            <div class="form-group">
+                <span>Price ($): between &nbsp; </span>
+            </div>
+            <div class="form-group">
+            <input id="min" 
+                 	type="number"
+                 	class= "form-control"
+                 	placeholder="from"
+                 	style="width:120px;" 
+                	data-ng-model="priceSlider.min"
+                	ng-focus="errorMessage=''"
+                 	min="0"
+                 	max="{{priceSlider.max-1}}"/>
+            </div>
+            <div class="form-group left-dent">
+                <span>&nbsp;  and  &nbsp;</span>
+            </div>
+            <div class="form-group">
+            <input id="max" 
+                 	type="number"
+                 	class= "form-control"
+                 	placeholder="To"
+                 	style="width:120px;" 
+                	data-ng-focus="errorMessage=''"
+                 	data-ng-model="priceSlider.max"
+                	min="{{priceSlider.min+1}}"/>
             </div>
         </div>
-    </section><!-- /.content -->
-
-<script type="text/javascript">
-    $(function () {
-        // See if this is a touch device
-        if ('ontouchstart' in window) {
-            // Set the correct body class
-            $('.no-touch').removeClass('no-touch').addClass('touch');
-
-            // Add the touch toggle to show text
-            $('div.boxInner img').click(function () {
-                $(this).closest('.boxInner').toggleClass('touchFocus');
-            });
-        }
-    });
-</script>
+        
+	<!--Filter By Date-->
+    <br/>
+   	<div class="bottom-line"></div>
+        <div class="form-inline">
+            <div class="form-group">
+                <span>Date: From</span>
+            </div>            
+            <div class="form-group input-append date first-avail">
+                <input type="date" 
+                		ng-model="from" 
+                		class="form-control" 
+                		style="width:160px;" 
+                		id="txtFirstAvailFrom" 
+                		placeholder="Date from"
+                       	name="from"
+                       	min-date="'01-01-2008'" 
+                       	max-date="'31-12-2020'"/>
+                       
+          	</div>
+            
+            
+		<div class="form-group left-dent">
+                <span>&nbsp; To &nbsp;</span>
+            </div>
+            	<div class="form-group input-append date first-avail">
+                	<input type="date" 
+                			data-ng-model="to" 
+                			class="form-control" 
+                			style="width:160px;" 
+                			id="txtFirstAvailFrom" 
+                			placeholder="Date To"
+                       		name="to"
+                       		data-min-date="'01-01-2008'" 
+                       		data-max-date="'31-12-2020'"/>
+                       
+            	</div>
+            </div>
+        <div class="bottom-line">
+        </div>
+        
+</fieldset>
+        </div>            
+	<br/><br/>
+	
+	
+	<!-- Table Columns -->
+	<table class="table table-responsive table-hover table-condensed">
+			<thead>
+				<tr style="font-weight: bold">
+										
+        	<th style="width:10%"> Title</th>
+            <th style="width:10%"> Start Date</th>
+            <th style="width:10%"> End Date</th>
+            <th style="width:10%"> Amount</th>
+            <th style="width:15%"> Type</th>
+            <th style="width:15%"> Message</th>
+            <th style="width:10%"> Price</th>
+            <th style="width:15%"> Image</th>
+        		</tr>
+			</thead>
+                                
+     
+     
+     <!-- Table Values From DB -->                          
+	<tr data-ng-repeat="coupon in coupons | 
+						filter: searchCoupon |
+						filter:customFilter | 
+						dateRange : 'startDate' : from : to |
+						price:priceSlider.min:priceSlider.max">       
+		<td>
+            <!--Title-->
+            		<span 
+            			editable-text="coupon.title"
+            			e-ng-model= "title"
+            			e-name="title"
+            			e-form="couponform"
+            			e-placeholder="Title">	
+                      		{{  coupon.title }}
+					</span>
+		</td>
+					
+		<td>
+        	<!--StartDate-->
+        		<span 
+        			editable-text="coupon.startDate"
+        			e-ng-model="coupons.startDate"
+        			e-name="startDate"
+            	 	e-form="couponform"
+            	 	e-placeholder="Start Date">
+            	 	<!-- onbeforesave="checkDate($data)" -->
+            		
+            			{{ coupon.startDate | date:"dd/MM/yyyy"  }}
+				</span>
+        </td>
+      	<td>
+      	
+			<!--EndDate-->
+            	<span 
+            		editable-text="coupon.endDate"
+            		e-ng-model ="coupons.endDate"
+            		e-name="endDate"
+            	 	e-form="couponform"
+            	 	e-placeholder="End Date">
+            	 <!-- onbeforesave="checkDate($data)" -->
+            		
+                           {{ coupon.endDate |  date:"dd/MM/yyyy" }}
+            	</span>
+        </td>
+		<td>		
+        	<!--Amount-->
+            	<span 
+            		editable-number="coupon.amount"
+            		e-min=0
+            		e-name="amount"
+            		e-form="couponform"
+                	e-placeholder="Amount">
+                		{{ coupon.amount }}
+				</span>
+		</td>
+        <td> 		
+			<!--Type-->
+            	<span 
+            		editable-select="coupon.type"
+                	e-name="type"
+                	e-form="couponform"
+                	e-ng-options="type as type for type in couponTypes"
+                	e-required>
+                		  {{ coupon.type }}
+                </span>
+            	 
+		</td>	
+               
+                          		
+		<td>  		
+			<!--Message-->
+                <span 
+                	editable-text="coupon.message"
+                    e-name="message"
+                    e-form="couponform"
+                    e-placeholder="Message">
+                    		{{ coupon.message }}
+				</span>
+		</td>
+            	
+        <td>  		
+            <!--Price-->
+                <span 
+                	editable-number="coupon.price"
+                    e-min=0
+                    e-name="price"
+                    e-form="couponform"
+                    e-placeholder="Price">
+                    	{{ coupon.price  | currency}}
+				</span>
+		</td>
+        <td>  		
+			<!--Image-->
+    			<span 
+					e-name="image"
+        			e-form="couponform">
+            			{{ coupon.image }}
+                </span>
+		</td>   	
+            	
+            
+            <!-- Actions -->
+            <td style="white-space: nowrap">
+        	<!-- form --> 
+        	
+        	<form editable-form name="couponform" 
+        			onbeforesave="validateDates($data); saveCoupon($data, $index)"
+        			ng-show="couponform.$visible" 
+        			class="form-buttons form-inline pull-right"
+        			shown="inserted == coupon">
+          		
+          		<button type="submit" 
+          				ng-disabled="couponform.$waiting" 
+          				class="btn btn-primary">
+            		Save
+          		</button>    
+          		<button type="button" 
+          				ng-disabled="couponform.$waiting" 
+          				ng-click="couponform.$cancel()" 
+          				class="btn btn-primary">
+            		Cancel
+          		</button>
+        	</form>                          
+				
+				<div class="buttons pull-right" 
+					ng-show="!couponform.$visible">
+                 <button class="btn btn-danger" 
+                 		ng-click="showConfirm($event); removeCoupon($index)">
+                 	<i class="fa fa-trash"> &nbsp; Purchase Coupon </i></button>
+                </div>
+			 </td>    
+		</tr>
+	</tbody>
+</table>
+		</div>

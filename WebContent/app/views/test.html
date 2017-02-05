@@ -1,0 +1,39 @@
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+           All Coupons
+
+        </h1>
+        
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="no-touch">
+
+            <div class="wrap">
+
+                <div class="gallery-box" ng-repeat="type in couponTypes">
+                    <div class="boxInner">
+                        <img ng-src="style/images/portfolio/{{type.image}}.jpg">
+                        <div class="titleBox">{{type.title}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- /.content -->
+
+<script type="text/javascript">
+    $(function () {
+        // See if this is a touch device
+        if ('ontouchstart' in window) {
+            // Set the correct body class
+            $('.no-touch').removeClass('no-touch').addClass('touch');
+
+            // Add the touch toggle to show text
+            $('div.boxInner img').click(function () {
+                $(this).closest('.boxInner').toggleClass('touchFocus');
+            });
+        }
+    });
+</script>
