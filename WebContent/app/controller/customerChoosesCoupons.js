@@ -44,25 +44,28 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	            $scope.coupons.push($scope.inserted);
 	    };
 	    
-	    	
-	    //Remove Coupon
-	    $scope.removeCoupon = function(index){
-	    	console.log(index);
-	   		console.log($scope.coupons[index].id);	
-	   	if (confirm("Are you sure you want to delete this coupon?"))	
-	    customerCouponService.removeCoupon($scope.coupons[index].id)
-	        	.then(function successCallback (response){
-	            			// success callback
-	            			console.log('DELETED:');
-	                        console.log(response.data);
-	                        // Delete coupon from model
-	                        $scope.coupons.splice(index, 1);
-	            			}, 
-	                		       function(response){
-	                		         // failure call back
-	                			 console.log('NOT DELETED:');
-	                		       });
-	                	  };
+	    //purchase Coupon	
+	    $scope.purchaseCoupon = function(index){
+	         console.log($scope.coupons[index].id);
+	         if ($scope.coupons[index].amount<1)
+	         {
+	        	 return "Coupon is out of stock";
+	         }
+	         else {
+	        	 	customerCouponService.purchaseCoupon($scope.coupons[index].id)
+	        	 		.then(function successCallback (response){
+	                	     // success callback
+	            	 		console.log('PURCHESE:');
+	                	     console.log(response.data);
+	                	     // ADD coupon for model
+	                	     
+	                	     }, 
+	                	            function(response){
+	                	            // failure call back
+	                	            console.log('NOT PURCHESE:');
+	                	            });
+	         }
+	                	   };
 	         
 	    //////////////////
 	    //update coupon///      	  

@@ -65,16 +65,15 @@ public class CustomerService {
 	
 	
 //V
-	@PUT
+	@POST
 	@Path("/purchaseCoupon")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Coupon purchaseCoupon (long id) throws DoesNotExistException, CustomerFacadeException, CouponException, SQLException, AlreadyExistException 
 			
 	{
 		CustomerFacade facade = (CustomerFacade) request.getSession().getAttribute(FACADE_KEY);
 		
-
 			return facade.purchaseCoupon(id);
 	}
 	

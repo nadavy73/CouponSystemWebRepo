@@ -59,10 +59,26 @@ customer.controller("customerCouponCtrl", ['$scope','$rootScope','customerCoupon
                         $scope.coupons.splice(index, 1);
             			}, 
                 		       function(response){
-                		         // failure call back
-                			 console.log('NOT DELETED:');
+                		       // failure call back
+                			   console.log('NOT DELETED:');
                 		       });
                 	  };
+     //Purchase Coupon           	  
+     $scope.purchaseCoupon = function(index){
+         console.log(index);
+         	customerCouponService.purchaseCoupon(data)
+             .then(function successCallback (response){
+                	     // success callback
+                	     console.log('PURCHESE:');
+                	     console.log(response.data);
+                	     // ADD coupon for model
+                	     $scope.coupons.splice(index, 1);
+                	     }, 
+                	            function(response){
+                	            // failure call back
+                	            console.log('NOT PURCHESE:');
+                	            });
+                	   };
          
     //////////////////
     //update coupon///      	  

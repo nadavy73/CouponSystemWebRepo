@@ -281,11 +281,11 @@
           		</button>
         	</form>                          
 				
-				<div class="buttons pull-right" 
-					ng-show="!couponform.$visible">
+				<div class="buttons pull-right">
+                 
                  <button class="btn btn-danger" 
-                 		ng-click="showConfirm($event); removeCoupon($index)">
-                 	<i class="fa fa-trash"> &nbsp; Purchase Coupon </i></button>
+                 	data-ng-click="purchaseCoupon($index, $id)">
+                 	<i class="fa fa-plus"> &nbsp; Purchase Coupon </i></button>
                 </div>
 			 </td>    
 		</tr>
