@@ -94,7 +94,9 @@ admin.controller("customerCtrl",['$scope','adminCustomersService','$http',
 						console.log('NOT DELETED:');
 					});
 				};
-
+				
+	
+	//update Customer
 	$scope.updateCustomer = function(customer) {
 		adminCustomersService.updateCustomer().then(function(data) {
 			$scope.customers = data.data;

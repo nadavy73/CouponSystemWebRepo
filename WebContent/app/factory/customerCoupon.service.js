@@ -22,15 +22,15 @@ customer.factory('customerCouponService',
         	return $http.get(url+"getAllAvailableCoupons")
         };
         
-        //Create New Coupon
-        service.createCoupon = function(coupon) {
-      	  return $http({
-              method: 'PUT',
-              url: url + "createCoupon",
-              headers: {'Content-Type': 'application/json'},
-              data: coupon
-          })
-      };
+//        //Create New Coupon
+//        service.createCoupon = function(coupon) {
+//      	  return $http({
+//              method: 'PUT',
+//              url: url + "createCoupon",
+//              headers: {'Content-Type': 'application/json'},
+//              data: coupon
+//          })
+//      };
       
       	//purchase Coupon
       	service.purchaseCoupon = function(id){
