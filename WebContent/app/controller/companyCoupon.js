@@ -49,7 +49,12 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     $scope.removeCoupon = function(index){
     	console.log(index);
    		console.log($scope.coupons[index].id);	
-   	if (confirm("Are you sure you want to delete this coupon?"))	
+   	if (confirm("Are you sure you want to delete this coupon?")){
+   		if ($scope.coupons[index].id === undefined)
+	   		{
+	   	   		$scope.coupons.splice(index, 1);
+	   	   	}
+		else {
     companyCouponService.removeCoupon($scope.coupons[index].id)
         	.then(function successCallback (response){
             			// success callback
@@ -62,7 +67,9 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                 		         // failure call back
                 			 console.log('NOT DELETED:');
                 		       });
+							}			
                 	  };
+    }
          
     //////////////////
     //update coupon///      	  
@@ -287,7 +294,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 	//  Clear Search Text  //
 	/////////////////////////
 	$scope.ClearSearchText = function () {
-	$scope.searchCoupon = '';
+	$scope.searchCoupon = {};
 	$scope.priceSlider = {min:0,max:1000};
 	$scope.from = new Date(2016, 8, 01);
 	$scope.to = new Date(2019, 09, 30);
