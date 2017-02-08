@@ -292,7 +292,7 @@ a:focus {
 }
 .main-header .logo .logo-lg {
   display: block;
-}
+  }
 .main-header .logo .logo-mini {
   display: none;
 }
@@ -416,6 +416,7 @@ a:focus {
   -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  background-color: #222d32;
 }
 @media (max-width: 767px) {
   .main-sidebar,
@@ -452,10 +453,12 @@ a:focus {
 }
 .sidebar {
   padding-bottom: 10px;
+  background-color: #222d32;
   
 }
 .sidebar-form input:focus {
   border-color: transparent;
+  background-color: #222d32;
   
 }
 .user-panel {
@@ -463,6 +466,7 @@ a:focus {
   width: 100%;
   padding: 10px;
   overflow: hidden;
+  background-color: #222d32;
 }
 .user-panel:before,
 .user-panel:after {
@@ -476,6 +480,8 @@ a:focus {
   width: 100%;
   max-width: 45px;
   height: auto;
+  
+
 }
 .user-panel > .info {
   padding: 5px 5px 5px 15px;
