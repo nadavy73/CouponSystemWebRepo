@@ -150,7 +150,7 @@
             <th style="width:15%"> Type</th>
             <th style="width:15%"> Message</th>
             <th style="width:10%"> Price</th>
-            <th style="width:15%"> Image</th>
+        <!--   <th style="width:15%"> Image</th> -->
         		</tr>
 			</thead>
                                 
@@ -201,8 +201,10 @@
                            {{ coupon.endDate |  date:"dd/MM/yyyy" }}
             	</span>
         </td>
+		
 		<td>		
         	<!--Amount-->
+            
             	<span 
             		editable-number="coupon.amount"
             		e-min=0
@@ -211,7 +213,10 @@
                 	e-placeholder="Amount">
                 		{{ coupon.amount }}
 				</span>
+			
 		</td>
+		
+		 
         <td> 		
 			<!--Type-->
             	<span 
@@ -248,14 +253,19 @@
                     	{{ coupon.price  | currency}}
 				</span>
 		</td>
+      
         <td>  		
-			<!--Image-->
-    			<span 
+		  	<!--Image
+    			 <span 
 					e-name="image"
         			e-form="couponform">
             			{{ coupon.image }}
                 </span>
-		</td>   	
+        
+         
+		</td>  
+		
+			
             	
             
             <!-- Actions -->
