@@ -181,8 +181,8 @@
         			e-ng-model="coupons.startDate"
         			e-name="startDate"
             	 	e-form="couponform"
-            	 	e-placeholder="Start Date">
-            	 	<!-- onbeforesave="checkDate($data)" -->
+            	 	e-placeholder="Start Date"
+            	 	onbeforesave="checkDate($data)">
             		
             			{{ coupon.startDate | date:"dd/MM/yyyy"  }}
 				</span>
@@ -195,8 +195,8 @@
             		e-ng-model ="coupons.endDate"
             		e-name="endDate"
             	 	e-form="couponform"
-            	 	e-placeholder="End Date">
-            	 <!-- onbeforesave="checkDate($data)" -->
+            	 	e-placeholder="End Date"
+            	 	onbeforesave="checkDate($data)">
             		
                            {{ coupon.endDate |  date:"dd/MM/yyyy" }}
             	</span>

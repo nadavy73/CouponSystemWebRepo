@@ -31,7 +31,7 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	    	$scope.coupons.endDate = new Date($scope.coupons.endDate);    
 	    	
 	    	$scope.inserted= { 
-	    			'id': $scope.coupons.id,
+	    			id: $scope.coupons.id,
 	                'title':'',
 	                'startDate':'',
 	                'endDate': '',
@@ -44,19 +44,62 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	            $scope.coupons.push($scope.inserted);
 	    };
 	    
-	    //purchase Coupon	
-	    $scope.purchaseCoupon = function(index){
-	         console.log($scope.coupons[index].id);
-	         if ($scope.coupons[index].amount<1)
-	         {
-	        	 return "Coupon is out of stock";
+	   //purchase Coupon	
+	    $scope.purchaseCoupon = function(index, id){
+	       	console.log($scope.coupons[index].amount);
+	       	var userExists = false;
+	       	var date = new Date();
+//	      angular.forEach ($scope.coupons, function (coupon) {
+//	       	
+//				 if (userExists === false) 
+//				 {
+//					 	if(coupon.id === id)
+//					 {
+//					 		
+//						userExists = true;
+//						console.log ("Exist!");
+//						return userExists; 
+//					 } 
+//					 	else 
+//					 {
+//					 	userExists = false;
+//						console.log ("Not exist!");
+//						return userExists;
+//					 }
+//				 }
+//			 });
+//	    	 
+//	      if (userExists==true)debugger;
+//			{
+//				return alert ("Coupon already purchased\n"
+//					+ "Please select different coupon");
+//			}
+	       	
+			if ($scope.coupons[index].amount<1){
+	        		 alert("Coupon is out of stock\n"
+	        				 +"Please select different coupon");
 	         }
-	         else {
-	        	 	customerCouponService.purchaseCoupon($scope.coupons[index].id)
+	         
+	       		console.log($scope.coupons[index].endDate);debugger;
+	       	if ($scope.coupons[index].endDate < date){
+	       		alert ("Coupon was expired");
+	       		
+	       	}
+	         else { customerCouponService.purchaseCoupon($scope.coupons[index].id)
 	        	 		.then(function successCallback (response){
 	                	     // success callback
-	            	 		console.log('PURCHESE:');
-	                	     console.log(response.data);
+	        	 			
+	        	 			$scope.amount = ($scope.coupons[index].amount-1);
+	        	 			
+	        	 			
+	        	 			$scope.coupons.push($scope.update);
+	        	 			console.log("Pusrchase:");
+	        	 			$scope.successTextAlert = "Some content";
+	        	 		    $scope.showSuccessAlert = true;
+	        	 		    
+	            	 		$scope.coupons.push($scope.amount);		            	 		       	    
+	            	 		 console.log(response.data);
+	                	     
 	                	     // ADD coupon for model
 	                	     
 	                	     }, 
@@ -65,8 +108,14 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	                	            console.log('NOT PURCHESE:');
 	                	            });
 	         }
-	                	   };
-	         
+};
+	     
+
+
+	
+
+
+
 	    //////////////////
 	    //update coupon///      	  
 	    /////////////////
@@ -111,41 +160,7 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	     $scope.currencyFormatting = function(value) { 
 	        return value.toString() + " $"; };  
 	             
-	     $scope.imageUpload = function(event){
-	                 var files = event.target.files; //FileList object
-	                 
-	                 for (var i = 0; i < files.length; i++) {
-	                     var file = files[i];
-	                         var reader = new FileReader();
-	                         reader.onload = $scope.imageIsLoaded; 
-	                         reader.readAsDataURL(file);
-	                 }
-	            }
-
-	            $scope.imageIsLoaded = function(e){
-	                $scope.$apply(function() {
-	                    $scope.coupons.push(e.target.result);
-	                });
-	            }    
-	            
-	   
-		   
-		   // return false if date is not in the correct format
-	       this.dateValidation = function (date) {
-	           var pattern = /(2)(?=.*[0-9]).{3}(-)(((0)(?=.*[1-9]).{1})|((1)(?=.*[0-2]).{1}))(-)(|((0)(?=.*[1-9]).{1})|((1)(?=.*[0-9]).{1})|((2)(?=.*[0-9]).{1})|((3)(?=.*[0-1]).{1}))/g;
-
-	           if (!(pattern.test(date) && date.length == 10)) {
-	               return "Date format: yyyy-mm-dd";
-	           } else if (Date.parse(date) < new Date()) {
-	               return "Date can't be in the past";
-	           } else {
-	               return true;
-	           }
-	       };
-		   
-		   
-		   
-		   
+	    		   
 		   // returns date in string format that the server can handel
 	       $scope.dateToStringFormat = function (data) {
 	       var today = new Date();
@@ -190,11 +205,7 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 		 console.log(endDt);
 		 if (data.startDate > data.endDate) {
 		    return "DATE START has to be smaller than DATE END."; 
-//		    console.log('startDt > endDt');
-//		    console.log(startDt);
-//	        console.log(endDt);
-//	        console.log("What is DAte?");
-//			return false;
+
 			
 		} else
 		    console.log(startDt);
@@ -204,28 +215,7 @@ customer.controller("customerChoosesCouponCtrl", ['$scope','$rootScope','custome
 	            	     
 	};
 		
-
-	//$scope.startDate = $filter("date")(Date.now(), 'yyyy/MM/dd');
-
-	//$scope.convertDate = function(date){
-	//  var myDate = new Date(date);
-//	      var month = lessThanTen(myDate.getMonth() + 1);
-//	      var date = lessThanTen(myDate.getDate());
-//	      var year = myDate.getFullYear();
-//	      var format = date + '/' + month + '/' + year
-//	      return format;
-	//}
-	//
-	//function lessThanTen(value) {
-//	    return value < 10 ? '0' + value : value;
-	//  }
-
-
-
-
-
-
-	  	////////////////////////////////
+		////////////////////////////////
 		//Filters And Search Functions//
 		///////////////////////////////
 		

@@ -77,8 +77,10 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
  	//Edit/Save - Opens the Edit Row for both Options//
  	//////////////////////////////////////////////////
  $scope.saveCoupon = function(data, index) {
-    	if ($scope.coupons[index].id == null) {
-    		companyCouponService.createCoupon(data).then(
+	 debugger;	
+	 if ($scope.coupons[index].id == null && (data.startDate < data.endDate))
+    	{
+		companyCouponService.createCoupon(data).then(
     			function successCallback(response) {
     				console.log('ADDED:');
     				console.log(response.data);
@@ -86,10 +88,13 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                      },
                 function errorCallback(response) {
                     console.log('NOT DELETED:', response);
-                    $scope.coupons.splice(index, 1);
+                    
                      });
+		$scope.coupons.splice(index, 1);
          	}
-    	else {
+	 
+    	else if (data.startDate < data.endDate){
+    		debugger;
         	companyCouponService.updateCoupon($scope.coupons[index].id, data).then(
         			function successCallback(response) {
         				console.log('Coupon updated', response);
@@ -100,6 +105,9 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
                         console.log('ERROR:', response);
                          });
                  }
+    	else{
+	 $scope.coupons.splice(index, 1);
+	 return alert ("Didn't Add this coupon");}		
              };
          
 
@@ -108,42 +116,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
      $scope.currencyFormatting = function(value) { 
         return value.toString() + " $"; };  
              
-     $scope.imageUpload = function(event){
-                 var files = event.target.files; //FileList object
-                 
-                 for (var i = 0; i < files.length; i++) {
-                     var file = files[i];
-                         var reader = new FileReader();
-                         reader.onload = $scope.imageIsLoaded; 
-                         reader.readAsDataURL(file);
-                 }
-            }
-
-            $scope.imageIsLoaded = function(e){
-                $scope.$apply(function() {
-                    $scope.coupons.push(e.target.result);
-                });
-            }    
-            
-   
-	   
-	   // return false if date is not in the correct format
-       this.dateValidation = function (date) {
-           var pattern = /(2)(?=.*[0-9]).{3}(-)(((0)(?=.*[1-9]).{1})|((1)(?=.*[0-2]).{1}))(-)(|((0)(?=.*[1-9]).{1})|((1)(?=.*[0-9]).{1})|((2)(?=.*[0-9]).{1})|((3)(?=.*[0-1]).{1}))/g;
-
-           if (!(pattern.test(date) && date.length == 10)) {
-               return "Date format: yyyy-mm-dd";
-           } else if (Date.parse(date) < new Date()) {
-               return "Date can't be in the past";
-           } else {
-               return true;
-           }
-       };
-	   
-	   
-	   
-	   
-	   // returns date in string format that the server can handel
+     // returns date in string format that the server can handel
        $scope.dateToStringFormat = function (data) {
        var today = new Date();
        var d = (today.getDate() < 10 ? '0' : '' )+ today.getDate();
@@ -175,47 +148,9 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
     
   }
 
-	//Date validations - Checks if the input 'End date' is After the 'Start Date'//
-	$scope.validateDates = function(data) {
-	    console.log('IN VALIDATEDATES');
-	    console.log(data.startDate);
-	    console.log(data.endDate);
-	      
-	 var startDt = data.startDate;
-	 var endDt = data.endDate;
-	 console.log(startDt);
-	 console.log(endDt);
-	 if (data.startDate > data.endDate) {
-	    return "DATE START has to be smaller than DATE END."; 
-//	    console.log('startDt > endDt');
-//	    console.log(startDt);
-//        console.log(endDt);
-//        console.log("What is DAte?");
-//		return false;
-		
-	} else
-	    console.log(startDt);
-	    console.log ("***********");
-        console.log(endDt);
-        return false;
-            	     
-};
+		 
 	
 
-//$scope.startDate = $filter("date")(Date.now(), 'yyyy/MM/dd');
-
-//$scope.convertDate = function(date){
-//  var myDate = new Date(date);
-//      var month = lessThanTen(myDate.getMonth() + 1);
-//      var date = lessThanTen(myDate.getDate());
-//      var year = myDate.getFullYear();
-//      var format = date + '/' + month + '/' + year
-//      return format;
-//}
-//
-//function lessThanTen(value) {
-//    return value < 10 ? '0' + value : value;
-//  }
 
 
 
@@ -287,7 +222,7 @@ company.controller("companyCouponCtrl", ['$scope','$rootScope','companyCouponSer
 	//  Clear Search Text  //
 	/////////////////////////
 	$scope.ClearSearchText = function () {
-	$scope.searchCoupon = '';
+	$scope.searchCoupon = {};
 	$scope.priceSlider = {min:0,max:1000};
 	$scope.from = new Date(2016, 8, 01);
 	$scope.to = new Date(2019, 09, 30);

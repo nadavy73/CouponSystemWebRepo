@@ -62,10 +62,11 @@
 	    	e-ng-model= "email"
 	    	e-name="email"
 	    	e-form="companyform"
-	    	e-placeholder="email">
-	    		{{company.email}}
+	    	e-placeholder="email@example.com"
+	    	onbeforesave="emailValidation($data)">
+	    	{{company.email}}
         </span>
-    </td>
+     </td>
 
 	<td style="white-space: nowrap">
     	<!-- form --> 
